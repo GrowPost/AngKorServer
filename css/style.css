@@ -6,7 +6,7 @@
 */
 
 :root {
-  --background: rgb(0 0 0 / 50%);
+  --background: rgb(37, 150, 190/ 50%);
   --background-transparent: rgba(28, 36, 44, 0.85);
   --footer: rgba(0, 0, 0, 0.75);
   --transparent: rgba(255, 255, 255, 0.15);
