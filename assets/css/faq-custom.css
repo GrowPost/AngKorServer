@@ -1,0 +1,556 @@
+/*!
+ * Custom CSS defined for web
+ * Author: Ali (ali.ejaz@ubisoft.com)
+ *
+ */
+ @font-face {
+	font-family: CenturyGothic;
+	src: url(../fonts/GOTHICB.TTF);
+}
+@font-face {
+    font-family: CenturyGothicNormal;
+    src: url(../fonts/GOTHIC.TTF);
+}
+
+body, html {
+	font-family: CenturyGothic, Verdana, Arial;
+	background: #f9f9f9;
+	padding: 0 !important;
+	height: 100%;
+	margin: 0px;
+}
+
+.common-box {
+    padding-top: 20px !important;
+}
+
+.shop-menu-button, .shop-menu-button:hover {
+	background: #03afef url(../images/gt-WebShop-Gem-Icon.png) 7px 2px no-repeat !important;
+	margin: 5px;
+	padding: 7px 15px 7px 40px !important;
+	border-radius: 5px;
+	color: #fff !important;
+}
+
+.shop-menu-button:after {
+	content: "";
+	position: absolute;
+	top: -10%;
+	left: -10%;
+	width: 20%;
+	height: 120%;
+	opacity: 0;
+	transform: rotate(-5deg);
+
+	background: rgba(255, 255, 255, 0.13);
+	background: linear-gradient(
+			to right,
+			rgba(255, 255, 255, 0.13) 0%,
+			rgba(255, 255, 255, 0.13) 77%,
+			rgba(255, 255, 255, 0.5) 92%,
+			rgba(255, 255, 255, 0.0) 100%
+	);
+}
+
+#install {
+	cursor: pointer;
+	background-color: #47bffb;
+	padding: 6px;
+	border-radius: 8px;
+	color: white;
+	text-decoration:underline;
+}
+#install a {
+	color: white;
+
+}
+
+.fankit-menu-button, .fankit-menu-button:hover {
+    background: #febc0b url(../images/Grow_Fankit-Icon.png) 5px 12px no-repeat !important;
+    padding: 15px 80px 15px 60px !important;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.fankit-winterfest-menu-button, .fankit-winterfest-menu-button:hover {
+    background: #0b58fe url(../images/Grow_Fankit-Winterfest-Icon.png) 5px 8px no-repeat !important;
+    padding: 15px 80px 15px 60px !important;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.fankit-spring-menu-button, .fankit-spring-menu-button:hover {
+    background: #f991c5 url(../images/Grow_Fankit-Spring-Icon.png) 5px 8px no-repeat !important;
+    padding: 15px 80px 15px 60px !important;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.fankit-summer-menu-button, .fankit-summer-menu-button:hover {
+    background: #ff6207 url(../images/Sandtopian.png) 5px 8px no-repeat !important;
+    padding: 15px 80px 15px 60px !important;
+    border-radius: 5px;
+    margin-right: 10px;
+    margin-bottom: 10px;
+}
+
+.fankit-menu-button a, .fankit-winterfest-menu-button a, .fankit-spring-menu-button a, .fankit-summer-menu-button a {
+	color: #fff !important;
+}
+
+/* Hover state - trigger effect */
+.shop-menu-button:hover:after {
+	opacity: 1;
+	left: 130%;
+	transition-property: left, top, opacity;
+	transition-duration: 1.5s, 1.5s, 0.15s;
+	transition-timing-function: ease;
+}
+
+/* Active state */
+.shop-menu-button:active:after {
+	opacity: 0;
+}
+
+* {
+    -moz-box-sizing: border-box;
+    -webkit-box-sizing: border-box;
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+.content a:hover, .content a:focus{
+	text-decoration: none;
+	filter: alpha(opacity = 65);
+	opacity: .65;
+}
+
+.page-wrapper {
+	max-width: 1260px;
+	min-height: 100%;
+	position: relative;
+	margin: 0 auto;
+    background: #fff;
+}
+
+.header-bg {
+	background: #60d7f2;
+}
+.header {
+	color: #fff;
+	padding: 13px 12px 13px 12px;
+	border-bottom: 0 !important;
+	background: url(../images/grow_dude_sign.png) no-repeat;
+    background-position: right bottom;
+    background-size: 200px;
+}
+
+.dirt {
+    background: url(../images/grow_dirt_faq.png) repeat-x;
+    background-position: right bottom;
+    width: 100%;
+    height: 13px;
+}
+.center-align {
+	text-align: center;
+}
+body, button, input, select, textarea {
+	text-rendering: optimizeLegibility;
+}
+
+#header .logo {
+	height: auto;
+	width: auto;
+	padding-top: 10px;
+	padding-bottom: 10px;
+	padding-left: 10px;
+}
+
+.search-wrapper {
+	background: #eff0f4;
+	padding: 20px 12px 20px 12px;
+	border: 0;
+	position: relative;
+}
+
+.search-input {
+	border: 0 !important;
+	padding: 13px 45px 13px 15px !important;
+	border-radius: 4px 0 0 4px !important;
+	-webkit-box-shadow: none !important;
+	-moz-box-shadow: none !important;
+	box-shadow: none !important;
+	-webkit-appearance: none;
+	-moz-appearance: none;
+	appearance: none;
+	background: #fff;
+	padding: 8px 8px 8px 32px;
+	border: 1px solid #ccd1d7;
+	font-size: 14px !important;
+	line-height: 20px !important;
+}
+
+.icon-search {
+	color: #c4c4c4;
+	border: none;
+	padding: 7px;
+	border-radius: 0px 4px 4px 0px;
+}
+
+.content-wrapper {
+	padding-top: 30px;
+	position: relative;
+	min-height: 500px;
+	overflow: hidden;
+}
+
+.section-title a, .section-title, .answer-title, .search-title {
+	color: #47bffb;
+	font-weight: 500 !important;
+	font-size: 26px;
+}
+
+.section-title:after {
+	position: absolute;
+	bottom: 0;
+	left: 0;
+	content: none;
+	background-color: #f15b22;
+	width: auto;
+	height: auto;
+}
+
+.section-title {
+	padding-bottom: 10px;
+	margin-bottom: 10px
+}
+
+.faq-list {
+	list-style: none;
+}
+
+ol, ul {
+	padding-left: 20px;
+}
+
+.faq-list li {
+	padding: 0;
+}
+
+.faq-list li {
+	margin-bottom: 8px;
+	word-wrap: break-word;
+	text-align: initial;
+}
+
+.faq-list a {
+	color: #444;
+	font-size: 16px;
+	line-height: 1;
+}
+
+.content a {
+	-webkit-transition: opacity linear .1s;
+	transition: opacity linear .1s;
+}
+
+.faq-list a {
+	font-size: 15px;
+	display: inline-block;
+}
+
+.faq-list .all-questions {
+	color: #999;
+	font-size: 14px;
+	margin-top: 24px;
+}
+
+.faq-list label {
+	width: 100%;
+	box-shadow: 0 1px 3px rgba(0,0,0,0.12), 0 1px 2px rgba(0,0,0,0.24);
+	transition: all 0.3s cubic-bezier(.25,.8,.25,1);
+	border-radius: 5px;
+	cursor: pointer;
+}
+.faq-list label:hover {
+	box-shadow: 0 14px 28px rgba(0,0,0,0.25), 0 10px 10px rgba(0,0,0,0.22);
+}
+.faq-list img {
+	width: 100%;
+}
+
+.faq-list p {
+	background: rgba(96, 215, 242, 0.15);
+	padding-top: 5px;
+	padding-bottom: 5px;
+}
+.faq-list input[type="radio"] {
+	display: none;
+}
+.faq-list input[type="radio"]:checked+label{
+	border: 2px solid #60d7f2;
+	box-shadow: 0 0 10px #60d7f2 inset;
+	z-index: 99;
+}
+.section-image .full-width {
+	width:100%;
+}
+.help-block.cursor {
+	cursor:pointer;
+}
+.column {
+	padding-bottom: 35px;
+	padding-right: 40px;
+}
+
+.column:nth-child(3n+1) {
+    clear: both;
+}
+
+#platform.dropdown-menu {
+	padding:10px;
+}
+
+#platform li {
+	padding:5px 0 5px 0;
+	cursor: pointer;
+}
+
+.answer-footer {
+    color: #999;
+    margin-top: 25px;
+    font-size: 12px;
+}
+.answer {
+	padding: 10px 0 10px 0;
+	font-size: 14px;
+    color: #444 !important;
+}
+
+.answer span, .answer font, .answer a, .answer b  {
+	font-family: CenturyGothic !important;
+	font-size: 14px !important;
+}
+
+.section-label {
+    font-size: 12px;
+    color: #999;
+    margin-top: -2px;
+}
+.breadcrumb {
+    padding: 5px 15px;
+}
+
+.breadcrumb li {
+	font-size:14px;
+}
+
+.text-danger-wrapper {
+    padding: 10px;
+    background: #FFCDD2;
+    margin: 0 0 10px 0px;
+    border-radius: 5px;
+}
+
+.text-success-wrapper {
+    padding: 10px;
+    background: #C8E6C9;
+    margin: 0 0 10px 0px;
+    border-radius: 5px;
+}
+
+.grow-button {
+    background-color: #60d7f2 !important;
+    border-color: #60d7f2 !important;
+}
+
+p {
+    color: #000;
+}
+
+.section-title h2 {
+	color: #60d7f2;
+}
+
+#footer ul {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: inline-table;
+}
+
+
+
+.copy-right a, .copy-right {
+	text-decoration: none;
+	color: #000;
+    font-family: CenturyGothicNormal;
+    font-weight: 700;
+}
+
+#footer .link li:nth-child(1) {
+    border-left: none;
+}
+
+#footer .link li {
+    padding: 0 5px;
+    border-left: 1px solid #000;
+    float: left;
+    display: inline;
+}
+
+#footer .link li a {
+    color: #000;
+	text-decoration: none;
+    font-family: CenturyGothicNormal;
+}
+#consentModal .grow-button {
+	margin: 2px;
+}
+.cookie-consent {
+    text-align: left;
+    opacity: 0.9;
+    background: none repeat scroll 0 0 rgba(20,16,16,0.8);
+    bottom: 0;
+    left: 0;
+    position: fixed;
+    width: 80%;
+    z-index: 100000;
+    margin: 0 0 0 10%;
+    padding: 10px;
+    display: none;
+}
+.cookie-consent span img {
+    float:left;margin:0 10px 0 0;background: white;
+}
+.cookie-consent button.grow-button {
+    background-color: #60d7f2 !important;
+    border-color: #60d7f2 !important;
+    padding: 5px;
+    font-size: 12px !important;
+    float: right;
+}
+.withdraw-cookie-consent {
+    text-align: left;
+    opacity: 0.9;
+    background: none repeat scroll 0 0 rgba(51,51,51,0.3);
+    bottom: 0;right: 0;
+    position: fixed;
+    width: auto;
+    z-index: 100000;
+    padding: 10px;
+    display: none;
+}
+.withdraw-cookie-consent a, .withdraw-cookie-consent a:active, .withdraw-cookie-consent a:focus, .withdraw-cookie-consent a:hover {
+    color: #000;
+    text-decoration: none;
+    font-weight: unset;
+}
+/* Shine */
+.annoucemnet-banner:after {
+	content:'';
+	top:0;
+	transform:translateX(100%);
+	width:100%;
+	height:100%;
+	position: absolute;
+	z-index:1;
+	animation: annoucement 7s infinite 2s;
+
+	/*
+    CSS Gradient - complete browser support from http://www.colorzilla.com/gradient-editor/
+    */
+	background: -moz-linear-gradient(left, rgba(255,255,255,0) 0%, rgba(255,255,255,0.8) 50%, rgba(128,186,232,0) 99%, rgba(125,185,232,0) 100%); /* FF3.6+ */
+	background: -webkit-gradient(linear, left top, right top, color-stop(0%,rgba(255,255,255,0)), color-stop(50%,rgba(255,255,255,0.8)), color-stop(99%,rgba(128,186,232,0)), color-stop(100%,rgba(125,185,232,0))); /* Chrome,Safari4+ */
+	background: -webkit-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%); /* Chrome10+,Safari5.1+ */
+	background: -o-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%); /* Opera 11.10+ */
+	background: -ms-linear-gradient(left, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%); /* IE10+ */
+	background: linear-gradient(to right, rgba(255,255,255,0) 0%,rgba(255,255,255,0.8) 50%,rgba(128,186,232,0) 99%,rgba(125,185,232,0) 100%); /* W3C */
+	filter: progid:DXImageTransform.Microsoft.gradient( startColorstr='#00ffffff', endColorstr='#007db9e8',GradientType=1 ); /* IE6-9 */
+}
+
+/* animation */
+
+@keyframes annoucement {
+	0% {transform:translateX(-100%);}
+	100% {transform:translateX(100%);}
+}
+
+
+@media only screen and (min-width: 1100px) {
+	body .search-wrapper {
+		padding: 20px 20px 20px 30px;
+	}
+}
+
+@media only screen and (max-width: 767px) {
+	.column {
+		padding-top: 10px;
+		padding-bottom: 10px;
+	}
+	.content {
+		padding: 18px 20px;
+	}
+	.header .title {
+		font-size: 18pt;
+		padding-top: 15px;
+		text-transform: uppercase;
+	}
+	.header {
+		background-size: 150px;
+	}
+	.section-title a, .section-title, .answer-title, .search-title {
+		color: #47bffb;
+		font-weight: 500 !important;
+		font-size: 20px;
+	}
+	.faq-list a {
+		color: #444;
+		font-size: 12px;
+		font-weight:normal;
+		line-height: 1;
+	}
+}
+
+@media only screen and (min-width: 768px) {
+	.header {
+		padding: 22px 25px 23px 25px;
+	}
+	.header .title {
+		color: #fff;
+		font-size: 30px;
+		padding-top: 15px;
+		text-transform: uppercase;
+	}
+	.search-wrapper {
+		background: #eff0f4;
+		padding: 20px 30px 20px 30px;
+		max-height: 100px;
+	}
+	.content {
+		padding: 20px 30px;
+	}
+	.section-title a, .section-title, .answer-title, .search-title {
+		font-weight: 500 !important;
+		color: #47bffb;
+	}
+	.section-title a:hover, .section-title:hover, .answer-title:hover,
+		.search-title:hover {
+		text-decoration: none;
+		color: rgba(71, 191, 251, 0.8);
+	}
+    .support-wrapper {
+        background: #eff0f4;
+    }
+    .support-wrapper a {
+        color: #000;
+    }
+
+    .support-wrapper a:hover {
+        color: #f15b22;
+    }
+}
