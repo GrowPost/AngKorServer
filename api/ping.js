@@ -2,7 +2,7 @@
 import net from "net";
 
 export default function handler(req, res) {
-    const SERVER_IP = "5.39.13.21";  
+    const SERVER_IP = "15.235.227.241";  
     const SERVER_PORT = 17091; // change if your GTPS port is different
 
     const socket = new net.Socket();
