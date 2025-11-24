@@ -1,7 +1,7 @@
 import net from "net";
 
 export default async function handler(req, res) {
-  const serverIP = "5.39.13.21";   // Your dedicated IP
+  const serverIP = "188.165.42.105";   // Your dedicated IP
   const serverPort = 27280;        // Your correct GTPS port
 
   const start = Date.now();
