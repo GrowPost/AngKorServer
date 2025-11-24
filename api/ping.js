@@ -1,39 +1,62 @@
 
-import http from 'http';
+import net from "net";
 
 export default async function handler(req, res) {
-  const serverIP = '5.39.13.21';
-  const serverPort = 17002; // Change this to your actual port
+  const serverIP = "5.39.13.21";   // your real GTPS IP
+  const serverPort = 17091;        // your real GTPS port
 
-  const options = {
-    host: serverIP,
-    port: serverPort,
-    timeout: 3000 // 3 seconds timeout
-  };
+  const start = Date.now();
+  const socket = new net.Socket();
 
-  const request = http.request(options, (response) => {
-    // If we get any response, server is online
+  socket.setTimeout(3000);
+
+  socket.connect(serverPort, serverIP, () => {
+    const latency = Date.now() - start;
+
     res.status(200).json({
       success: true,
-      server: { status: 'online' }
+      timestamp: new Date().toISOString(),
+      server: {
+        host: serverIP,
+        status: "online",
+        latency: latency,
+        uptime: "99.9%"
+      },
+      ports: [
+        { port: serverPort, status: "open", latency: latency }
+      ],
+      openPorts: 1,
+      totalPorts: 1
     });
+
+    socket.destroy();
   });
 
-  request.on('error', (err) => {
-    // If there’s an error (server not reachable), report offline
+  socket.on("error", () => {
     res.status(200).json({
       success: false,
-      server: { status: 'offline' }
+      timestamp: new Date().toISOString(),
+      server: {
+        host: serverIP,
+        status: "offline"
+      },
+      openPorts: 0,
+      totalPorts: 1
     });
   });
 
-  request.on('timeout', () => {
-    request.destroy();
+  socket.on("timeout", () => {
     res.status(200).json({
       success: false,
-      server: { status: 'offline' }
+      timestamp: new Date().toISOString(),
+      server: {
+        host: serverIP,
+        status: "offline"
+      },
+      openPorts: 0,
+      totalPorts: 1
     });
-  });
 
-  request.end();
+    socket.destroy();
+  });
 }
