@@ -1,7 +1,7 @@
 import http from 'http';
 
 export default async function handler(req, res) {
-  const serverIP = '188.165.42.105';
+  const serverIP = 5.39.13.21;
   const serverPort = 27280; // Change this to your actual port
 
   const options = {
