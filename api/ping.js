@@ -2,7 +2,7 @@ import net from 'net';
 
 export default async function handler(req, res) {
   const serverIP = '91.134.85.13';
-  const portsToCheck = [17091, 17092, 17093, 17002, 27280, 443]; // Add any ports you want to test
+  const portsToCheck = [17091, 17092, 17093, 17002, 27280, 443, 17094, 17095]; // Add any ports you want to test
   const timeout = 3000; // 3 seconds
 
   const results = [];
