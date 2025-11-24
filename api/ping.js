@@ -1,61 +1,46 @@
-import http from 'http';
+import net from 'net';
 
-export default function handler(req, res) {
-  const options = {
-    host: '5.39.13.21',         // your server IP
-    port: 443,                 // your API port
-    path: '/api/ping',           // GrowSoft ping endpoint
-    method: 'GET',
-    timeout: 5000,
-    headers: {
-      'X-Soft-Authenticate-Key': '194638752546'
+export default async function handler(req, res) {
+  const serverIP = '91.134.85.13'; // Replace with your GTPS server IP
+  const serverPort = 17091;        // Replace with your GTPS server port
+
+  const client = new net.Socket();
+  let responded = false;
+
+  // Set 3-second timeout
+  client.setTimeout(3000);
+
+  // Try to connect to the server
+  client.connect(serverPort, serverIP, () => {
+    responded = true;
+    client.destroy(); // Close connection
+    res.status(200).json({
+      success: true,
+      server: { status: 'online' }
+    });
+  });
+
+  // If connection fails
+  client.on('error', () => {
+    if (!responded) {
+      responded = true;
+      client.destroy();
+      res.status(200).json({
+        success: false,
+        server: { status: 'offline' }
+      });
     }
-  };
-
-  const request = http.request(options, (response) => {
-    let data = '';
-
-    response.on('data', chunk => {
-      data += chunk;
-    });
-
-    response.on('end', () => {
-      try {
-        const json = JSON.parse(data);
-
-        return res.status(200).json({
-          success: true,
-          server: 'online',
-          players: json.players ?? null,       // if GrowSoft provides it
-          maxPlayers: json.maxPlayers ?? null,
-          uptime: json.uptime ?? null,
-          raw: json
-        });
-      } catch (err) {
-        // Could not parse JSON, still online
-        return res.status(200).json({
-          success: true,
-          server: 'online',
-          raw: data
-        });
-      }
-    });
   });
 
-  request.on('error', () => {
-    return res.status(200).json({
-      success: false,
-      server: 'offline'
-    });
+  // If connection times out
+  client.on('timeout', () => {
+    if (!responded) {
+      responded = true;
+      client.destroy();
+      res.status(200).json({
+        success: false,
+        server: { status: 'offline' }
+      });
+    }
   });
-
-  request.on('timeout', () => {
-    request.destroy();
-    return res.status(200).json({
-      success: false,
-      server: 'offline'
-    });
-  });
-
-  request.end();
 }
