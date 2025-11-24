@@ -3,7 +3,7 @@ import http from 'http';
 export default function handler(req, res) {
   const options = {
     host: '5.39.13.21',         // your server IP
-    port: 27280,                 // your API port
+    port: 443,                 // your API port
     path: '/api/ping',           // GrowSoft ping endpoint
     method: 'GET',
     timeout: 5000,
