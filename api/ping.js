@@ -1,42 +1,38 @@
-import net from "net";
+import http from 'http';
 
 export default async function handler(req, res) {
-  const serverIP = "188.165.42.105";   // Your dedicated IP
-  const serverPort = 27280;        // Your correct GTPS port
+  const serverIP = '5.39.13.21';
+  const serverPort = 27280; // Change this to your actual port
 
-  const start = Date.now();
-  const socket = new net.Socket();
+  const options = {
+    host: serverIP,
+    port: serverPort,
+    timeout: 3000 // 3 seconds timeout
+  };
 
-  socket.setTimeout(3000);
-
-  socket.connect(serverPort, serverIP, () => {
-    const latency = Date.now() - start;
-
+  const request = http.request(options, (response) => {
+    // If we get any response, server is online
     res.status(200).json({
       success: true,
-      server: {
-        status: "online",
-        host: serverIP,
-        port: serverPort,
-        latency: latency
-      }
+      server: { status: 'online' }
     });
-
-    socket.destroy();
   });
 
-  socket.on("error", () => {
+  request.on('error', (err) => {
+    // If there’s an error (server not reachable), report offline
     res.status(200).json({
       success: false,
-      server: { status: "offline" }
+      server: { status: 'offline' }
     });
   });
 
-  socket.on("timeout", () => {
+  request.on('timeout', () => {
+    request.destroy();
     res.status(200).json({
       success: false,
-      server: { status: "offline" }
+      server: { status: 'offline' }
     });
-    socket.destroy();
   });
+
+  request.end();
 }
