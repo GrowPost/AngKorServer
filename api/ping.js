@@ -1,25 +1,24 @@
 import http from 'http';
 
 export default async function handler(req, res) {
-  const serverIP = '5.39.13.21';
-  const serverPort = 27280; // Change this to your actual port
-
   const options = {
-    host: serverIP,
-    port: serverPort,
-    timeout: 3000 // 3 seconds timeout
+    host: '5.39.13.21',
+    port: 27280,
+    timeout: 3000,
+    method: 'GET',
+    headers: {
+      'X-Soft-Authenticate-Key': '194638752546'
+    }
   };
 
   const request = http.request(options, (response) => {
-    // If we get any response, server is online
     res.status(200).json({
       success: true,
       server: { status: 'online' }
     });
   });
 
-  request.on('error', (err) => {
-    // If there’s an error (server not reachable), report offline
+  request.on('error', () => {
     res.status(200).json({
       success: false,
       server: { status: 'offline' }
