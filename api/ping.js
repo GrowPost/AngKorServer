@@ -1,9 +1,8 @@
-
 import net from "net";
 
 export default async function handler(req, res) {
-  const serverIP = "188.165.42.105";   // your real GTPS IP
-  const serverPort = 443;        // your real GTPS port
+  const serverIP = "5.39.13.21";   // Your dedicated IP
+  const serverPort = 17002;        // Your correct GTPS port
 
   const start = Date.now();
   const socket = new net.Socket();
@@ -15,18 +14,12 @@ export default async function handler(req, res) {
 
     res.status(200).json({
       success: true,
-      timestamp: new Date().toISOString(),
       server: {
-        host: serverIP,
         status: "online",
-        latency: latency,
-        uptime: "99.9%"
-      },
-      ports: [
-        { port: serverPort, status: "open", latency: latency }
-      ],
-      openPorts: 1,
-      totalPorts: 1
+        host: serverIP,
+        port: serverPort,
+        latency: latency
+      }
     });
 
     socket.destroy();
@@ -35,28 +28,15 @@ export default async function handler(req, res) {
   socket.on("error", () => {
     res.status(200).json({
       success: false,
-      timestamp: new Date().toISOString(),
-      server: {
-        host: serverIP,
-        status: "offline"
-      },
-      openPorts: 0,
-      totalPorts: 1
+      server: { status: "offline" }
     });
   });
 
   socket.on("timeout", () => {
     res.status(200).json({
       success: false,
-      timestamp: new Date().toISOString(),
-      server: {
-        host: serverIP,
-        status: "offline"
-      },
-      openPorts: 0,
-      totalPorts: 1
+      server: { status: "offline" }
     });
-
     socket.destroy();
   });
 }
