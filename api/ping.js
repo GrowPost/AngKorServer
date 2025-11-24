@@ -3,7 +3,7 @@ import net from "net";
 
 export default async function handler(req, res) {
   const serverIP = "5.39.13.21";   // your real GTPS IP
-  const serverPort = 17091;        // your real GTPS port
+  const serverPort = 17002;        // your real GTPS port
 
   const start = Date.now();
   const socket = new net.Socket();
