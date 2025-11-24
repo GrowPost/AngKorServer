@@ -2,7 +2,7 @@ import net from 'net';
 
 export default async function handler(req, res) {
   const serverIP = '91.134.85.13'; // Replace with your GTPS server IP
-  const serverPort = 17091;        // Replace with your GTPS server port
+  const serverPort = 27280;        // Replace with your GTPS server port
 
   const client = new net.Socket();
   let responded = false;
