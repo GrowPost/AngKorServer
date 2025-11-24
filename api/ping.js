@@ -3,7 +3,7 @@ import http from 'http';
 
 export default async function handler(req, res) {
   const serverIP = '5.39.13.21';
-  const serverPort = 80; // Change this to your actual port
+  const serverPort = 443; // Change this to your actual port
 
   const options = {
     host: serverIP,
