@@ -1,35 +1,59 @@
 import http from 'http';
 
-export default async function handler(req, res) {
+export default function handler(req, res) {
   const options = {
-    host: '5.39.13.21',
-    port: 27280,
-    timeout: 3000,
+    host: '5.39.13.21',         // your server IP
+    port: 27280,                 // your API port
+    path: '/api/ping',           // GrowSoft ping endpoint
     method: 'GET',
+    timeout: 5000,
     headers: {
       'X-Soft-Authenticate-Key': '194638752546'
     }
   };
 
   const request = http.request(options, (response) => {
-    res.status(200).json({
-      success: true,
-      server: { status: 'online' }
+    let data = '';
+
+    response.on('data', chunk => {
+      data += chunk;
+    });
+
+    response.on('end', () => {
+      try {
+        const json = JSON.parse(data);
+
+        return res.status(200).json({
+          success: true,
+          server: 'online',
+          players: json.players ?? null,       // if GrowSoft provides it
+          maxPlayers: json.maxPlayers ?? null,
+          uptime: json.uptime ?? null,
+          raw: json
+        });
+      } catch (err) {
+        // Could not parse JSON, still online
+        return res.status(200).json({
+          success: true,
+          server: 'online',
+          raw: data
+        });
+      }
     });
   });
 
   request.on('error', () => {
-    res.status(200).json({
+    return res.status(200).json({
       success: false,
-      server: { status: 'offline' }
+      server: 'offline'
     });
   });
 
   request.on('timeout', () => {
     request.destroy();
-    res.status(200).json({
+    return res.status(200).json({
       success: false,
-      server: { status: 'offline' }
+      server: 'offline'
     });
   });
 
