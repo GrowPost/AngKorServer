@@ -1,46 +1,44 @@
-import net from 'net';
+import fetch from 'node-fetch';
+import fs from 'fs';
+import path from 'path';
 
-export default async function handler(req, res) {
-  const serverIP = '91.134.85.13'; // Replace with your GTPS server IP
-  const serverPort = 27280;        // Replace with your GTPS server port
+const API_URL = 'http://127.0.0.1:27280/status';
+const SECRET_KEY = '194638752546';
+const OUTPUT_FILE = path.join(__dirname, 'server-status.json'); // adjust path to public folder if needed
 
-  const client = new net.Socket();
-  let responded = false;
-
-  // Set 3-second timeout
-  client.setTimeout(3000);
-
-  // Try to connect to the server
-  client.connect(serverPort, serverIP, () => {
-    responded = true;
-    client.destroy(); // Close connection
-    res.status(200).json({
-      success: true,
-      server: { status: 'online' }
+async function updateStatus() {
+  try {
+    const res = await fetch(API_URL, {
+      headers: { 'X-Soft-Authenticate-Key': SECRET_KEY },
+      timeout: 3000
     });
-  });
 
-  // If connection fails
-  client.on('error', () => {
-    if (!responded) {
-      responded = true;
-      client.destroy();
-      res.status(200).json({
-        success: false,
-        server: { status: 'offline' }
-      });
-    }
-  });
+    const data = await res.json();
 
-  // If connection times out
-  client.on('timeout', () => {
-    if (!responded) {
-      responded = true;
-      client.destroy();
-      res.status(200).json({
-        success: false,
-        server: { status: 'offline' }
-      });
-    }
-  });
+    fs.writeFileSync(
+      OUTPUT_FILE,
+      JSON.stringify({
+        success: true,
+        server: {
+          status: 'online',
+          currentPlayers: data.players || 0,
+          maxPlayers: data.maxPlayers || 0,
+          uptime: data.uptime || 'N/A',
+          version: data.version || 'N/A'
+        }
+      }, null, 2)
+    );
+
+    console.log('Server status updated!');
+  } catch (err) {
+    fs.writeFileSync(
+      OUTPUT_FILE,
+      JSON.stringify({ success: false, server: { status: 'offline' } }, null, 2)
+    );
+    console.log('Server offline or error.');
+  }
 }
+
+// Run immediately and repeat every 30 seconds
+updateStatus();
+setInterval(updateStatus, 30000);
