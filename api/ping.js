@@ -1,44 +1,41 @@
-import fetch from 'node-fetch';
-import fs from 'fs';
-import path from 'path';
+import net from 'net';
 
-const API_URL = 'http://127.0.0.1:27280/status';
-const SECRET_KEY = '194638752546';
-const OUTPUT_FILE = path.join(__dirname, 'server-status.json'); // adjust path to public folder if needed
+export default async function handler(req, res) {
+  const serverIP = '91.134.85.13';  // Replace with your server IP
+  const serverPort = 17002;           // Replace with your game server port
 
-async function updateStatus() {
-  try {
-    const res = await fetch(API_URL, {
-      headers: { 'X-Soft-Authenticate-Key': SECRET_KEY },
-      timeout: 3000
+  const socket = new net.Socket();
+  let responded = false;
+
+  socket.setTimeout(3000); // 3s timeout
+
+  socket.connect(serverPort, serverIP, () => {
+    responded = true;
+    res.status(200).json({
+      success: true,
+      server: { status: 'online' }
     });
+    socket.destroy();
+  });
 
-    const data = await res.json();
+  socket.on('error', () => {
+    if (!responded) {
+      responded = true;
+      res.status(200).json({
+        success: false,
+        server: { status: 'offline' }
+      });
+    }
+  });
 
-    fs.writeFileSync(
-      OUTPUT_FILE,
-      JSON.stringify({
-        success: true,
-        server: {
-          status: 'online',
-          currentPlayers: data.players || 0,
-          maxPlayers: data.maxPlayers || 0,
-          uptime: data.uptime || 'N/A',
-          version: data.version || 'N/A'
-        }
-      }, null, 2)
-    );
-
-    console.log('Server status updated!');
-  } catch (err) {
-    fs.writeFileSync(
-      OUTPUT_FILE,
-      JSON.stringify({ success: false, server: { status: 'offline' } }, null, 2)
-    );
-    console.log('Server offline or error.');
-  }
+  socket.on('timeout', () => {
+    if (!responded) {
+      responded = true;
+      res.status(200).json({
+        success: false,
+        server: { status: 'offline' }
+      });
+      socket.destroy();
+    }
+  });
 }
-
-// Run immediately and repeat every 30 seconds
-updateStatus();
-setInterval(updateStatus, 30000);
