@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -345,7 +345,6 @@
             flex-direction: column;
             width: 100%;
             box-sizing: border-box;
-
         }
 
         .guide-slider {
@@ -1016,122 +1015,55 @@
             left: 0;
             right: 0;
             bottom: 0;
-            background: linear-gradient(90deg,
-                    transparent,
-                    rgba(16, 185, 129, 0.3),
-                    transparent);
+            background: linear-gradient(90deg, transparent, rgba(16, 185, 129, 0.3), transparent);
             background-size: 200% 100%;
             animation: shimmer 2s infinite;
             border-radius: 8px;
+            z-index: 0;
         }
 
-        .lang-btn {
-            position: relative;
-            overflow: hidden;
-        }
-
-        .lang-btn::after {
+        .lang-btn:active::after {
             content: '';
             position: absolute;
+            border-radius: 50%;
+            background: rgba(255, 255, 255, 0.1);
+            width: 10px;
+            height: 10px;
             top: 50%;
             left: 50%;
-            width: 0;
-            height: 0;
-            border-radius: 50%;
-            background: rgba(16, 185, 129, 0.4);
-            transform: translate(-50%, -50%);
+            transform: translate(-50%, -50%) scale(0);
+            animation: ripple 0.4s linear forwards;
             pointer-events: none;
         }
 
-        .lang-btn.ripple-effect::after {
-            animation: ripple 0.6s ease-out;
+        .lang-btn.active:active::after {
+            background: rgba(16, 185, 129, 0.2);
         }
 
-        .lang-switching {
-            animation: textSlideOut 0.25s cubic-bezier(0.4, 0, 1, 1) forwards;
+        .flag-id {
+            filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
+            transition: filter 0.3s ease;
         }
 
-        .lang-switched {
-            animation: textSlideIn 0.35s cubic-bezier(0, 0, 0.2, 1) forwards;
+        .lang-btn:hover .flag-id {
+            filter: drop-shadow(0 0 5px rgba(16, 185, 129, 0.6));
         }
 
-        .lang-btn.switching {
-            animation: buttonPulse 0.4s cubic-bezier(0.4, 0, 0.2, 1);
-            pointer-events: none;
-        }
-
-        [data-id],
-        [data-en] {
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        .guide-slider.transitioning {
-            transition: min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-        }
-
-        @keyframes fadeOut {
-            from {
-                opacity: 1;
-            }
-
-            to {
-                opacity: 0;
-            }
-        }
-
-        .guide-slider {
-            display: flex;
-            transition: transform 0.4s cubic-bezier(0.4, 0, 0.2, 1), min-height 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            touch-action: pan-y;
-            min-height: 320px;
-            align-items: stretch;
-            will-change: transform, min-height;
-        }
-
-        .guide-slider,
-        .guide-card,
-        [data-id],
-        [data-en] {
-            -webkit-backface-visibility: hidden;
-            backface-visibility: hidden;
-            -webkit-perspective: 1000;
-            perspective: 1000;
-        }
-
-        .lang-btn,
-        .guide-arrow,
-        .faq-item {
-            transform: translateZ(0);
-            -webkit-transform: translateZ(0);
+        .flag-en {
+            filter: drop-shadow(0 0 2px rgba(0, 0, 0, 0.2));
         }
 
         @keyframes jellyStretch {
             0% {
-                transform: scale(1, 1);
-            }
-
-            30% {
-                transform: scale(1.25, 0.75);
-            }
-
-            40% {
-                transform: scale(0.75, 1.25);
+                transform: scaleX(1) scaleY(1);
             }
 
             50% {
-                transform: scale(1.15, 0.85);
-            }
-
-            65% {
-                transform: scale(0.95, 1.05);
-            }
-
-            75% {
-                transform: scale(1.05, 0.95);
+                transform: scaleX(1.15) scaleY(0.8);
             }
 
             100% {
-                transform: scale(1, 1);
+                transform: scaleX(1) scaleY(1);
             }
         }
 
@@ -1217,129 +1149,148 @@
             display: flex;
             align-items: center;
             justify-content: center;
-            overflow-x: auto;
-            scrollbar-width: none;
-            -ms-overflow-style: none;
-        }
-
-
-        .tab-container::-webkit-scrollbar {
-            display: none;
+            gap: 1.5rem;
         }
 
         .tab {
+            background: none;
+            border: none;
+            padding: 0.75rem 0.5rem;
+            color: #aaa;
+            font-size: 1rem;
+            font-weight: 500;
+            cursor: pointer;
+            transition: color 0.3s ease, transform 0.2s ease;
+            position: relative;
+            overflow: hidden;
             display: flex;
             align-items: center;
             gap: 0.5rem;
-            padding: 1rem 1.25rem;
-            background: transparent;
-            border: none;
-            color: #aaa;
-            font-size: 0.95rem;
-            font-weight: 500;
-            cursor: pointer;
-            transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
-            white-space: nowrap;
-            position: relative;
             -webkit-tap-highlight-color: transparent;
-            font-family: 'Inter', sans-serif;
-            flex-shrink: 0;
+            touch-action: manipulation;
+        }
+
+        .tab::after {
+            content: '';
+            position: absolute;
+            left: 0;
+            bottom: 0;
+            width: 100%;
+            height: 3px;
+            background: transparent;
+            transition: background 0.3s ease, transform 0.3s ease;
         }
 
         .tab:hover {
             color: #e0e0e0;
-            transform: translateY(-1px);
         }
 
         .tab.active {
             color: #10b981;
             font-weight: 600;
-            animation: tabPop 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        .tab.active::before {
-            content: '';
-            position: absolute;
-            bottom: 0;
-            left: 50%;
-            transform: translateX(-50%);
-            width: 80%;
-            height: 3px;
-            background: linear-gradient(90deg, #10b981, #34d399);
-            border-radius: 2px 2px 0 0;
-            animation: slideInGrow 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
+            animation: tabPop 0.3s cubic-bezier(0.68, -0.55, 0.265, 1.55);
         }
 
         .tab.active::after {
-            content: '';
-            position: absolute;
-            bottom: -1px;
-            left: 0;
-            width: 100%;
-            height: 1px;
-            background: rgba(16, 185, 129, 0.3);
-        }
-
-        .tab-icon {
-            width: 20px;
-            height: 20px;
-            fill: currentColor;
-            flex-shrink: 0;
-        }
-
-        .tab-label {
-            transition: opacity 0.3s ease;
+            background: #10b981;
+            transform: scaleX(1);
         }
 
         @media (max-width: 768px) {
-            .tab-bar {
-                padding: 0;
-                margin: 0 -1rem 0.5rem;
+            .tab-container {
+                gap: 1rem;
+                justify-content: space-between;
             }
 
             .tab {
-                padding: 0.875rem 1rem;
-                gap: 0.4rem;
+                padding: 0.75rem 0;
+                font-size: 0.9rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .tab-container {
+                gap: 0.75rem;
+            }
+
+            .tab {
+                padding: 0.6rem 0;
+                font-size: 0.8rem;
+                gap: 0.3rem;
+            }
+
+            .tab-icon {
+                width: 18px;
+                height: 18px;
             }
 
             .tab-label {
                 display: none;
             }
 
+            .tab.active .tab-label {
+                display: inline;
+            }
+
+            .tab.active {
+                background: rgba(16, 185, 129, 0.1);
+                border-radius: 6px;
+                padding: 0.6rem 0.75rem;
+                animation: none;
+            }
+
+            .tab.active::after {
+                height: 0;
+            }
+        }
+
+        @media (max-width: 399px) {
+            .tab-container {
+                gap: 0.5rem;
+            }
+
+            .tab {
+                padding: 0.5rem 0;
+                font-size: 0.75rem;
+            }
+
             .tab-icon {
-                width: 22px;
-                height: 22px;
+                width: 16px;
+                height: 16px;
             }
 
-            .platform-header {
-                margin-bottom: 0.875rem;
-                padding-bottom: 0.75rem;
+            .tab-label {
+                display: none;
             }
 
-            .platform-icon {
-                width: 2.25rem;
-                height: 2.25rem;
+            .tab.active {
+                padding: 0.5rem 0.6rem;
+            }
+        }
+
+        @media (max-width: 768px) and (min-width: 481px) {
+            .tab-container {
+                gap: 1.25rem;
             }
 
-            .platform-icon svg {
+            .tab {
+                padding: 0.75rem 0.25rem;
+            }
+
+            .tab-icon {
                 width: 20px;
                 height: 20px;
             }
+        }
 
-            .platform-title {
-                font-size: 1rem;
+        @media (min-width: 769px) {
+            .tab-icon {
+                width: 20px;
+                height: 20px;
             }
         }
 
         @media (max-width: 480px) {
-            .tab-bar {
-                padding: 0 0.25rem;
-            }
-
-            .tab {
-                padding: 0.75rem 0.875rem;
-            }
-
             .tab-icon {
                 width: 20px;
                 height: 20px;
@@ -1361,7 +1312,6 @@
         }
 
         @keyframes pulseGlow {
-
             0%,
             100% {
                 box-shadow: 0 0 5px rgba(16, 185, 129, 0.4);
@@ -1433,118 +1383,69 @@
 
         #server-status {
             margin-top: 0.5rem;
-            margin-bottom: 1rem;
-            text-align: center;
-            font-weight: 600;
-            opacity: 0;
-            animation: fadeInStatus 0.8s ease-out forwards;
-            animation-delay: 0.6s;
-        }
-
-
-
-        #server-info {
-            display: inline-flex;
-            align-items: center;
-            gap: 8px;
-            margin-left: 6px;
-        }
-
-        #server-indicator {
-            color: #ff0;
-        }
-
-        #server-gif {
-            width: 28px;
-            height: 28px;
-            display: none;
-            vertical-align: middle;
-        }
-
-        .status-label {
-            color: #aaa;
-        }
-
-        #notification-container {
-            position: fixed;
-            bottom: 2rem;
-            left: 50%;
-            transform: translateX(-50%);
-            z-index: 2000;
-            width: 320px;
-            height: auto;
-            pointer-events: none;
-        }
-
-        .notification {
-            position: relative;
-            width: 100%;
-            background: rgba(25, 25, 25, 0.95);
-            border-radius: 14px;
-            border: 1px solid rgba(16, 185, 129, 0.5);
-            backdrop-filter: blur(10px);
-            box-shadow: 0 8px 32px rgba(0, 0, 0, 0.5);
+            margin-bottom: 2rem;
             display: flex;
             align-items: center;
-            gap: 0.75rem;
-            padding: 1.25rem 1.75rem;
+            justify-content: center;
+            gap: 0.6rem;
+            font-size: 1.1rem;
+            font-weight: 700;
             color: #10b981;
-            font-weight: 600;
-            font-size: 0.95rem;
+            text-shadow: 0 0 8px rgba(16, 185, 129, 0.4);
             opacity: 0;
-            transform: translateY(100%);
-            animation: slideInUp 0.4s cubic-bezier(0.34, 1.56, 0.64, 1) forwards;
+            animation: fadeInStatus 0.7s ease-out forwards 0.5s;
+        }
+
+        #server-status.offline {
+            color: #f87171;
+            text-shadow: 0 0 8px rgba(248, 113, 113, 0.4);
+        }
+
+        #status-circle {
+            width: 10px;
+            height: 10px;
+            background-color: #10b981;
+            border-radius: 50%;
+            box-shadow: 0 0 10px rgba(16, 185, 129, 0.6);
+            animation: pulseGlow 1.5s ease-in-out infinite;
+            display: block;
+            position: relative;
+        }
+
+        #server-status.offline #status-circle {
+            background-color: #f87171;
+            box-shadow: 0 0 10px rgba(248, 113, 113, 0.6);
+            animation: none;
+        }
+
+        #server-status.offline #status-circle::after {
+            content: '•';
+            color: rgba(255, 255, 255, 0.8);
+            position: absolute;
+            top: 50%;
+            left: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 1.2em;
+            line-height: 0;
+        }
+
+        #status-text {
+            letter-spacing: 0.05em;
+        }
+
+        .highlight-text {
+            color: #3ee0a2;
+            font-weight: 700;
+        }
+
+        .link-text {
+            color: #3ee0a2;
+            text-decoration: underline;
             transition: all 0.3s ease;
-            margin-bottom: 0.75rem;
-            pointer-events: auto;
         }
 
-        .notification.layer-1 {
-            transform: scale(0.9) translateY(18px);
-            opacity: 0.25;
-            z-index: 1;
-        }
-
-        .notification.layer-2 {
-            transform: scale(0.95) translateY(9px);
-            opacity: 0.5;
-            z-index: 2;
-        }
-
-        .notification.layer-3 {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-            z-index: 3;
-        }
-
-        .notification.fade-out {
-            opacity: 0;
-            transform: scale(0.9) translateY(-10px);
-        }
-
-        @keyframes fadeInStack {
-            from {
-                opacity: 0;
-                transform: translateY(15px) scale(0.85);
-            }
-
-            to {
-                opacity: 1;
-                transform: translateY(0) scale(1);
-            }
-        }
-
-
-
-        .notification.show {
-            opacity: 1;
-            transform: translateY(0) scale(1);
-        }
-
-        .notification.fade-out {
-            opacity: 0;
-            transform: translateY(-10px) scale(0.95);
-            transition: all 0.3s ease;
+        .link-text:hover {
+            color: #10b981;
         }
 
         .ip-box {
@@ -1636,93 +1537,26 @@
             display: flex;
             align-items: center;
             gap: 0.75rem;
-            font-size: 0.95rem;
-            font-weight: 500;
-            box-shadow: 0 8px 24px rgba(16, 185, 129, 0.4);
-            z-index: 9999;
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+            z-index: 2000;
+            transition: transform 0.3s ease-out, opacity 0.3s ease-out;
             opacity: 0;
-            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
-            pointer-events: none;
         }
 
         .toast.show {
-            opacity: 1;
             transform: translateX(-50%) translateY(0);
+            opacity: 1;
         }
 
         .toast svg {
             width: 20px;
             height: 20px;
-            fill: currentColor;
-            flex-shrink: 0;
+            fill: #fff;
         }
 
-        @keyframes checkmark {
-            0% {
-                transform: scale(0) rotate(-45deg);
-            }
-
-            50% {
-                transform: scale(1.2) rotate(-45deg);
-            }
-
-            100% {
-                transform: scale(1) rotate(0deg);
-            }
-        }
-
-        .toast.show svg {
-            animation: checkmark 0.4s cubic-bezier(0.34, 1.56, 0.64, 1);
-        }
-
-        @media (max-width: 768px) {
-            .toast {
-                bottom: 1.5rem;
-                left: 1rem;
-                right: 1rem;
-                transform: translateX(0) translateY(100px);
-                width: auto;
-            }
-
-            .toast.show {
-                transform: translateX(0) translateY(0);
-            }
-        }
-
-        .steps a {
-            color: #3ee0a2;
-            text-decoration: none;
-            font-weight: 600;
-            border-bottom: 1px solid rgba(62, 224, 162, 0.3);
-            transition: all 0.3s ease;
-        }
-
-        .steps a:hover {
-            color: #34d399;
-            border-bottom-color: #34d399;
-            text-shadow: 0 0 8px rgba(62, 224, 162, 0.4);
-        }
-
-        .btn-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 1rem;
-        }
-
-        .btn-grid:has(.btn-whatsapp:only-child),
-        .btn-grid:has(.btn-discord:only-child) {
-            grid-template-columns: 1fr;
-        }
-
-        @media (max-width: 768px) {
-            .btn-grid {
-                grid-template-columns: 1fr;
-            }
-        }
-
-        .steps .small-link {
-            font-size: 0.75rem;
-            background: rgba(16, 185, 129, 0.1);
+        .small-link {
+            font-family: monospace;
+            background-color: rgba(16, 185, 129, 0.1);
             color: #3ee0a2;
             padding: 0.15rem 0.4rem;
             border-radius: 4px;
@@ -1747,315 +1581,231 @@
             </button>
             <button class="tab" onclick="scrollToSection('community', this)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 26 26">
-                    <path fill="#3ee0a2"
-                        d="M17.531 1c-1.798 0-3.367.927-4.062 2.688c1.459 1.204 2.469 3.067 2.469 5.593c0 2.697-1.272 5.162-2.594 6.75c2.106.797 5.402 2.394 6.344 4.844c3.318-.184 6.28-.852 6.28-2.75V17.5c0-1.74-3.034-3.443-5.718-4.344c-.122-.04-.89-.226-.406-1.719c1.26-1.316 2.125-3.446 2.125-5.53C21.969 2.696 19.973 1 17.53 1zM8.97 4.094c-2.6 0-4.844 1.775-4.844 5.187c0 2.23 1.06 4.506 2.406 5.906c.525 1.399-.428 2.395-.625 2.47C3.186 18.653 0 20.452 0 22.25v.688c0 2.449 4.671 3 9 3c4.334 0 8.969-.551 8.969-3v-.688c0-1.852-3.208-3.635-6.063-4.594c-.13-.043-.951-.913-.437-2.5h-.031c1.34-1.4 2.5-3.654 2.5-5.875c0-3.412-2.371-5.187-4.97-5.187z" />
+                    <path fill="#3ee0a2" d="M17.531 1c-1.798 0-3.367.927-4.062 2.688c1.459 1.204 2.469 3.067 2.469 5.593c0 2.697-1.272 5.162-2.594 6.75c2.106.797 5.402 2.394 6.344 4.844c3.318-.184 6.28-.852 6.28-2.75V17.5c0-1.74-3.034-3.443-5.718-4.344c-.122-.04-.89-.226-.406-1.719c1.26-1.316 2.125-3.446 2.125-5.53C21.969 2.696 19.973 1 17.53 1zM8.97 4.094c-2.6 0-4.844 1.775-4.844 5.187c0 2.23 1.06 4.506 2.406 5.813c.277.292 2.493 2.155 3.375 2.155c.784 0 2.454-1.637 2.454-2.137c0-2.616-1.427-4.103-2.906-4.969-.379-.225-.797-.562-1.031-1.062-.486-1.026-.145-2.094.75-2.687.75-.487 1.838-.406 2.5.219c.175.163.784.775.969 1.031.558.784.819 1.637.75 2.531-.07.973-.47 1.72-.937 2.313c-1.325 1.637-2.313 3.863-2.313 6.094c0 1.908 2.35 2.572 5.75 2.75 1.5-.96 4.496-2.583 5.375-3.844-.922-2.31-4.085-3.804-6.313-4.594-.96-.33-2.59-.812-3.156-.812-1.07 0-2.37.525-3.5 1.563-1.406 1.306-2.625 3.256-2.625 5.531c0 1.006.593 1.944 1.563 2.563c1.78.966 5.77 1.488 9.937 1.488 4.75 0 8.78-1.07 8.78-3.094v-2.031c0-2.502-3.568-4.872-6.531-5.719c-1.031-.29-.625-1.781-.625-2.5v-3.344c0-2.128-.863-4.18-2.375-5.75-.125-.15-.281-.29-.406-.406-2.312-2.313-5.368-3.563-8.812-3.563z" />
                 </svg>
                 <span class="tab-label">Community</span>
             </button>
             <button class="tab" onclick="scrollToSection('guide', this)">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 897 1024">
-                    <path fill="#3ee0a2"
-                        d="M832.338 192q27 0 45.5 18.5t18.5 45.5v640q0 49-66.5 88.5t-125.5 39.5h-576q-53 0-90.5-37.5T.338 896V128q0-53 37.5-90.5t90.5-37.5h704q26 0 45 19t19 45.5t-19 45t-45 18.5h-672q-13 0-22.5 9.5t-9.5 22.5t9.5 22.5t22.5 9.5h224v288q0 12 11 22t21 10l96-96l96 96q10 0 21-10t11-22V192h192z" />
+                    <path fill="#3ee0a2" d="M832.338 192q27 0 45.5 18.5t18.5 45.5v640q0 49-66.5 88.5t-125.5 39.5h-576q-53 0-90.5-37.5T.338 896V128q0-53 37.5-90.5t90.5-37.5h704q26 0 45 19t19 45.5t-19 45t-45 18.5h-672q-13 0-22.5 9.5t-9.5 22.5t9.5 22.5t22.5 9.5h224v288q0 12 11 22t21 10l96-96l96 96q10 0 21-10t11-22V192h192z" />
                 </svg>
-                <span class="tab-label">Guide</span>
+                <span class="tab-label">Cara Bermain</span>
             </button>
-
         </div>
     </div>
+
     <div class="container">
         <header class="header">
-
-            <h1 class="title">AngkorPS</h1>
-            <p class="subtitle">Rasakan pengalaman bermain di Growtopia private server dengan gameplay seru dan sistem
-                yang
-                stabil</p>
+            <h1 class="title">ANGKORPS</h1>
+            <p class="subtitle" data-id="id">AngkorPS adalah Private Server Growtopia dengan gameplay yang unik, sistem yang stabil, dan selalu ada event seru.</p>
+            <p class="subtitle" data-en="en" style="display:none">AngkorPS is a Growtopia Private Server with unique gameplay, stable systems, and always hosts exciting events.</p>
         </header>
+
         <div id="server-status">
-            <span class="status-label">Server Status:</span>
-            <div id="server-info">
-                <span id="server-indicator">Checking...</span>
-                <img id="server-gif" src="/gif/online.gif">
-            </div>
+            <span id="status-circle"></span>
+            <span id="status-text" data-id="id">ONLINE</span>
+            <span id="status-text" data-en="en" style="display:none">ONLINE</span>
         </div>
+
         <section class="section" id="download">
             <div class="section-title">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 16 16">
                     <path fill="#3ee0a2" d="M16 10h-5.5L8 12.5L5.5 10H0v6h16v-6zM4 14H2v-2h2v2z" />
                     <path fill="#3ee0a2" d="M10 6V0H6v6H3l5 5l5-5z" />
-                </svg>
-                HOST & DOWNLOAD
+                </svg> DOWNLOAD CLIENT
             </div>
             <div class="btn-grid">
-                <button class="btn" onclick="copyHost()">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M16 1H4c-1.1 0-2 .9-2 2v14h2V3h12V1zm3 4H8c-1.1 0-2 .9-2 2v14c0 1.1.9 2 2 2h11c1.1 0 2-.9 2-2V7c0-1.1-.9-2-2-2zm0 16H8V7h11v14z" />
+                <a class="btn" href="https://sfile.mobi/63rX6lP9tY2" target="_blank" onclick="this.classList.add('pulse-active'); setTimeout(() => this.classList.remove('pulse-active'), 500);">
+                    <svg viewBox="0 0 448 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M439.5 125.7l-94.8-109C340 10.3 328.7 0 316 0H132c-12.7 0-24 10.3-28.7 16.7l-94.8 109C3.6 131.3 0 144.1 0 156.9v310.8c0 24.3 19.8 44.2 44.2 44.2h359.5c24.3 0 44.2-19.8 44.2-44.2V156.9c0-12.8-3.6-25.6-8.5-31.2zM192 368h64v-32h-64v32zm0-64h64v-32h-64v32zm0-64h64v-32h-64v32zm0-64h64v-32h-64v32zM80 304v64h32v-64H80zm32-128H80v64h32v-64zm0 128h32v-64h-32v64zm32 128v-32h-32v32h32zm192-32h-32v32h32v-32zm32-64h-32v64h32v-64zm0-128h-32v64h32v-64zm-32-64h32v64h-32v-64z" />
                     </svg>
-                    <span>Copy IP</span>
+                    <span>Android Client</span>
+                </a>
+                <button class="btn" onclick="copyHost()">
+                    <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M224 448c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h32c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16h-32zm64-384H224c-17.6 0-32 14.4-32 32v224h128V96c0-17.6-14.4-32-32-32zm192 128c-8.8 0-16 7.2-16 16v16h-32v-32c0-17.6-14.4-32-32-32h-32V96c0-35.2-28.8-64-64-64H224c-35.2 0-64 28.8-64 64v192h-32c-17.6 0-32 14.4-32 32v32H48c-8.8 0-16 7.2-16 16v32c0 8.8 7.2 16 16 16h416c8.8 0 16-7.2 16-16v-32c0-8.8-7.2-16-16-16h-32v-32c0-17.6-14.4-32-32-32h-32V256c0-8.8-7.2-16-16-16zM112 368H64v-16c0-8.8 7.2-16 16-16h16v32zm288 0h-48v-32h16c8.8 0 16-7.2 16-16v-16h16c8.8 0 16 7.2 16 16v32z" />
+                    </svg>
+                    <span>Copy Host</span>
                 </button>
                 <button class="btn" onclick="downloadHost()">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M19 9h-4V3H9v6H5l7 7 7-7zM5 18v2h14v-2H5z" />
+                    <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M480 352h-96v64h96c17.6 0 32-14.4 32-32v-64c0-17.6-14.4-32-32-32H352V192h-96V32H160v160H64v-64H32c-17.6 0-32 14.4-32 32v64c0 17.6 14.4 32 32 32h32v64H32c-17.6 0-32 14.4-32 32v64c0 17.6 14.4 32 32 32h448c17.6 0 32-14.4 32-32v-64c0-17.6-14.4-32-32-32zM96 368h64v64H96v-64zm256 64h-64v-64h64v64zm96-64h-64v-64h64v64zM160 128V64h192v64H160z" />
                     </svg>
                     <span>Download Host</span>
                 </button>
                 <button class="btn" onclick="copyPowerTunnel()">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M3.9 12c0-1.71 1.39-3.1 3.1-3.1h4V7H7c-2.76 0-5 2.24-5 5s2.24 5 5 5h4v-1.9H7c-1.71 0-3.1-1.39-3.1-3.1zM8 13h8v-2H8v2zm9-6h-4v1.9h4c1.71 0 3.1 1.39 3.1 3.1s-1.39 3.1-3.1 3.1h-4V17h4c2.76 0 5-2.24 5-5s-2.24-5-5-5z" />
+                        <path fill="#e0e0e0" d="M19.982 12.001A8 8 0 1 0 4 12c0 2.453 1.048 4.67 2.723 6.136L4 20v2l5.748-2.738A7.962 7.962 0 0 0 12.001 20c4.418 0 7.982-3.582 7.982-7.999Z" />
+                        <path fill="#3ee0a2" d="M14.996 11.25A.75.75 0 0 1 14.246 12H9.754a.75.75 0 1 1 0-1.5h4.492a.75.75 0 0 1 .75.75Z" />
+                        <path fill="#3ee0a2" d="M12.001 13.5a.75.75 0 0 1-.75-.75V8.25a.75.75 0 1 1 1.5 0v4.499a.75.75 0 0 1-.75.75Z" />
                     </svg>
                     <span>PowerTunnel URL</span>
                 </button>
                 <button class="btn" onclick="copyHostGoURL()">
                     <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" />
+                        <path d="M19 19H5V5h7V3H5c-1.11 0-2 .9-2 2v14c0 1.1.89 2 2 2h14c1.1 0 2-.9 2-2v-7h-2v7zM14 3v2h3.59l-9.83 9.83 1.41 1.41L19 6.41V10h2V3h-7z" />
                     </svg>
                     <span>Host GO URL</span>
                 </button>
                 <button class="btn btn-full" onclick="copyIOS()">
                     <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
+                        <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
                     </svg>
                     <span>iOS Host</span>
                 </button>
             </div>
         </section>
+
         <section class="section" id="community">
             <div class="section-title">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 26 26">
-                    <path fill="#3ee0a2"
-                        d="M17.531 1c-1.798 0-3.367.927-4.062 2.688c1.459 1.204 2.469 3.067 2.469 5.593c0 2.697-1.272 5.162-2.594 6.75c2.106.797 5.402 2.394 6.344 4.844c3.318-.184 6.28-.852 6.28-2.75V17.5c0-1.74-3.034-3.443-5.718-4.344c-.122-.04-.89-.226-.406-1.719c1.26-1.316 2.125-3.446 2.125-5.53C21.969 2.696 19.973 1 17.53 1zM8.97 4.094c-2.6 0-4.844 1.775-4.844 5.187c0 2.23 1.06 4.506 2.406 5.906c.525 1.399-.428 2.395-.625 2.47C3.186 18.653 0 20.452 0 22.25v.688c0 2.449 4.671 3 9 3c4.334 0 8.969-.551 8.969-3v-.688c0-1.852-3.208-3.635-6.063-4.594c-.13-.043-.951-.913-.437-2.5h-.031c1.34-1.4 2.5-3.654 2.5-5.875c0-3.412-2.371-5.187-4.97-5.187z" />
-                </svg>
-                COMMUNITY
+                    <path fill="#3ee0a2" d="M17.531 1c-1.798 0-3.367.927-4.062 2.688c1.459 1.204 2.469 3.067 2.469 5.593c0 2.697-1.272 5.162-2.594 6.75c2.106.797 5.402 2.394 6.344 4.844c3.318-.184 6.28-.852 6.28-2.75V17.5c0-1.74-3.034-3.443-5.718-4.344c-.122-.04-.89-.226-.406-1.719c1.26-1.316 2.125-3.446 2.125-5.53C21.969 2.696 19.973 1 17.53 1zM8.97 4.094c-2.6 0-4.844 1.775-4.844 5.187c0 2.23 1.06 4.506 2.406 5.813c.277.292 2.493 2.155 3.375 2.155c.784 0 2.454-1.637 2.454-2.137c0-2.616-1.427-4.103-2.906-4.969-.379-.225-.797-.562-1.031-1.062-.486-1.026-.145-2.094.75-2.687.75-.487 1.838-.406 2.5.219c.175.163.784.775.969 1.031.558.784.819 1.637.75 2.531-.07.973-.47 1.72-.937 2.313c-1.325 1.637-2.313 3.863-2.313 6.094c0 1.908 2.35 2.572 5.75 2.75 1.5-.96 4.496-2.583 5.375-3.844-.922-2.31-4.085-3.804-6.313-4.594-.96-.33-2.59-.812-3.156-.812-1.07 0-2.37.525-3.5 1.563-1.406 1.306-2.625 3.256-2.625 5.531c0 1.006.593 1.944 1.563 2.563c1.78.966 5.77 1.488 9.937 1.488 4.75 0 8.78-1.07 8.78-3.094v-2.031c0-2.502-3.568-4.872-6.531-5.719c-1.031-.29-.625-1.781-.625-2.5v-3.344c0-2.128-.863-4.18-2.375-5.75-.125-.15-.281-.29-.406-.406-2.312-2.313-5.368-3.563-8.812-3.563z" />
+                </svg> COMMUNITY
             </div>
             <div class="btn-grid">
-                <button class="btn btn-whatsapp" onclick="window.open('https://chat.whatsapp.com/Be7XDHPekX75w51D5wz1WY?mode=wwt','_blank')">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347m-5.421 7.403h-.004a9.87 9.87 0 01-5.031-1.378l-.361-.214-3.741.982.998-3.648-.235-.374a9.86 9.86 0 01-1.51-5.26c.001-5.45 4.436-9.884 9.888-9.884 2.64 0 5.122 1.03 6.988 2.898a9.825 9.825 0 012.893 6.994c-.003 5.45-4.437 9.884-9.885 9.884m8.413-18.297A11.815 11.815 0 0012.05 0C5.495 0 .16 5.335.157 11.892c0 2.096.547 4.142 1.588 5.945L.057 24l6.305-1.654a11.882 11.882 0 005.683 1.448h.005c6.554 0 11.89-5.335 11.893-11.893a11.821 11.821 0 00-3.48-8.413z" />
-                    </svg>
-                    <span>WhatsApp Group</span>
-                </button>
-                <button class="btn btn-discord" onclick="window.open('https://discord.gg/zeEbabkJWb','_blank')">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path
-                            d="M20.317 4.37a19.791 19.791 0 00-4.885-1.515.074.074 0 00-.079.037c-.21.375-.444.864-.608 1.25a18.27 18.27 0 00-5.487 0 12.64 12.64 0 00-.617-1.25.077.077 0 00-.079-.037A19.736 19.736 0 003.677 4.37a.07.07 0 00-.032.027C.533 9.046-.32 13.58.099 18.057a.082.082 0 00.031.057 19.9 19.9 0 005.993 3.03.078.078 0 00.084-.028c.462-.63.874-1.295 1.226-1.994a.076.076 0 00-.041-.106 13.107 13.107 0 01-1.872-.892.077.077 0 01-.008-.128 10.2 10.2 0 00.372-.292.074.074 0 01.077-.01c3.928 1.793 8.18 1.793 12.062 0 a.074.074 0 01.078.01c.12.098.246.198.373.292a.077.077 0 01-.006.127 12.299 12.299 0 01-1.873.892.077.077 0 00-.041.107c.36.698.772 1.362 1.225 1.993a.076.076 0 00.084.028 19.839 19.839 0 006.002-3.03.077.077 0 00.032-.054c.5-5.177-.838-9.674-3.549-13.66a.061.061 0 00-.031-.03zM8.02 15.33c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.956-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.956 2.418-2.157 2.418zm7.975 0c-1.183 0-2.157-1.085-2.157-2.419 0-1.333.955-2.419 2.157-2.419 1.21 0 2.176 1.096 2.157 2.42 0 1.333-.946 2.418-2.157 2.418z" />
+                <a class="btn btn-discord" href="https://discord.gg/angkorps" target="_blank" onclick="this.classList.add('pulse-active'); setTimeout(() => this.classList.remove('pulse-active'), 500);">
+                    <svg viewBox="0 0 640 512" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#5865f2" d="M530.8 77.2L500 240.2c-15.6 15-38.4 20-61.2 20h-53.6v127.2c0 23.4-19 42.4-42.4 42.4h-90.4c-23.4 0-42.4-19-42.4-42.4V260.2h-53.6c-22.8 0-45.6-5-61.2-20L109.2 77.2c-14.8-14.2-14.2-37.4 1.4-51.6 15.6-14.2 39-15 54.8-1.4l36.6 31.4 35.2 30.2c16.4 14.2 33.4 27.2 53 38.2 2.2 1.2 4.4 2.2 6.6 3.2 2.4 1 4.6 2 7 3 2.4 1 5 1.8 7.4 2.6 2.6 1 5 1.4 7.6 1.8 2.6.2 5.2.4 7.8.4 2.6 0 5.2-.2 7.8-.4 2.6-.4 5-.8 7.6-1.8 2.4-.8 5-1.6 7.4-2.6 2.2-1 4.4-2 6.6-3.2 19.6-11 36.6-24 53-38.2l35.2-30.2 36.6-31.4c15.8-13.6 39.2-12.8 54.8 1.4 15.6 14.2 16.2 37.4 1.4 51.6zM272.2 368.2c0 2.2 1.8 4 4 4h90.4c2.2 0 4-1.8 4-4v-90.2h-98.4v90.2zM272.2 240.2h98.4c2.2 0 4-1.8 4-4v-30.2h-106.4v34.2c0 2.2 1.8 4 4 4zM169.2 92.2l20.8 17.8c2.2 1.8 4.6 3.6 7 5.2 2.4 1.8 5 3.4 7.6 4.8 2.6 1.4 5.2 2.6 8 3.6 2.8 1.2 5.8 2 8.8 2.6 3 .8 6.2 1.2 9.4 1.2 3.2 0 6.4-.4 9.4-1.2 3-.6 6-1.4 8.8-2.6 2.8-1 5.4-2.2 8-3.6 2.4-1.6 4.8-3.4 7-5.2l20.8-17.8 22.8-19.6c.4-.4 1-.6 1.6-.6 1.8 0 3.2 1.4 3.2 3.2v30.2c0 2.2-1.8 4-4 4h-34.6c-2.2 0-4-1.8-4-4V77.2h-98.4v30.2c0 2.2-1.8 4-4 4h-34.6c-2.2 0-4-1.8-4-4V77.2c0-1.8 1.4-3.2 3.2-3.2.6 0 1.2.2 1.6.6l22.8 19.6z" />
                     </svg>
                     <span>Discord Server</span>
-                </button>
+                </a>
+                <a class="btn btn-whatsapp" href="https://wa.me/62895628104443" target="_blank" onclick="this.classList.add('pulse-active'); setTimeout(() => this.classList.remove('pulse-active'), 500);">
+                    <svg viewBox="0 0 512 512" xmlns="http://www.w3.org/2000/svg">
+                        <path fill="#25d366" d="M256 0C114.6 0 0 114.6 0 256s114.6 256 256 256 256-114.6 256-256S397.4 0 256 0zm0 464c-114.9 0-208-93.1-208-208S141.1 48 256 48s208 93.1 208 208-93.1 208-208 208zm114.8-219.8c-2.2-2.3-5-3.4-8.3-3.4-3.3 0-6.1 1.1-8.3 3.4l-52.2 52.2-22.9-22.9c-2.3-2.3-5-3.4-8.3-3.4-3.3 0-6.1 1.1-8.3 3.4l-52.2 52.2c-2.3 2.3-3.4 5-3.4 8.3s1.1 6 3.4 8.3c4.5 4.5 10.4 6.7 17.5 6.7 7 0 12.9-2.2 17.5-6.7l31.2-31.2 22.9 22.9c2.3 2.3 5 3.4 8.3 3.4 3.3 0 6-1.1 8.3-3.4l52.2-52.2c4.5-4.5 6.7-10.4 6.7-17.5s-2.2-12.9-6.7-17.5z" />
+                    </svg>
+                    <span>Whatsapp Support</span>
+                </a>
+                <a class="btn" href="https://www.youtube.com/@AngkorPS_GT" target="_blank" onclick="this.classList.add('pulse-active'); setTimeout(() => this.classList.remove('pulse-active'), 500);">
+                    <svg viewBox="0 0 576 512" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M549.7 121.2c-5.7-21.4-23.7-38.3-45.1-44-33.5-8.8-168-8.8-168-8.8S179.9 68.4 146.4 77.2c-21.4 5.7-39.4 22.6-45.1 44-8.8 33.5-8.8 102.5-8.8 102.5s0 69 8.8 102.5c5.7 21.4 23.7 38.3 45.1 44 33.5 8.8 168 8.8 168 8.8s134.5 0 168-8.8c21.4-5.7 39.4-22.6 45.1-44 8.8-33.5 8.8-102.5 8.8-102.5s0-69-8.8-102.5zM232 352V160l144 96-144 96z" />
+                    </svg>
+                    <span>Youtube Channel</span>
+                </a>
             </div>
         </section>
+
         <section class="section" id="guide">
             <div class="section-title">
                 <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 897 1024">
-                    <path fill="#3ee0a2"
-                        d="M832.338 192q27 0 45.5 18.5t18.5 45.5v640q0 49-66.5 88.5t-125.5 39.5h-576q-53 0-90.5-37.5T.338 896V128q0-53 37.5-90.5t90.5-37.5h704q26 0 45 19t19 45.5t-19 45t-45 18.5h-672q-13 0-22.5 9.5t-9.5 22.5t9.5 22.5t22.5 9.5h224v288q0 12 11 22t21 10l96-96l96 96q10 0 21-10t11-22V192h192z" />
-                </svg>
-                CARA BERMAIN
-                <div class="lang-switch">
+                    <path fill="#3ee0a2" d="M832.338 192q27 0 45.5 18.5t18.5 45.5v640q0 49-66.5 88.5t-125.5 39.5h-576q-53 0-90.5-37.5T.338 896V128q0-53 37.5-90.5t90.5-37.5h704q26 0 45 19t19 45.5t-19 45t-45 18.5h-672q-13 0-22.5 9.5t-9.5 22.5t9.5 22.5t22.5 9.5h224v288q0 12 11 22t21 10l96-96l96 96q10 0 21-10t11-22V192h192z" />
+                </svg> CARA BERMAIN <div class="lang-switch">
                     <button class="lang-btn active" onclick="switchLanguage('id')" data-lang="id">
                         <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
                             <path d="M31,8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4v9H31V8Z" fill="#ea3323"></path>
                             <path d="M5,28H27c2.209,0,4-1.791,4-4v-8H1v8c0,2.209,1.791,4,4,4Z" fill="#fff"></path>
-                            <path
-                                d="M5,28H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4ZM2,8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8Z"
-                                opacity=".15"></path>
-                            <path
-                                d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z"
-                                fill="#fff" opacity=".2"></path>
+                            <path d="M5,28H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4Z" fill="#156cb8"></path>
+                            <g>
+                                <path fill="#fff" d="M27.994 11.104L28.585 10.674 27.854 10.674 27.628 9.979 27.402 10.674 26.671 10.674 27.262 11.104 27.037 11.799 27.628 11.369 28.219 11.799 27.994 11.104z"> </path>
+                                <path fill="#fff" d="M24.994 11.104L25.585 10.674 24.854 10.674 24.628 9.979 24.402 10.674 23.671 10.674 24.262 11.104 24.037 11.799 24.628 11.369 25.219 11.799 24.994 11.104z"> </path>
+                                <path fill="#fff" d="M21.994 11.104L22.585 10.674 21.854 10.674 21.628 9.979 21.402 10.674 20.671 10.674 21.262 11.104 21.037 11.799 21.628 11.369 22.219 11.799 21.994 11.104z"> </path>
+                                <path fill="#fff" d="M18.994 11.104L19.585 10.674 18.854 10.674 18.628 9.979 18.402 10.674 17.671 10.674 18.262 11.104 18.037 11.799 18.628 11.369 19.219 11.799 18.994 11.104z"> </path>
+                                <path fill="#fff" d="M15.994 11.104L16.585 10.674 15.854 10.674 15.628 9.979 15.402 10.674 14.671 10.674 15.262 11.104 15.037 11.799 15.628 11.369 16.219 11.799 15.994 11.104z"> </path>
+                            </g>
+                            <g>
+                                <path fill="#fff" d="M12.808 7.463L13.399 7.033 12.668 7.033 12.442 6.338 12.216 7.033 11.485 7.033 12.076 7.463 11.85 8.158 12.442 7.729 13.033 8.158 12.808 7.463z"> </path>
+                                <path fill="#fff" d="M9.829 7.463L10.42 7.033 9.689 7.033 9.463 6.338 9.237 7.033 8.506 7.033 9.097 7.463 8.871 8.158 9.463 7.729 10.054 8.158 9.829 7.463z"> </path>
+                                <path fill="#fff" d="M6.85 7.463L7.441 7.033 6.71 7.033 6.484 6.338 6.258 7.033 5.527 7.033 6.118 7.463 5.892 8.158 6.484 7.729 7.075 8.158 6.85 7.463z"> </path>
+                                <path fill="#fff" d="M3.87 7.463L4.462 7.033 3.731 7.033 3.505 6.338 3.279 7.033 2.548 7.033 3.139 7.463 2.913 8.158 3.505 7.729 4.096 8.158 3.87 7.463z"> </path>
+                                <path fill="#fff" d="M0.891 7.463L1.482 7.033 0.751 7.033 0.525 6.338 0.299 7.033 0.007 7.033 0.598 7.463 0.372 8.158 0.963 7.729 1.554 8.158 0.891 7.463z"> </path>
+                            </g>
+                            <g>
+                                <path fill="#fff" d="M4.601 11.104L5.193 10.674 4.462 10.674 4.236 9.979 4.01 10.674 3.279 10.674 3.87 11.104 3.644 11.799 4.236 11.369 4.827 11.799 4.601 11.104z"> </path>
+                                <path fill="#fff" d="M7.58 11.104L8.172 10.674 7.441 10.674 7.215 9.979 6.989 10.674 6.258 10.674 6.849 11.104 6.623 11.799 7.215 11.369 7.806 11.799 7.58 11.104z"> </path>
+                                <path fill="#fff" d="M10.56 11.104L11.151 10.674 10.42 10.674 10.194 9.979 9.968 10.674 9.237 10.674 9.828 11.104 9.603 11.799 10.194 11.369 10.785 11.799 10.56 11.104z"> </path>
+                                <path fill="#fff" d="M13.539 11.104L14.13 10.674 13.399 10.674 13.173 9.979 12.947 10.674 12.216 10.674 12.808 11.104 12.582 11.799 13.173 11.369 13.765 11.799 13.539 11.104z"> </path>
+                            </g>
                         </svg>
+                        <span class="flag">🇮🇩</span> ID
                     </button>
                     <button class="lang-btn" onclick="switchLanguage('en')" data-lang="en">
-                        <svg xmlns="http://www.w3.org/2000/svg" width="32" height="32" viewBox="0 0 32 32">
-                            <rect x="1" y="4" width="30" height="24" rx="4" ry="4" fill="#fff"></rect>
-                            <path
-                                d="M1.638,5.846H30.362c-.711-1.108-1.947-1.846-3.362-1.846H5c-1.414,0-2.65,.738-3.362,1.846Z"
-                                fill="#a62842"></path>
-                            <path
-                                d="M2.03,7.692c-.008,.103-.03,.202-.03,.308v1.539H31v-1.539c0-.105-.022-.204-.03-.308H2.03Z"
-                                fill="#a62842"></path>
-                            <path fill="#a62842" d="M2 11.385H31V13.231H2z"></path>
-                            <path fill="#a62842" d="M2 15.077H31V16.923000000000002H2z"></path>
-                            <path fill="#a62842" d="M1 18.769H31V20.615H1z"></path>
-                            <path
-                                d="M1,24c0,.105,.023,.204,.031,.308H30.969c.008-.103,.031-.202,.031-.308v-1.539H1v1.539Z"
-                                fill="#a62842"></path>
-                            <path
-                                d="M30.362,26.154H1.638c.711,1.108,1.947,1.846,3.362,1.846H27c1.414,0,2.65-.738,3.362-1.846Z"
-                                fill="#a62842"></path>
-                            <path d="M5,4h11v12.923H1V8c0-2.208,1.792-4,4-4Z" fill="#102d5e"></path>
-                            <path
-                                d="M27,4H5c-2.209,0-4,1.791-4,4V24c0,2.209,1.791,4,4,4H27c2.209,0,4-1.791,4-4V8c0-2.209-1.791-4-4-4Zm3,20c0,1.654-1.346,3-3,3H5c-1.654,0-3-1.346-3-3V8c0-1.654,1.346-3,3-3H27c1.654,0,3,1.346,3,3V24Z"
-                                opacity=".15"></path>
-                            <path
-                                d="M27,5H5c-1.657,0-3,1.343-3,3v1c0-1.657,1.343-3,3-3H27c1.657,0,3,1.343,3,3v-1c0-1.657-1.343-3-3-3Z"
-                                fill="#fff" opacity=".2"></path>
-                            <path fill="#fff"
-                                d="M4.601 7.463L5.193 7.033 4.462 7.033 4.236 6.338 4.01 7.033 3.279 7.033 3.87 7.463 3.644 8.158 4.236 7.729 4.827 8.158 4.601 7.463z">
-                            </path>
-                            <path fill="#fff"
-                                d="M7.58 7.463L8.172 7.033 7.441 7.033 7.215 6.338 6.989 7.033 6.258 7.033 6.849 7.463 6.623 8.158 7.215 7.729 7.806 8.158 7.58 7.463z">
-                            </path>
-                            <path fill="#fff"
-                                d="M10.56 7.463L11.151 7.033 10.42 7.033 10.194 6.338 9.968 7.033 9.237 7.033 9.828 7.463 9.603 8.158 10.194 7.729 10.785 8.158 10.56 7.463z">
-                            </path>
-                            <path fill="#fff"
-                                d="M6.066 9.283L6.658 8.854 5.927 8.854 5.701 8.158 5.475 8.854 4.744 8.854 5.335 9.283 5.109 9.979 5.701 9.549 6.292 9.979 6.066 9.283z">
-                            </path>
-                            <path fill="#fff"
-                                d="M9.046 9.283L9.637 8.854 8.906 8.854 8.68 8.158 8.454 8.854 7.723 8.854 8.314 9.283 8.089 9.979 8.68 9.549 9.271 9.979 9.046 9.283z">
-                            </path>
-                            <path fill="#fff"
-                                d="M12.025 9.283L12.616 8.854 11.885 8.854 11.659 8.158 11.433 8.854 10.702 8.854 11.294 9.283 11.068 9.979 11.659 9.549 12.251 9.979 12.025 9.283z">
-                            </path>
-                            <path fill="#fff"
-                                d="M6.066 12.924L6.658 12.494 5.927 12.494 5.701 11.799 5.475 12.494 4.744 12.494 5.335 12.924 5.109 13.619 5.701 13.19 6.292 13.619 6.066 12.924z">
-                            </path>
-                            <path fill="#fff"
-                                d="M9.046 12.924L9.637 12.494 8.906 12.494 8.68 11.799 8.454 12.494 7.723 12.494 8.314 12.924 8.089 13.619 8.68 13.19 9.271 13.619 9.046 12.924z">
-                            </path>
-                            <path fill="#fff"
-                                d="M12.025 12.924L12.616 12.494 11.885 12.494 11.659 11.799 11.433 12.494 10.702 12.494 11.294 12.924 11.068 13.619 11.659 13.19 12.251 13.619 12.025 12.924z">
-                            </path>
-                            <path fill="#fff"
-                                d="M13.539 7.463L14.13 7.033 13.399 7.033 13.173 6.338 12.947 7.033 12.216 7.033 12.808 7.463 12.582 8.158 13.173 7.729 13.765 8.158 13.539 7.463z">
-                            </path>
-                            <path fill="#fff"
-                                d="M4.601 11.104L5.193 10.674 4.462 10.674 4.236 9.979 4.01 10.674 3.279 10.674 3.87 11.104 3.644 11.799 4.236 11.369 4.827 11.799 4.601 11.104z">
-                            </path>
-                            <path fill="#fff"
-                                d="M7.58 11.104L8.172 10.674 7.441 10.674 7.215 9.979 6.989 10.674 6.258 10.674 6.849 11.104 6.623 11.799 7.215 11.369 7.806 11.799 7.58 11.104z">
-                            </path>
-                            <path fill="#fff"
-                                d="M10.56 11.104L11.151 10.674 10.42 10.674 10.194 9.979 9.968 10.674 9.237 10.674 9.828 11.104 9.603 11.799 10.194 11.369 10.785 11.799 10.56 11.104z">
-                            </path>
-                            <path fill="#fff"
-                                d="M13.539 11.104L14.13 10.674 13.399 10.674 13.173 9.979 12.947 10.674 12.216 10.674 12.808 11.104 12.582 11.799 13.173 11.369 13.765 11.799 13.539 11.104z">
-                            </path>
-                            <path fill="#fff"
-                                d="M4.601 14.744L5.193 14.315 4.462 14.315 4.236 13.619 4.01 14.315 3.279 14.315 3.87 14.744 3.644 15.44 4.236 15.01 4.827 15.44 4.601 14.744z">
-                            </path>
-                            <path fill="#fff"
-                                d="M7.58 14.744L8.172 14.315 7.441 14.315 7.215 13.619 6.989 14.315 6.258 14.315 6.849 14.744 6.623 15.44 7.215 15.01 7.806 15.44 7.58 14.744z">
-                            </path>
-                            <path fill="#fff"
-                                d="M10.56 14.744L11.151 14.315 10.42 14.315 10.194 13.619 9.968 14.315 9.237 14.315 9.828 14.744 9.603 15.44 10.194 15.01 10.785 15.44 10.56 14.744z">
-                            </path>
-                            <path fill="#fff"
-                                d="M13.539 14.744L14.13 14.315 13.399 14.315 13.173 13.619 12.947 14.315 12.216 14.315 12.808 14.744 12.582 15.44 13.173 15.01 13.765 15.44 13.539 14.744z">
-                            </path>
-                        </svg>
+                        <span class="flag">🇺🇸</span> EN
                     </button>
                 </div>
             </div>
+
             <div class="guide-container">
-                <button class="guide-arrow" onclick="nextGuide()" id="nextBtn">
-                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
-                    </svg>
-                </button>
-                <div class="guide-slider" id="guideSlider">
+                <div class="guide-slider">
                     <div class="guide-card">
                         <div class="platform-header">
                             <div class="platform-icon">
                                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 00-8.94 0L5.65 5.67c-.19-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C4.8 11.16 3.5 13.84 3.5 16.5h17c0-2.66-1.3-5.34-2.9-7.02zM7 14.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm10 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z" />
+                                    <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 00-8.94 0L5.65 5.67c-.19-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C4.8 11.16 3.5 13.84 3.5 16.5h17c0-2.66-1.3-5.34-2.9-7.02zM12 21c-3.31 0-6-2.69-6-6v-1c0-2.76 2.24-5 5-5h2c2.76 0 5 2.24 5 5v1c0 3.31-2.69 6-6 6zm-1.5-11h3c1.93 0 3.5 1.57 3.5 3.5v1c0 1.93-1.57 3.5-3.5 3.5h-3c-1.93 0-3.5-1.57-3.5-3.5v-1c0-1.93 1.57-3.5 3.5-3.5z" />
                                 </svg>
                             </div>
                             <div>
-                                <div class="platform-title">Android</div>
-                                <div style="font-size: 0.85rem; color: #888;">PowerTunnel Method</div>
+                                <div class="platform-title" data-id="id">Android (Manual Host)</div>
+                                <div class="platform-title" data-en="en" style="display:none">Android (Manual Host)</div>
+                                <div style="font-size: 0.85rem; color: #888;" data-id="id">Membutuhkan akses root atau aplikasi pihak ketiga (seperti PowerTunnel)</div>
+                                <div style="font-size: 0.85rem; color: #888;" data-en="en" style="display:none">Requires root access or a third-party app (like PowerTunnel)</div>
                             </div>
                         </div>
                         <ol class="steps">
-                            <li data-id="id">Download <a href="https://sfile.mobi/9yeA3hP6fYz"
-                                    target="_blank">PowerTunnel
-                                </a></li>
-                            <li data-id="id">Install PowerTunnel ke perangkat anda</li>
-                            <li data-id="id">Buka aplikasi PowerTunnel.</li>
-                            <li data-id="id">Ketuk ikon Settings di pojok kanan atas.</li>
-                            <li data-id="id">Pilih menu Plugins.</li>
-                            <li data-id="id">Pastikan plugin Hosts aktif (centang), lalu ketuk ikon di sebelahnya.</li>
-                            <li data-id="id">Pada bagian Hosts file URL, masukkan: <code
-                                    class="small-link">https://angkorps.vercel.app/gtps-host.txt</code></li>
-                            <li data-id="id">Pada opsi Hosts file update period, pilih On start (pastikan disetel ke On
-                                start).</li>
-                            <li data-id="id">Tekan tombol OK untuk menyimpan.</li>
-                            <li data-id="id">Kembali ke halaman utama PowerTunnel lalu tekan CONNECT dan tunggu hingga
-                                berubah menjadi DISCONNECT.</li>
-
-                            <li data-en="en" style="display:none">Download <a href="https://sfile.mobi/9yeA3hP6fYz"
-                                    target="_blank">PowerTunnel</a></li>
-                            <li data-en="en" style="display:none">Install PowerTunnel on your device.</li>
-                            <li data-en="en" style="display:none">Open the PowerTunnel app.</li>
-                            <li data-en="en" style="display:none">Tap the Settings icon in the top-right corner.</li>
-                            <li data-en="en" style="display:none">Select the Plugins menu.</li>
-                            <li data-en="en" style="display:none">Make sure the Hosts plugin is enabled (checked), then
-                                tap the icon next to it.</li>
-                            <li data-en="en" style="display:none">In the Hosts file URL field, enter: <code
-                                    class="small-link">https://angkorps.vercel.app/gtps-host.txt</code></li>
-                            <li data-en="en" style="display:none">Set the Hosts file update period to On start (make
-                                sure it is set to On start).</li>
-                            <li data-en="en" style="display:none">Press OK to save.</li>
-                            <li data-en="en" style="display:none">Return to the main PowerTunnel screen, then press
-                                CONNECT and wait until it changes to DISCONNECT.</li>
-
-                            <div class="swipe-indicator">
-                                <span data-id="id">GESER KE KIRI →</span>
-                                <span data-en="en" style="display: none;">SWIPE LEFT →</span>
-                            </div>
-                    </div>
-                    <div class="guide-card">
-                        <div class="platform-header">
-                            <div class="platform-icon">
-                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 00-8.94 0L5.65 5.67c-.19-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C4.8 11.16 3.5 13.84 3.5 16.5h17c0-2.66-1.3-5.34-2.9-7.02zM7 14.5c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1zm10 0c-.55 0-1-.45-1-1s.45-1 1-1 1 .45 1 1-.45 1-1 1z" />
-                                </svg>
-                            </div>
-                            <div>
-                                <div class="platform-title">Android</div>
-                                <div style="font-size: 0.85rem; color: #888;">Hosts Go Method</div>
-                            </div>
-                        </div>
-                        <ol class="steps">
-                            <li data-id="id">Download <a href="https://sfile.mobi/5YCy57j3Es5" target="_blank">Hosts
-                                    Go</a></li>
-                            <li data-id="id">Install Hosts Go ke perangkat Anda.</li>
-                            <li data-id="id">Buka Hosts Go dan pilih 'Hosts Editor'.</li>
-                            <li data-id="id">Klik ⋮ di sebelah kanan, lalu klik 'Download Hosts File'.</li>
-                            <li data-id="id">Ketik link berikut: <code class="small-link">https://angkorps.vercel.app/gtps.host</code></li>
-                            <li data-id="id">Pilih 'Download and Apply'.</li>
-                            <li data-id="id">Kembali dan klik 'START'.</li>
-                            <li data-id="id">Buka Growtopia!!</li>
-                            <li data-en="en" style="display: none;">Download <a href="https://sfile.mobi/5YCy57j3Es5"
-                                    target="_blank">Hosts Go</a></li>
-                            <li data-en="en" style="display: none;">Install Hosts Go on your device.</li>
-                            <li data-en="en" style="display: none;">Open Hosts Go and select 'Hosts Editor'.</li>
-                            <li data-en="en" style="display: none;">Tap ⋮ on the right, then select 'Download Hosts
-                                File'.</li>
-                            <li data-en="en" style="display: none;">Enter this link: <code
-                                    class="small-link">https://angkorps.vercel.app/gtps.host</code></li>
-                            <li data-en="en" style="display: none;">Select 'Download and Apply'.</li>
-                            <li data-en="en" style="display: none;">Go back and tap 'START'.</li>
-                            <li data-en="en" style="display: none;">Open Growtopia!!</li>
-                        </ol>
-
+                            <li data-id="id">Salin <code class="small-link" id="hostText">20.2.146.126 growtopia1.com</code> atau <code class="small-link" id="hostText2">20.2.146.126 growtopia2.com</code></li>
+                            <li data-id="id">Tempelkan host ke <span class="hl">file host</span> Anda yang terletak di <code class="small-link">/etc/hosts</code>. <span class="hl">(Hanya untuk perangkat yang sudah di-root)</span></li>
+                            <li data-id="id">Jika Anda <span class="hl">TIDAK memiliki akses root</span>, unduh dan gunakan aplikasi <a href="https://sfile.mobi/9yeA3hP6fYz" target="_blank" class="link-text">PowerTunnel</a>.</li>
+                            <li data-id="id">Buka PowerTunnel, lalu pergi ke <span class="hl">Settings</span> → <span class="hl">Plugins</span>.</li>
+                            <li data-id="id">Pastikan plugin <span class="hl">Hosts</span> diaktifkan (centang).</li>
+                            <li data-id="id">Tekan ikon Settings di sebelah Hosts, lalu masukkan link Host GO: <code class="small-link">https://angkorps.vercel.app/gtps-host.txt</code></li>
+                            <li data-id="id">Atur periode update Hosts file ke <span class="hl">On start</span>.</li>
+                            <li data-id="id">Tekan <span class="hl">OK</span> untuk menyimpan.</li>
+                            <li data-id="id">Kembali ke halaman utama PowerTunnel lalu tekan <span class="hl">CONNECT</span> dan tunggu hingga berubah menjadi <span class="hl">DISCONNECT</span>.</li>
+                            <li data-en="en" style="display:none">Copy <code class="small-link" id="hostText_en">20.2.146.126 growtopia1.com</code> or <code class="small-link" id="hostText2_en">20.2.146.126 growtopia2.com</code></li>
+                            <li data-en="en" style="display:none">Paste the host into your <span class="hl">hosts file</span> located at <code class="small-link">/etc/hosts</code>. <span class="hl">(For rooted devices only)</span></li>
+                            <li data-en="en" style="display:none">If you <span class="hl">DO NOT have root access</span>, download and use the <a href="https://sfile.mobi/9yeA3hP6fYz" target="_blank" class="link-text">PowerTunnel</a> app.</li>
+                            <li data-en="en" style="display:none">Open PowerTunnel, then go to <span class="hl">Settings</span> → <span class="hl">Plugins</span>.</li>
+                            <li data-en="en" style="display:none">Make sure the <span class="hl">Hosts</span> plugin is enabled (checked).</li>
+                            <li data-en="en" style="display:none">Tap the Settings icon next to Hosts, then enter the Host GO link: <code class="small-link">https://angkorps.vercel.app/gtps-host.txt</code></li>
+                            <li data-en="en" style="display:none">Set the Hosts file update period to <span class="hl">On start</span>.</li>
+                            <li data-en="en" style="display:none">Press <span class="hl">OK</span> to save.</li>
+                            <li data-en="en" style="display:none">Return to the main PowerTunnel screen, then press <span class="hl">CONNECT</span> and wait until it changes to <span class="hl">DISCONNECT</span>.</li>
                         </ol>
                         <div class="swipe-indicator">
                             <span data-id="id">GESER KE KIRI →</span>
                             <span data-en="en" style="display: none;">SWIPE LEFT →</span>
                         </div>
                     </div>
+
+                    <div class="guide-card">
+                        <div class="platform-header">
+                            <div class="platform-icon">
+                                <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                                    <path d="M17.6 9.48l1.84-3.18c.16-.31.04-.69-.26-.85-.29-.15-.65-.06-.83.22l-1.88 3.24a11.43 11.43 0 00-8.94 0L5.65 5.67c-.19-.28-.54-.37-.83-.22-.3.16-.42.54-.26.85l1.84 3.18C4.8 11.16 3.5 13.84 3.5 16.5h17c0-2.66-1.3-5.34-2.9-7.02zM12 21c-3.31 0-6-2.69-6-6v-1c0-2.76 2.24-5 5-5h2c2.76 0 5 2.24 5 5v1c0 3.31-2.69 6-6 6zm-1.5-11h3c1.93 0 3.5 1.57 3.5 3.5v1c0 1.93-1.57 3.5-3.5 3.5h-3c-1.93 0-3.5-1.57-3.5-3.5v-1c0-1.93 1.57-3.5 3.5-3.5z" />
+                                </svg>
+                            </div>
+                            <div>
+                                <div class="platform-title" data-id="id">Android (Host Go)</div>
+                                <div class="platform-title" data-en="en" style="display:none">Android (Host Go)</div>
+                                <div style="font-size: 0.85rem; color: #888;" data-id="id">Menggunakan aplikasi Host Go. Lebih mudah tanpa root.</div>
+                                <div style="font-size: 0.85rem; color: #888;" data-en="en" style="display:none">Uses the Host Go app. Easier and no root needed.</div>
+                            </div>
+                        </div>
+                        <ol class="steps">
+                            <li data-id="id">Unduh <a href="https://sfile.mobi/W0l01lM9kH3" target="_blank" class="link-text">Host Go</a> dan install di perangkat Anda.</li>
+                            <li data-id="id">Buka aplikasi Host Go, lalu masuk ke menu <span class="hl">Setting</span>.</li>
+                            <li data-id="id">Pilih <span class="hl">Remote host file URL</span>.</li>
+                            <li data-id="id">Masukkan link berikut: <code class="small-link">https://angkorps.vercel.app/gtps.host</code></li>
+                            <li data-id="id">Kembali ke halaman utama dan aktifkan <span class="hl">Host Go</span>.</li>
+                            <li data-id="id">Tekan <span class="hl">OK</span> untuk konfigurasi VPN.</li>
+                            <li data-id="id">Buka Growtopia!!</li>
+                            <li data-en="en" style="display:none">Download <a href="https://sfile.mobi/W0l01lM9kH3" target="_blank" class="link-text">Host Go</a> and install it on your device.</li>
+                            <li data-en="en" style="display:none">Open the Host Go app, then go to the <span class="hl">Setting</span> menu.</li>
+                            <li data-en="en" style="display:none">Select <span class="hl">Remote host file URL</span>.</li>
+                            <li data-en="en" style="display:none">Enter this link: <code class="small-link">https://angkorps.vercel.app/gtps.host</code></li>
+                            <li data-en="en" style="display:none">Return to the main screen and enable <span class="hl">Host Go</span>.</li>
+                            <li data-en="en" style="display:none">Press <span class="hl">OK</span> for VPN configuration.</li>
+                            <li data-en="en" style="display:none">Open Growtopia!!</li>
+                        </ol>
+                        <div class="swipe-indicator">
+                            <span data-id="id">GESER KE KIRI →</span>
+                            <span data-en="en" style="display: none;">SWIPE LEFT →</span>
+                        </div>
+                    </div>
+
                     <div class="guide-card">
                         <div class="platform-header">
                             <div class="platform-icon">
                                 <svg viewBox="0 0 400 480" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
+                                    <path d="M318.7 268.7c-.2-36.7 16.4-64.4 50-84.8-18.8-26.9-47.2-41.7-84.7-44.6-35.5-2.8-74.3 20.7-88.5 20.7-15 0-49.4-19.7-76.4-19.7C63.3 141.2 4 184.8 4 273.5q0 39.3 14.4 81.2c12.8 36.7 59 126.7 107.2 125.2 25.2-.6 43-17.9 75.8-17.9 31.8 0 48.3 17.9 76.4 17.9 48.6-.7 90.4-82.5 102.6-119.3-65.2-30.7-61.7-90-61.7-91.9zm-56.6-164.2c27.3-32.4 24.8-61.9 24-72.5-24.1 1.4-52 16.4-67.9 34.9-17.5 19.8-27.8 44.3-25.6 71.9 26.1 2 49.9-11.4 69.5-34.3z" />
                                 </svg>
                             </div>
                             <div>
@@ -2064,174 +1814,207 @@
                             </div>
                         </div>
                         <ol class="steps">
-                            <li data-id="id">Buka App Store dan unduh Surge 5.</li>
-                            <li data-id="id">Buka Surge 5 dan klik 'OKE'.</li>
-                            <li data-id="id">Klik 'Default.conf'.</li>
-                            <li data-id="id">Pilih 'IMPORT' → 'Download Profile From URL'.</li>
+                            <li data-id="id">Buka App Store dan unduh <span class="hl">Surge 5</span>.</li>
+                            <li data-id="id">Buka Surge 5 dan klik <span class="hl">'OKE'</span>.</li>
+                            <li data-id="id">Klik <span class="hl">'Default.conf'</span>.</li>
+                            <li data-id="id">Pilih <span class="hl">'IMPORT'</span> → <span class="hl">'Download Profile From URL'</span>.</li>
                             <li data-id="id">Input link berikut: <code class="small-link">https://angkorps.vercel.app/api/ios</code></li>
-                            <li data-id="id">Tekan 'OK' dan 'DONE'.</li>
-                            <li data-id="id">Klik 'SETUP', setujui kebijakan, lalu klik 'OK'.</li>
-                            <li data-id="id">Tekan 'Allow' untuk konfigurasi VPN.</li>
+                            <li data-id="id">Tekan <span class="hl">'OK'</span> dan <span class="hl">'DONE'</span>.</li>
+                            <li data-id="id">Klik <span class="hl">'SETUP'</span>, setujui kebijakan, lalu klik <span class="hl">'OK'</span>.</li>
+                            <li data-id="id">Tekan <span class="hl">'Allow'</span> untuk konfigurasi VPN.</li>
                             <li data-id="id">Buka Growtopia!!</li>
-
-                            <li data-en="en" style="display: none;">Open App Store and download Surge 5.</li>
-                            <li data-en="en" style="display: none;">Open Surge 5 and click 'OK'.</li>
-                            <li data-en="en" style="display: none;">Click 'Default.conf'.</li>
-                            <li data-en="en" style="display: none;">Select 'IMPORT' → 'Download Profile From URL'.</li>
-                            <li data-en="en" style="display: none;">Enter this link: <code
-                                    class="small-link">https://angkorps.vercel.app/api/ios</code></li>
-                            <li data-en="en" style="display: none;">Press 'OK' and 'DONE'.</li>
-                            <li data-en="en" style="display: none;">Click 'SETUP', agree to the policy, then click 'OK'.
-                            </li>
-                            <li data-en="en" style="display: none;">Tap 'Allow' to configure VPN.</li>
+                            <li data-en="en" style="display: none;">Open App Store and download <span class="hl">Surge 5</span>.</li>
+                            <li data-en="en" style="display: none;">Open Surge 5 and click <span class="hl">'OK'</span>.</li>
+                            <li data-en="en" style="display: none;">Click <span class="hl">'Default.conf'</span>.</li>
+                            <li data-en="en" style="display: none;">Select <span class="hl">'IMPORT'</span> → <span class="hl">'Download Profile From URL'</span>.</li>
+                            <li data-en="en" style="display: none;">Enter this link: <code class="small-link">https://angkorps.vercel.app/api/ios</code></li>
+                            <li data-en="en" style="display: none;">Press <span class="hl">'OK'</span> and <span class="hl">'DONE'</span>.</li>
+                            <li data-en="en" style="display: none;">Click <span class="hl">'SETUP'</span>, agree to the policy, then click <span class="hl">'OK'</span>.</li>
+                            <li data-en="en" style="display: none;">Press <span class="hl">'Allow'</span> for VPN configuration.</li>
                             <li data-en="en" style="display: none;">Open Growtopia!!</li>
                         </ol>
-
                         <div class="swipe-indicator">
                             <span data-id="id">GESER KE KIRI →</span>
                             <span data-en="en" style="display: none;">SWIPE LEFT →</span>
                         </div>
-
-                    </div>
-                    <div class="guide-card">
-                        <div class="platform-header">
-                            <div class="platform-icon">
-                                <svg viewBox="0 0 480 480" xmlns="http://www.w3.org/2000/svg">
-                                    <path
-                                        d="M0 93.7l183.6-25.3v177.4H0V93.7zm0 324.6l183.6 25.3V268.4H0v149.9zm203.8 28L448 480V268.4H203.8v177.9zm0-380.6v180.1H448V32L203.8 65.7z" />
-                                </svg>
-
-                            </div>
-                            <div>
-                                <div class="platform-title">Windows</div>
-                                <div style="font-size: 0.85rem; color: #888;">Manual Host Edit</div>
-                            </div>
-                        </div>
-                        <ol class="steps">
-                            <li data-id="id">Tekan ⊞ Win + R (Windows Key + R)</li>
-                            <li data-id="id">Ketik C:\Windows\System32\drivers\etc</li>
-                            <li data-id="id">Temukan file yang bernama hosts</li>
-                            <li data-id="id">Klik kanan file hosts dan klik 'Edit with Notepad++'</li>
-                            <li data-id="id">Hapus semua text</li>
-                            <li data-id="id">
-                                Copy dan paste IP berikut:
-                                <pre class="ip-box">5.39.13.21 www.growtopia1.com
-5.39.13.21 www.growtopia2.com</pre>
-                            </li>
-                            <li data-id="id">Tekan Ctrl + S untuk menyimpan file</li>
-                            <li data-id="id">Buka Growtopia!!</li>
-                            <li data-en="en" style="display: none;">Press ⊞ Win + R (Windows Key + R)</li>
-                            <li data-en="en" style="display: none;">Type C:\Windows\System32\drivers\etc</li>
-                            <li data-en="en" style="display: none;">Find the file named hosts</li>
-                            <li data-en="en" style="display: none;">Right-click the hosts file and click 'Edit with
-                                Notepad++'</li>
-                            <li data-en="en" style="display: none;">Delete all text</li>
-                            <li data-en="en" style="display: none;">
-                                Copy and paste the IP:
-                                <pre class="ip-box">5.39.13.21 www.growtopia1.com
-5.39.13.21 www.growtopia2.com</pre>
-                            </li>
-                            <li data-en="en" style="display: none;">Press Ctrl + S to save the file</li>
-                            <li data-en="en" style="display: none;">Open Growtopia!!</li>
-                        </ol>
-
-                        <div class="swipe-indicator">
-                            <span data-id="id">GESER KE KIRI →</span>
-                            <span data-en="en" style="display: none;">SWIPE LEFT →</span>
-                        </div>
-                    </div>
-                    <div class="highlight-box">
-                        <strong data-id="id">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"
-                                style="vertical-align: middle; margin-right: 6px;">
-                                <path fill="#3ee0a2"
-                                    d="M21.375 8.625L20 8l1.375-.625L22 6l.625 1.375L24 8l-1.375.625L22 10l-.625-1.375ZM18.05 3.95L16 3l2.05-.95L19 0l.95 2.05L22 3l-2.05.95L19 6l-.95-2.05ZM9 22q-.825 0-1.413-.588T7 20h4q0 .825-.588 1.413T9 22Zm-3-3q-.425 0-.713-.288T5 18q0-.425.288-.713T6 17h6q.425 0 .713.288T13 18q0 .425-.288.713T12 19H6Zm-.75-3q-1.725-1.025-2.738-2.75T1.5 9.5q0-3.125 2.188-5.313T9 2q3.125 0 5.313 2.188T16.5 9.5q0 2.025-1.012 3.75T12.75 16h-7.5Z" />
-                            </svg>
-                            Tips:
-                        </strong>
-                        <span data-id="id">
-                            Pastikan Surge sudah terinstall sebelum mengikuti panduan lengkap
-                        </span>
-
-                        <strong data-en="en" style="display: none;">
-                            <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24"
-                                style="vertical-align: middle; margin-right: 6px;">
-                                <path fill="#3ee0a2"
-                                    d="M21.375 8.625L20 8l1.375-.625L22 6l.625 1.375L24 8l-1.375.625L22 10l-.625-1.375ZM18.05 3.95L16 3l2.05-.95L19 0l.95 2.05L22 3l-2.05.95L19 6l-.95-2.05ZM9 22q-.825 0-1.413-.588T7 20h4q0 .825-.588 1.413T9 22Zm-3-3q-.425 0-.713-.288T5 18q0-.425.288-.713T6 17h6q.425 0 .713.288T13 18q0 .425-.288.713T12 19H6Zm-.75-3q-1.725-1.025-2.738-2.75T1.5 9.5q0-3.125 2.188-5.313T9 2q3.125 0 5.313 2.188T16.5 9.5q0 2.025-1.012 3.75T12.75 16h-7.5Z" />
-                            </svg>
-                            Tips:
-                        </strong>
-                        <span data-en="en" style="display: none;">
-                            Make sure Surge is installed before following the full guide
-                        </span>
                     </div>
                 </div>
+
+                <div class="guide-nav">
+                    <div class="guide-dot active" data-index="0"></div>
+                    <div class="guide-dot" data-index="1"></div>
+                    <div class="guide-dot" data-index="2"></div>
+                </div>
+
+                <div class="guide-arrow" onclick="nextCard()" style="display: flex;">
+                    <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
+                        <path d="M10 6L8.59 7.41 13.17 12l-4.58 4.59L10 18l6-6z" />
+                    </svg>
+                </div>
+
+                <div class="highlight-box">
+                    <strong data-id="id">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px;">
+                            <path fill="#3ee0a2" d="M21.375 8.625L20 8l1.375-.625L22 6l.625 1.375L24 8l-1.375.625L22 10l-.625-1.375ZM18.05 3.95L16 3l2.05-.95L19 0l.95 2.05L22 3l-2.05.95L19 6l-.95-2.05ZM9 22q-.825 0-1.413-.588T7 20h4q0 .825-.588 1.413T9 22Zm-3-3q-.425 0-.713-.288T5 18q0-.425.288-.713T6 17h6q.425 0 .713.288T13 18q0 .425-.288.713T12 19H6Zm-.75-3q-1.725-1.025-2.738-2.75T1.5 9.5q0-3.125 2.188-5.313T9 2q3.125 0 5.313 2.188T16.5 9.5q0 2.025-1.012 3.75T12.75 16h-7.5Z" />
+                        </svg> Tips: </strong>
+                    <span data-id="id"> Pastikan Surge sudah terinstall sebelum mengikuti panduan lengkap </span>
+                    <strong data-en="en" style="display: none;">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="16px" height="16px" viewBox="0 0 24 24" style="vertical-align: middle; margin-right: 6px;">
+                            <path fill="#3ee0a2" d="M21.375 8.625L20 8l1.375-.625L22 6l.625 1.375L24 8l-1.375.625L22 10l-.625-1.375ZM18.05 3.95L16 3l2.05-.95L19 0l.95 2.05L22 3l-2.05.95L19 6l-.95-2.05ZM9 22q-.825 0-1.413-.588T7 20h4q0 .825-.588 1.413T9 22Zm-3-3q-.425 0-.713-.288T5 18q0-.425.288-.713T6 17h6q.425 0 .713.288T13 18q0 .425-.288.713T12 19H6Zm-.75-3q-1.725-1.025-2.738-2.75T1.5 9.5q0-3.125 2.188-5.313T9 2q3.125 0 5.313 2.188T16.5 9.5q0 2.025-1.012 3.75T12.75 16h-7.5Z" />
+                        </svg> Tips: </strong>
+                    <span data-en="en" style="display: none;"> Make sure Surge is installed before following the full guide </span>
+                </div>
+
             </div>
-            <div class="guide-nav">
-                <span class="guide-dot active" onclick="goToGuide(0)"></span>
-                <span class="guide-dot" onclick="goToGuide(1)"></span>
-                <span class="guide-dot" onclick="goToGuide(2)"></span>
-                <span class="guide-dot" onclick="goToGuide(3)"></span>
-            </div>
+        </section>
+
+
+        <footer class="footer">
+            <p data-id="id">Copyright &copy; 2024 AngkorPS. All rights reserved.</p>
+            <p data-en="en" style="display: none;">Copyright &copy; 2024 AngkorPS. All rights reserved.</p>
+            <strong data-id="id"> Growtopia is a trademark of Ubisoft Entertainment.</strong>
+            <strong data-en="en" style="display: none;"> Growtopia is a trademark of Ubisoft Entertainment.</strong>
+        </footer>
     </div>
-    </section>
-    <footer class="footer">
-        © 2025 AngkorPS. All rights reserved.
-        <strong>https://dsc.gg/amuba</strong>
-    </footer>
-    </div>
-    <textarea id="hostText" hidden>5.39.13.21 growtopia1.com
-5.39.13.21 growtopia2.com
-5.39.13.21 www.growtopia1.com
-5.39.13.21 www.growtopia2.com</textarea>
 
     <script>
-        let currentGuide = 0;
-        const totalGuides = 4;
+        // Language Switch Logic
+        let currentLang = 'id';
+        const texts = document.querySelectorAll('[data-id], [data-en]');
+        const langBtns = document.querySelectorAll('.lang-btn');
 
-        async function updateServerStatus() {
-            const indicator = document.getElementById('server-indicator');
-            const gif = document.getElementById('server-gif');
+        function switchLanguage(lang) {
+            if (lang === currentLang) return;
 
-            try {
-                const res = await fetch('/api/ping');
-                const data = await res.json();
-
-                if (data.success && data.server.status === 'online') {
-                    indicator.textContent = 'ONLINE';
-                    indicator.style.color = '#10b981';
-                    gif.src = '/gif/online.gif';
-                    gif.style.display = 'inline-block';
-                } else {
-                    indicator.textContent = 'OFFLINE';
-                    indicator.style.color = '#f87171';
-                    gif.src = '/gif/offline.gif';
-                    gif.style.display = 'inline-block';
+            // Animate out
+            texts.forEach(el => {
+                if (el.dataset.id && el.dataset.id !== 'id' && el.style.display !== 'none') {
+                    el.classList.add('fade-out-fast');
                 }
-            } catch {
-                indicator.textContent = 'OFFLINE';
-                indicator.style.color = '#f87171';
-                gif.src = '/gif/offline.gif';
-                gif.style.display = 'inline-block';
-            }
-        }
-
-        document.addEventListener('DOMContentLoaded', updateServerStatus);
-
-        function updateGuideSlider() {
-            const slider = document.getElementById('guideSlider');
-            slider.style.transform = `translateX(-${currentGuide * 100}%)`;
-            document.querySelectorAll('.guide-dot').forEach((dot, idx) => {
-                dot.classList.toggle('active', idx === currentGuide);
+                if (el.dataset.en && el.dataset.en !== 'en' && el.style.display !== 'none') {
+                    el.classList.add('fade-out-fast');
+                }
             });
-            if (currentGuide >= 2) {
-                slider.classList.add('expanded');
-            } else {
-                slider.classList.remove('expanded');
+
+            // Animate buttons out
+            langBtns.forEach(btn => {
+                if (btn.classList.contains('active')) {
+                    btn.classList.add('jelly-out');
+                }
+            });
+
+            setTimeout(() => {
+                texts.forEach(el => {
+                    el.classList.remove('fade-out-fast', 'fade-in-fast');
+                    if (el.dataset.id) {
+                        el.style.display = lang === 'id' ? '' : 'none';
+                    }
+                    if (el.dataset.en) {
+                        el.style.display = lang === 'en' ? '' : 'none';
+                    }
+                });
+
+                // Update active button classes
+                langBtns.forEach(btn => {
+                    btn.classList.remove('active', 'jelly-out', 'jelly-in');
+                    if (btn.dataset.lang === lang) {
+                        btn.classList.add('active', 'jelly-in');
+                    }
+                });
+
+                currentLang = lang;
+
+                // Animate in
+                texts.forEach(el => {
+                    if (el.style.display !== 'none') {
+                        el.classList.add('fade-in-fast');
+                    }
+                });
+            }, 300); // Wait for fade out animation
+        }
+
+        // Initialize language display
+        window.onload = () => {
+            texts.forEach(el => {
+                if (el.dataset.en) {
+                    el.style.display = 'none';
+                }
+            });
+            document.querySelectorAll('.tab').forEach((tab, index) => {
+                if (index === 0) tab.classList.add('active');
+            });
+        };
+
+        // Guide Slider Logic
+        const slider = document.querySelector('.guide-slider');
+        const dots = document.querySelectorAll('.guide-dot');
+        const arrow = document.querySelector('.guide-arrow');
+        const cards = document.querySelectorAll('.guide-card');
+        const totalCards = cards.length;
+        let currentIndex = 0;
+
+        function updateSlider() {
+            const offset = -currentIndex * 100;
+            slider.style.transform = `translateX(${offset}%)`;
+
+            dots.forEach((dot, index) => {
+                dot.classList.toggle('active', index === currentIndex);
+            });
+
+            if (arrow) {
+                arrow.style.display = currentIndex < totalCards - 1 ? 'flex' : 'none';
             }
         }
 
-        // Toast Notification Function
+        function nextCard() {
+            if (currentIndex < totalCards - 1) {
+                currentIndex++;
+                updateSlider();
+            }
+        }
+
+        dots.forEach((dot, index) => {
+            dot.addEventListener('click', () => {
+                currentIndex = index;
+                updateSlider();
+            });
+        });
+
+        if (arrow) {
+            arrow.addEventListener('click', nextCard);
+        }
+
+        // Swipe detection for mobile
+        let startX = 0;
+        let endX = 0;
+
+        slider.addEventListener('touchstart', (e) => {
+            startX = e.touches[0].clientX;
+        });
+
+        slider.addEventListener('touchmove', (e) => {
+            endX = e.touches[0].clientX;
+        });
+
+        slider.addEventListener('touchend', () => {
+            const diff = startX - endX;
+            if (diff > 50 && currentIndex < totalCards - 1) {
+                // Swipe left (next card)
+                currentIndex++;
+                updateSlider();
+            } else if (diff < -50 && currentIndex > 0) {
+                // Swipe right (previous card)
+                currentIndex--;
+                updateSlider();
+            }
+            startX = 0;
+            endX = 0;
+        });
+
+        // Initialize slider state
+        updateSlider();
+
+        // Toast Notification
         function showToast(message) {
             const existingToast = document.querySelector('.toast');
             if (existingToast) {
@@ -2239,14 +2022,13 @@
             }
 
             const toast = document.createElement('div');
-            toast.className = 'toast';
+            toast.classList.add('toast');
             toast.innerHTML = `
                 <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">
-                    <path d="M9 16.17L4.83 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
+                    <path d="M9 16.2L4.8 12l-1.42 1.41L9 19 21 7l-1.41-1.41z"/>
                 </svg>
                 <span>${message}</span>
             `;
-
             document.body.appendChild(toast);
 
             requestAnimationFrame(() => {
@@ -2290,7 +2072,8 @@
 
         function copyHostGoURL() {
             const hostname = window.location.hostname;
-            const url = `https://${hostname}/gtps.host`; // ← Fixed: nama file tetap
+            const url = `https://${hostname}/gtps.host`;
+            // ← Fixed: nama file tetap
             navigator.clipboard.writeText(url).then(() => {
                 showToast('Host GO URL disalin!');
             }).catch(() => {
@@ -2300,116 +2083,23 @@
 
         function copyIOS() {
             const url = `https://${window.location.hostname}/api/ios`;
-            window.location.href = url;
-        }
-
-        // Guide Navigation
-        function nextGuide() {
-            currentGuide++;
-            if (currentGuide >= totalGuides) {
-                currentGuide = 0;
-            }
-            updateGuideSlider();
-        }
-
-        function goToGuide(index) {
-            currentGuide = index;
-            updateGuideSlider();
-        }
-
-        // Touch Swipe
-        let touchStartX = 0;
-        let touchEndX = 0;
-        const slider = document.getElementById('guideSlider');
-
-        slider.addEventListener('touchstart', e => {
-            touchStartX = e.changedTouches[0].screenX;
-        });
-
-        slider.addEventListener('touchend', e => {
-            touchEndX = e.changedTouches[0].screenX;
-            handleSwipe();
-        });
-
-        function handleSwipe() {
-            const swipeThreshold = 50;
-            if (touchStartX - touchEndX > swipeThreshold) {
-                nextGuide();
-            }
-        }
-
-        // Keyboard Navigation
-        document.addEventListener('keydown', e => {
-            if (e.key === 'ArrowRight') nextGuide();
-        });
-
-        // Language Switch
-        let currentLang = 'id';
-
-        function switchLanguage(lang) {
-            if (currentLang === lang) return;
-
-            const activeBtn = document.querySelector(`.lang-btn[data-lang="${lang}"]`);
-            const slider = document.getElementById('guideSlider');
-
-            activeBtn.classList.add('switching');
-
-            const currentElements = currentLang === 'id'
-                ? document.querySelectorAll('[data-id]')
-                : document.querySelectorAll('[data-en]');
-
-            currentElements.forEach(el => {
-                if (el.style.display !== 'none') {
-                    el.classList.add('lang-switching');
-                }
+            navigator.clipboard.writeText(url).then(() => {
+                showToast('iOS Host URL disalin!');
+            }).catch(() => {
+                showToast('Gagal menyalin URL');
             });
-
-            setTimeout(() => {
-                currentLang = lang;
-
-                document.querySelectorAll('.lang-btn').forEach(btn => {
-                    btn.classList.toggle('active', btn.dataset.lang === lang);
-                });
-
-                document.querySelectorAll('[data-id], [data-en]').forEach(el => {
-                    el.style.display = 'none';
-                    el.classList.remove('lang-switching', 'lang-switched');
-                });
-
-                if (lang === 'id') {
-                    document.querySelectorAll('[data-id]').forEach(el => {
-                        el.style.display = '';
-                        el.classList.add('lang-switched');
-                    });
-                } else {
-                    document.querySelectorAll('[data-en]').forEach(el => {
-                        el.style.display = '';
-                        el.classList.add('lang-switched');
-                    });
-                }
-
-                activeBtn.classList.remove('switching');
-                slider.classList.add('transitioning');
-
-                requestAnimationFrame(() => {
-                    updateGuideSlider();
-                    setTimeout(() => {
-                        slider.classList.remove('transitioning');
-                        document.querySelectorAll('.lang-switched').forEach(el => {
-                            el.classList.remove('lang-switched');
-                        });
-                    }, 300);
-                });
-            }, 150);
         }
 
-        // Smooth Scroll
+        // Smooth scrolling for anchor links
         document.querySelectorAll('a[href^="#"]').forEach(anchor => {
             anchor.addEventListener('click', function (e) {
                 e.preventDefault();
                 const target = document.querySelector(this.getAttribute('href'));
                 if (target) {
-                    target.scrollIntoView({ behavior: 'smooth', block: 'start' });
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
                 }
             });
         });
@@ -2419,8 +2109,7 @@
             const element = document.getElementById(sectionId);
             if (element) {
                 const offset = 80;
-                const elementPosition = element.getBoundingClientRect().top;
-                const offsetPosition = elementPosition + window.pageYOffset - offset;
+                const offsetPosition = element.offsetTop - offset;
 
                 window.scrollTo({
                     top: offsetPosition,
@@ -2462,6 +2151,3 @@
 
 
 </html>
-
-
-
