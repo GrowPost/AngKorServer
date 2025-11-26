@@ -1,0 +1,133 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="description" content="Growtopia Private Server with exciting gameplay and stable system.">
+<meta name="theme-color" content="#10b981">
+<title>AngkorPS</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<style>
+/* ⭐ STYLES SAME AS BEFORE — NO FLAGS */
+*{margin:0;padding:0;box-sizing:border-box;}
+html{overflow-x:hidden;width:100%;}
+body{font-family:'Inter',sans-serif;background:linear-gradient(to bottom,#1a1a1a 0%,#0d1117 100%);color:#e0e0e0;min-height:100vh;line-height:1.6;position:relative;overflow-x:hidden;}
+.container{max-width:1000px;margin:0 auto;padding:2rem 1rem;position:relative;z-index:1;}
+.header{text-align:center;margin-bottom:1rem;padding:0.75rem 0;animation:fadeInScale 0.8s ease-out forwards;}
+.title{font-size:clamp(2.5rem,6vw,3.5rem);font-weight:700;color:#10b981;margin-top:.5rem;transform:scale(1.60);}
+.subtitle{font-size:1.1rem;color:#aaa;max-width:650px;margin:0 auto;margin-top:1rem;}
+.section{background:rgba(30,30,30,0.6);border:1px solid rgba(255,255,255,0.06);border-radius:20px;padding:2rem;margin-bottom:1.5rem;}
+.section-title{font-size:1.25rem;font-weight:600;color:#fff;margin-bottom:1.5rem;display:flex;align-items:center;gap:0.75rem;}
+.btn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
+.btn{padding:1.25rem;background:rgba(40,40,40,0.6);border:1px solid rgba(255,255,255,0.1);border-radius:14px;color:#e0e0e0;font-size:1rem;font-weight:500;cursor:pointer;transition:0.2s;}
+.btn:hover{background:rgba(50,50,50,0.7);border-color:rgba(16,185,129,0.4);}
+.btn-full{grid-column:1/-1;}
+.btn-whatsapp{background:rgba(37,211,102,0.15);border-color:rgba(37,211,102,0.3);color:#25d366;}
+.btn-discord{background:rgba(88,101,242,0.15);border-color:rgba(88,101,242,0.3);color:#5865f2;}
+.footer{text-align:center;padding:3rem 0 2rem;color:#666;font-size:0.95rem;border-top:1px solid rgba(255,255,255,0.05);}
+.footer strong{color:#10b981;}
+</style>
+</head>
+
+<body>
+
+<header class="header">
+<h1 class="title">AngkorPS</h1>
+<p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
+</header>
+
+<!-- ⭐ SERVER STATUS -->
+<div id="server-status" style="text-align:center;margin-bottom:1rem;">
+  <span style="color:#aaa;font-weight:600;">Server Status:</span>
+  <span id="server-indicator" style="color:#ff0;font-weight:700;">Checking...</span>
+  <br>
+  <span style="color:#aaa;font-weight:600;">Players Online:</span>
+  <span id="online-count" style="color:#ff0;font-weight:700;">0</span>
+</div>
+
+<!-- ⭐ DOWNLOAD -->
+<section class="section" id="download">
+<div class="section-title">HOST & DOWNLOAD</div>
+<div class="btn-grid">
+<button class="btn" onclick="copyHost()">Copy IP</button>
+<button class="btn" onclick="downloadHost()">Download Host</button>
+<button class="btn" onclick="copyPowerTunnel()">PowerTunnel URL</button>
+<button class="btn" onclick="copyHostGoURL()">Host GO URL</button>
+<button class="btn btn-full" onclick="copyIOS()">iOS Host</button>
+</div>
+</section>
+
+<!-- ⭐ COMMUNITY -->
+<section class="section" id="community">
+<div class="section-title">COMMUNITY</div>
+<div class="btn-grid">
+<button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">Discord Server</button>
+</div>
+</section>
+
+<!-- ⭐ GUIDE -->
+<section class="section" id="guide">
+<div class="section-title">UPDATE</div>
+<p style="color:#aaa;font-size:0.9rem;">Coming Soon!</p>
+</section>
+
+<footer class="footer">
+Copyright © <strong>AngkorPS</strong>
+</footer>
+
+<!-- 🧠 JAVASCRIPT FIXED -->
+<script>
+// 🌐 HOST CONFIG (EDIT IF YOUR HOST DIFFERENT)
+const HOST_IP = "angkorps.vercel.app";
+const PT_URL = "https://angkorps.vercel.app/api/ping";
+const HOST_GO_URL = "https://angkorps.vercel.app/go-host";
+const IOS_HOST = "angkorps.vercel.app";
+
+// ✔ Utility: Copy + alert
+function copyText(text){
+    navigator.clipboard.writeText(text);
+    alert("Copied: " + text);
+}
+
+// ⭐ COPY FUNCTIONS
+function copyHost(){ copyText(HOST_IP); }
+function copyPowerTunnel(){ copyText(PT_URL); }
+function copyHostGoURL(){ copyText(HOST_GO_URL); }
+function copyIOS(){ copyText(IOS_HOST); }
+
+// ⭐ DOWNLOAD HOST FILE
+function downloadHost(){ window.open(PT_URL, "_blank"); }
+
+// ⭐ SERVER STATUS CHECK
+fetch("https://angkorps.vercel.app/api/ping")
+.then(res => res.json())
+.then(data => {
+    const indicator = document.getElementById("server-indicator");
+    const onlineCount = document.getElementById("online-count");
+
+    if(data.serverStatus.toLowerCase() === "online"){
+        indicator.style.color = "#10b981";
+        indicator.textContent = "ONLINE";
+        onlineCount.textContent = data.onlinePlayersCount;
+    } else {
+        indicator.style.color = "red";
+        indicator.textContent = "OFFLINE";
+        onlineCount.textContent = 0;
+    }
+})
+.catch(()=>{
+    const indicator = document.getElementById("server-indicator");
+    const onlineCount = document.getElementById("online-count");
+    indicator.textContent = "OFFLINE";
+    indicator.style.color = "red";
+    onlineCount.textContent = 0;
+});
+</script>
+
+</body>
+</html>
+
+
+
