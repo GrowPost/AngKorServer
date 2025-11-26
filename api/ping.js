@@ -1,10 +1,11 @@
 // api/ping.js
-let lastStatus = null; // store the latest server status
-const OFFLINE_THRESHOLD = 60; // 3 minutes
+let lastStatus = null; // Store the latest server status
+const OFFLINE_THRESHOLD = 15; // 15 seconds → online/offline detection
 
 export default function handler(req, res) {
   const now = Math.floor(Date.now() / 1000);
 
+  // POST: Receive webhook from Lua
   if (req.method === "POST") {
     try {
       const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
@@ -12,7 +13,6 @@ export default function handler(req, res) {
       if (!data.serverName) 
         return res.status(400).json({ success: false, error: "Missing serverName" });
 
-      // Save latest status
       lastStatus = {
         serverName: data.serverName,
         onlinePlayersCount: data.onlinePlayersCount || 0,
@@ -26,6 +26,7 @@ export default function handler(req, res) {
     }
   }
 
+  // GET: Return the latest server status
   if (req.method === "GET") {
     if (!lastStatus) {
       return res.status(200).json({
