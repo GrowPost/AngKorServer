@@ -1,6 +1,6 @@
 // api/ping.js
 let lastStatus = null; // Store the latest server status
-const OFFLINE_THRESHOLD = 5; // 15 seconds → online/offline detection
+const OFFLINE_THRESHOLD = 12; // 12 seconds → online/offline detection
 
 export default function handler(req, res) {
   const now = Math.floor(Date.now() / 1000);
