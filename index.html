@@ -16,6 +16,7 @@
 <link rel="apple-touch-icon" href="assets/AngkorPS.png">
 
 <style>
+/* 🌌 Global */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   font-family:'Inter',sans-serif;
@@ -27,43 +28,116 @@ body{
 .container{max-width:1000px;margin:0 auto;padding:2rem 1rem;}
 .header{text-align:center;margin-bottom:1rem;padding:1.5rem 0;animation:fadeIn .8s ease-out forwards;}
 .title{
-  font-size:clamp(2rem,5vw,3rem); /* slightly smaller */
+  font-size:clamp(2rem,5vw,3rem);
   font-weight:800;
   color:#10b981;
   letter-spacing:-1px;
-  text-shadow:0 0 12px rgba(16,185,129,0.7);
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 0.6rem;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.6rem;
 }
-.title img{width:40px;height:40px;} /* icon next to title */
+.title img{
+  width:36px; height:36px;
+  border-radius:50%; /* make rounded */
+  object-fit:cover;
+  border:2px solid #10b981;
+}
 .subtitle{
-  font-size:1rem; /* smaller subtitle */
+  font-size:1rem;
   color:#aaa;
   margin-top:.5rem;
-  max-width:650px;
-  margin:auto;
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
   line-height:1.4;
+  text-shadow:0 0 5px rgba(0,0,0,0.5);
 }
-.section{background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:2rem;margin-bottom:1.5rem;box-shadow:0 6px 20px rgba(0,0,0,0.7);transition:.3s;}
+
+/* 🌟 Sections */
+.section{
+  background:rgba(30,30,35,0.75);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:18px;
+  padding:2rem;
+  margin-bottom:1.5rem;
+  box-shadow:0 6px 25px rgba(0,0,0,0.7);
+  transition:.3s;
+}
 .section:hover{transform:translateY(-3px) scale(1.02);}
-.section-title{font-size:1.25rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;color:#fff;}
-.section-title i{color:#10b981;font-size:1.3rem;}
+
+/* Titles */
+.section-title{
+  font-size:1.3rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;color:#fff;
+}
+.section-title i{color:#10b981;font-size:1.4rem;}
+
+/* Buttons */
 .btn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
-.btn{display:flex;align-items:center;justify-content:center;padding:1rem 0.8rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.125);border-radius:14px;color:#e0e0e0;font-size:0.95rem;font-weight:500;cursor:pointer;transition:.25s;gap:0.5rem;box-shadow:0 4px 14px rgba(0,0,0,0.5);}
+.btn{
+  display:flex;align-items:center;justify-content:center;
+  padding:1rem 0.8rem;
+  background:rgba(16,185,129,0.1);
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:14px;
+  color:#fff;font-size:0.95rem;font-weight:500;
+  cursor:pointer;
+  transition: all 0.3s ease;
+  gap:0.5rem;
+  box-shadow:0 4px 14px rgba(0,0,0,0.5);
+}
 .btn i{transition: transform .3s ease;}
-.btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(16,185,129,0.5);transform:translateY(-2px);}
+.btn:hover{
+  background:rgba(16,185,129,0.25);
+  border-color:#10b981;
+  transform:translateY(-2px) scale(1.03);
+  box-shadow:0 6px 20px rgba(16,185,129,0.5);
+}
 .btn:hover i{transform:translateY(-1px) rotate(8deg);}
 .btn-full{grid-column:1/-1;}
 .btn-discord{background:rgba(88,101,242,0.15);border-color:rgba(88,101,242,0.3);color:#7b8df7;}
-.btn-discord:hover{background:rgba(88,101,242,0.25);}
-#server-status{text-align:center;padding:1rem 0;margin-bottom:2rem;font-weight:600;border:1px solid rgba(255,255,255,0.1);border-radius:14px;background:rgba(0,0,0,0.3);box-shadow:0 4px 15px rgba(0,0,0,0.6);}
+.btn-discord:hover{background:rgba(88,101,242,0.25);box-shadow:0 6px 20px rgba(88,101,242,0.5);}
+
+/* Server Status */
+#server-status{
+  text-align:center;padding:1rem 0;margin-bottom:2rem;
+  font-weight:600;
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:14px;
+  background:rgba(0,0,0,0.5);
+  box-shadow:0 4px 15px rgba(0,0,0,0.7);
+}
 #server-indicator,#online-count{font-weight:800;}
+
+/* Footer */
 .footer{text-align:center;padding:3rem 0 2rem;color:#777;font-size:.9rem;border-top:1px solid rgba(255,255,255,0.06);}
 .footer strong{color:#10b981;}
+
+/* Animations */
 @keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
-.toast {position: fixed;bottom: 30px;left: 50%;transform: translateX(-50%) translateY(100px);background: rgba(16,185,129,0.95);color: #fff;padding: 0.9rem 1.6rem;border-radius: 14px;font-weight: 500;font-size: 0.95rem;display: flex;align-items: center;gap: 0.6rem;box-shadow: 0 6px 20px rgba(0,0,0,0.5);opacity: 0;pointer-events: none;transition: all 0.5s ease;z-index: 9999;}
+
+/* Toast */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(16,185,129,0.95);
+  color: #fff;
+  padding: 0.9rem 1.6rem;
+  border-radius: 14px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  z-index: 9999;
+}
 .toast.show {opacity: 1;transform: translateX(-50%) translateY(0);}
 .toast i { font-size: 1.2rem; }
 .toast.error { background: rgba(255, 60, 60, 0.95); }
@@ -128,35 +202,25 @@ function showToast(message, type="success"){
   const toast = document.getElementById("toast");
   const icon = toast.querySelector("i");
   const text = toast.querySelector("span");
-
   text.textContent = message;
   if(type==="success"){toast.classList.remove("error"); icon.className="fas fa-check-circle";}
   else {toast.classList.add("error"); icon.className="fas fa-times-circle";}
-
   toast.classList.add("show");
   setTimeout(()=>toast.classList.remove("show"),2000);
 }
 
-function copyText(t){
-  navigator.clipboard.writeText(t).then(()=>{showToast(t,"success");})
-  .catch(()=>{showToast("Failed","error");});
-}
-
+function copyText(t){navigator.clipboard.writeText(t).then(()=>{showToast(t,"success");}).catch(()=>{showToast("Failed","error");});}
 function copyHost(){copyText(HOST_IP);}
 function copyPowerTunnel(){copyText(PT_URL);}
 function copyHostGoURL(){copyText(HOST_GO_URL);}
 function copyIOS(){copyText(IOS_HOST);}
 function downloadHost(){window.open(PT_URL,"_blank"); showToast("Opened!","success");}
 
-fetch("https://angkorps.vercel.app/api/ping")
-.then(res=>res.json()).then(data=>{
+fetch("https://angkorps.vercel.app/api/ping").then(res=>res.json()).then(data=>{
   const s=document.getElementById("server-indicator"),o=document.getElementById("online-count");
   if(data.serverStatus.toLowerCase()==="online"){s.style.color="#10b981";s.textContent="ONLINE";o.textContent=data.onlinePlayersCount;}
   else{s.style.color="red";s.textContent="OFFLINE";o.textContent=0;}
-}).catch(()=>{
-  document.getElementById("server-indicator").innerHTML="OFFLINE";document.getElementById("server-indicator").style.color="red";
-  document.getElementById("online-count").innerHTML=0;
-});
+}).catch(()=>{document.getElementById("server-indicator").innerHTML="OFFLINE";document.getElementById("server-indicator").style.color="red";document.getElementById("online-count").innerHTML=0;});
 </script>
 
 </body>
