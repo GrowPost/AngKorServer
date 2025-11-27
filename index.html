@@ -44,7 +44,7 @@ body{
 }
 .title img{
   width:36px; height:36px;
-  border-radius:50%; /* rounded icon */
+  border-radius:50%;
   object-fit:cover;
   border:2px solid #10b981;
 }
@@ -113,11 +113,6 @@ body{
 }
 #server-indicator{
   font-weight:800;
-  display:inline-block;
-  padding:0.2rem 0.6rem;
-  border-radius:6px;
-  text-transform:uppercase;
-  animation: pulse 1.5s infinite;
 }
 #online-count{font-weight:800;}
 
@@ -127,10 +122,6 @@ body{
 
 /* Animations */
 @keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
-@keyframes pulse{
-  0%,100%{opacity:0.7; transform: scale(1);}
-  50%{opacity:1; transform: scale(1.1);}
-}
 
 /* Toast */
 .toast {
@@ -166,16 +157,18 @@ body{
   <p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
 </header>
 
+<!-- 🖥 Server Status -->
 <div id="server-status">
   <span style="color:#aaa;">Server Status: </span>
-  <span id="server-indicator" style="color:#10b981;">Checking...</span>
+  <span id="server-indicator">Checking...</span>
   <br>
   <span style="color:#aaa;">Players Online: </span>
-  <span id="online-count" style="color:#ff0;">0</span>
+  <span id="online-count">0</span>
 </div>
 
 <div class="container">
 
+<!-- 🧩 DOWNLOAD -->
 <section class="section" id="download">
   <div class="section-title"><i class="fas fa-server"></i> HOST & DOWNLOAD</div>
   <div class="btn-grid">
@@ -187,6 +180,7 @@ body{
   </div>
 </section>
 
+<!-- 🌐 COMMUNITY -->
 <section class="section" id="community">
   <div class="section-title"><i class="fab fa-discord"></i> COMMUNITY</div>
   <div class="btn-grid">
@@ -194,6 +188,7 @@ body{
   </div>
 </section>
 
+<!-- 📌 UPDATE -->
 <section class="section" id="guide">
   <div class="section-title"><i class="fas fa-bolt"></i> UPDATE</div>
   <p style="color:#aaa;font-size:0.92rem;">Coming Soon!</p>
@@ -205,6 +200,7 @@ body{
   Copyright © <strong>AngkorPS</strong>
 </footer>
 
+<!-- 🔔 TOAST -->
 <div id="toast" class="toast"><i class="fas fa-check-circle"></i><span></span></div>
 
 <script>
@@ -231,33 +227,32 @@ function copyHostGoURL(){copyText(HOST_GO_URL);}
 function copyIOS(){copyText(IOS_HOST);}
 function downloadHost(){window.open(PT_URL,"_blank"); showToast("Opened!","success");}
 
-// Dynamic server status
+// Server status updates every 5 seconds
 const indicator = document.getElementById("server-indicator");
 const onlineCount = document.getElementById("online-count");
+
 async function updateServer(){
   try{
     const res = await fetch("https://angkorps.vercel.app/api/ping");
     const data = await res.json();
-    if(data.serverStatus.toLowerCase()==="online"){
+    if(data.serverStatus.toLowerCase() === "online"){
       indicator.textContent = "ONLINE";
       indicator.style.color = "#10b981";
-      indicator.style.textShadow = "0 0 10px #10b981";
       onlineCount.textContent = data.onlinePlayersCount;
-    }else{
+    } else {
       indicator.textContent = "OFFLINE";
       indicator.style.color = "red";
-      indicator.style.textShadow = "0 0 10px red";
       onlineCount.textContent = 0;
     }
-  }catch(e){
+  } catch(e){
     indicator.textContent = "OFFLINE";
     indicator.style.color = "red";
-    indicator.style.textShadow = "0 0 10px red";
     onlineCount.textContent = 0;
   }
 }
+
 updateServer();
-setInterval(updateServer, 5000); // update every 5 seconds
+setInterval(updateServer, 5000);
 </script>
 
 </body>
