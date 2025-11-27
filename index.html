@@ -7,11 +7,14 @@
 <meta name="theme-color" content="#10b981">
 <title>AngkorPS</title>
 
-<!-- Fonts & Icons -->
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Icons -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
-<!-- Favicon & Page Icon -->
+<!-- Favicon -->
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
 <link rel="apple-touch-icon" href="assets/AngkorPS.png">
 
@@ -28,18 +31,20 @@ body{
 .container{max-width:1000px;margin:0 auto;padding:2rem 1rem;}
 .header{text-align:center;margin-bottom:1rem;padding:1.5rem 0;animation:fadeIn .8s ease-out forwards;}
 .title{
+  font-family: 'Orbitron', sans-serif;
   font-size:clamp(2rem,5vw,3rem);
-  font-weight:800;
+  font-weight:700;
   color:#10b981;
   letter-spacing:-1px;
   display:flex;
   align-items:center;
   justify-content:center;
   gap:0.6rem;
+  text-shadow: 0 0 15px rgba(16,185,129,0.7);
 }
 .title img{
   width:36px; height:36px;
-  border-radius:50%; /* make rounded */
+  border-radius:50%; /* rounded icon */
   object-fit:cover;
   border:2px solid #10b981;
 }
@@ -66,8 +71,6 @@ body{
   transition:.3s;
 }
 .section:hover{transform:translateY(-3px) scale(1.02);}
-
-/* Titles */
 .section-title{
   font-size:1.3rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;color:#fff;
 }
@@ -108,7 +111,15 @@ body{
   background:rgba(0,0,0,0.5);
   box-shadow:0 4px 15px rgba(0,0,0,0.7);
 }
-#server-indicator,#online-count{font-weight:800;}
+#server-indicator{
+  font-weight:800;
+  display:inline-block;
+  padding:0.2rem 0.6rem;
+  border-radius:6px;
+  text-transform:uppercase;
+  animation: pulse 1.5s infinite;
+}
+#online-count{font-weight:800;}
 
 /* Footer */
 .footer{text-align:center;padding:3rem 0 2rem;color:#777;font-size:.9rem;border-top:1px solid rgba(255,255,255,0.06);}
@@ -116,6 +127,10 @@ body{
 
 /* Animations */
 @keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
+@keyframes pulse{
+  0%,100%{opacity:0.7; transform: scale(1);}
+  50%{opacity:1; transform: scale(1.1);}
+}
 
 /* Toast */
 .toast {
@@ -153,7 +168,7 @@ body{
 
 <div id="server-status">
   <span style="color:#aaa;">Server Status: </span>
-  <span id="server-indicator" style="color:#ff0;">Checking...</span>
+  <span id="server-indicator" style="color:#10b981;">Checking...</span>
   <br>
   <span style="color:#aaa;">Players Online: </span>
   <span id="online-count" style="color:#ff0;">0</span>
@@ -216,11 +231,33 @@ function copyHostGoURL(){copyText(HOST_GO_URL);}
 function copyIOS(){copyText(IOS_HOST);}
 function downloadHost(){window.open(PT_URL,"_blank"); showToast("Opened!","success");}
 
-fetch("https://angkorps.vercel.app/api/ping").then(res=>res.json()).then(data=>{
-  const s=document.getElementById("server-indicator"),o=document.getElementById("online-count");
-  if(data.serverStatus.toLowerCase()==="online"){s.style.color="#10b981";s.textContent="ONLINE";o.textContent=data.onlinePlayersCount;}
-  else{s.style.color="red";s.textContent="OFFLINE";o.textContent=0;}
-}).catch(()=>{document.getElementById("server-indicator").innerHTML="OFFLINE";document.getElementById("server-indicator").style.color="red";document.getElementById("online-count").innerHTML=0;});
+// Dynamic server status
+const indicator = document.getElementById("server-indicator");
+const onlineCount = document.getElementById("online-count");
+async function updateServer(){
+  try{
+    const res = await fetch("https://angkorps.vercel.app/api/ping");
+    const data = await res.json();
+    if(data.serverStatus.toLowerCase()==="online"){
+      indicator.textContent = "ONLINE";
+      indicator.style.color = "#10b981";
+      indicator.style.textShadow = "0 0 10px #10b981";
+      onlineCount.textContent = data.onlinePlayersCount;
+    }else{
+      indicator.textContent = "OFFLINE";
+      indicator.style.color = "red";
+      indicator.style.textShadow = "0 0 10px red";
+      onlineCount.textContent = 0;
+    }
+  }catch(e){
+    indicator.textContent = "OFFLINE";
+    indicator.style.color = "red";
+    indicator.style.textShadow = "0 0 10px red";
+    onlineCount.textContent = 0;
+  }
+}
+updateServer();
+setInterval(updateServer, 5000); // update every 5 seconds
 </script>
 
 </body>
