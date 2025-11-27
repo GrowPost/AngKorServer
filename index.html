@@ -146,7 +146,7 @@ body{
   <span id="server-indicator" style="color:#ff0;">Checking...</span>
   <br>
   <span style="color:#aaa;">Players Online: </span>
-  <span id="online-count" style="color:#ff0;">0</span>
+  <span id="online-count">0</span>
 </div>
 
 <div class="container">
@@ -199,7 +199,7 @@ const PT_URL = "https://angkorps.vercel.app/api/ping";
 const HOST_GO_URL = "https://angkorps.vercel.app/go-host";
 const IOS_HOST = "angkorps.vercel.app";
 
-// 💥 Bounce label above button only
+// 💥 Bounce label notification
 function showBounceLabel(btn, message, type="success"){
   const label = btn.querySelector(".bounce-label");
   label.innerHTML = type==="success" ? `<i class="fas fa-check-circle"></i>${message}` : `<i class="fas fa-times-circle"></i>${message}`;
@@ -212,9 +212,9 @@ function showBounceLabel(btn, message, type="success"){
 // 💥 Copy function (no alert)
 function copyText(t,btn=null){
   navigator.clipboard.writeText(t).then(()=>{
-    if(btn) showBounceLabel(btn,t,"success");
+    if(btn) showBounceLabel(btn, "Copied!", "success");
   }).catch(()=>{
-    if(btn) showBounceLabel(btn,"Failed","error");
+    if(btn) showBounceLabel(btn, "Failed!", "error");
   });
 }
 
@@ -227,12 +227,14 @@ function downloadHost(btn){ window.open(PT_URL,"_blank"); showBounceLabel(btn,"O
 
 // 💻 Server status
 fetch("https://angkorps.vercel.app/api/ping")
-.then(res=>res.json()).then(data=>{
+.then(res=>res.json())
+.then(data=>{
   const s=document.getElementById("server-indicator"),o=document.getElementById("online-count");
   if(data.serverStatus.toLowerCase()==="online"){s.style.color="#10b981";s.textContent="ONLINE";o.textContent=data.onlinePlayersCount;}
   else{s.style.color="red";s.textContent="OFFLINE";o.textContent=0;}
 }).catch(()=>{
-  document.getElementById("server-indicator").innerHTML="OFFLINE";document.getElementById("server-indicator").style.color="red";
+  document.getElementById("server-indicator").innerHTML="OFFLINE";
+  document.getElementById("server-indicator").style.color="red";
   document.getElementById("online-count").innerHTML=0;
 });
 </script>
