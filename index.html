@@ -16,7 +16,6 @@
 <link rel="apple-touch-icon" href="assets/AngkorPS.png">
 
 <style>
-/* 🌌 GLOBAL */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   font-family:'Inter',sans-serif;
@@ -26,110 +25,30 @@ body{
   overflow-x:hidden;
 }
 .container{max-width:1000px;margin:0 auto;padding:2rem 1rem;}
-
-/* 🌟 HEADER */
 .header{text-align:center;margin-bottom:1rem;padding:1.5rem 0;animation:fadeIn .8s ease-out forwards;}
-.title{
-  font-size:clamp(2.7rem,6vw,4rem);
-  font-weight:800;
-  color:#10b981;
-  letter-spacing:-1px;
-  text-shadow:0 0 12px rgba(16,185,129,0.7);
-}
+.title{font-size:clamp(2.7rem,6vw,4rem);font-weight:800;color:#10b981;letter-spacing:-1px;text-shadow:0 0 12px rgba(16,185,129,0.7);}
 .subtitle{font-size:1.15rem;color:#aaa;margin-top:.75rem;max-width:650px;margin:auto;}
-
-/* 🧊 SECTIONS */
-.section{
-  background:rgba(255,255,255,0.05);
-  backdrop-filter:blur(12px);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:18px;
-  padding:2rem;
-  margin-bottom:1.5rem;
-  box-shadow:0 6px 20px rgba(0,0,0,0.7);
-  transition:.3s;
-}
+.section{background:rgba(255,255,255,0.05);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,0.08);border-radius:18px;padding:2rem;margin-bottom:1.5rem;box-shadow:0 6px 20px rgba(0,0,0,0.7);transition:.3s;}
 .section:hover{transform:translateY(-3px) scale(1.02);}
-
-/* 🏷️ TITLES */
-.section-title{
-  font-size:1.35rem;font-weight:600;margin-bottom:1.5rem;
-  display:flex;align-items:center;gap:.75rem;color:#fff;
-}
-.section-title i{
-  color:#10b981;
-  font-size:1.3rem;
-}
-
-/* 🧱 BUTTON GRID */
+.section-title{font-size:1.35rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;color:#fff;}
+.section-title i{color:#10b981;font-size:1.3rem;}
 .btn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:1rem;}
-
-/* 🎛️ BUTTONS */
-.btn{
-  position: relative;
-  display:flex;align-items:center;justify-content:center;
-  padding:1.25rem 1rem;
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.125);
-  border-radius:14px;
-  color:#e0e0e0;font-size:1rem;font-weight:500;
-  cursor:pointer;transition:.25s;
-  gap:0.6rem;
-  box-shadow:0 4px 14px rgba(0,0,0,0.5);
-}
+.btn{display:flex;align-items:center;justify-content:center;padding:1.25rem 1rem;background:rgba(255,255,255,0.05);border:1px solid rgba(255,255,255,0.125);border-radius:14px;color:#e0e0e0;font-size:1rem;font-weight:500;cursor:pointer;transition:.25s;gap:0.6rem;box-shadow:0 4px 14px rgba(0,0,0,0.5);}
 .btn i{transition: transform .3s ease;}
-.btn:hover{
-  background:rgba(255,255,255,0.08);
-  border-color:rgba(16,185,129,0.5);
-  transform:translateY(-3px);
-}
+.btn:hover{background:rgba(255,255,255,0.08);border-color:rgba(16,185,129,0.5);transform:translateY(-3px);}
 .btn:hover i{transform:translateY(-2px) rotate(10deg);}
 .btn-full{grid-column:1/-1;}
 .btn-discord{background:rgba(88,101,242,0.15);border-color:rgba(88,101,242,0.3);color:#7b8df7;}
 .btn-discord:hover{background:rgba(88,101,242,0.25);}
-
-/* 🖥 SERVER STATUS */
-#server-status{
-  text-align:center;padding:1rem 0;margin-bottom:2rem;
-  font-weight:600;
-  border:1px solid rgba(255,255,255,0.1);
-  border-radius:14px;
-  background:rgba(0,0,0,0.3);
-  box-shadow:0 4px 15px rgba(0,0,0,0.6);
-}
+#server-status{text-align:center;padding:1rem 0;margin-bottom:2rem;font-weight:600;border:1px solid rgba(255,255,255,0.1);border-radius:14px;background:rgba(0,0,0,0.3);box-shadow:0 4px 15px rgba(0,0,0,0.6);}
 #server-indicator,#online-count{font-weight:800;}
-
-/* 👣 FOOTER */
 .footer{text-align:center;padding:3rem 0 2rem;color:#777;font-size:.95rem;border-top:1px solid rgba(255,255,255,0.06);}
 .footer strong{color:#10b981;}
-
-/* 🎞 ANIMATIONS */
 @keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
-
-/* 🔥 BUTTON BOUNCE LABEL */
-.bounce-label {
-  position: absolute;
-  top: -28px;
-  left: 50%;
-  transform: translateX(-50%) scale(0);
-  background: #10b981;
-  color: #fff;
-  font-size: 0.85rem;
-  font-weight: 500;
-  padding: 0.35rem 0.7rem;
-  border-radius: 8px;
-  pointer-events: none;
-  opacity: 0;
-  display: flex;
-  align-items: center;
-  gap: 0.4rem;
-  transition: all 0.3s ease;
-}
-.bounce-label.show {
-  transform: translateX(-50%) translateY(-5px) scale(1);
-  opacity: 1;
-}
-.bounce-label.error { background: #ff3c3c; }
+.toast {position: fixed;bottom: 30px;left: 50%;transform: translateX(-50%) translateY(100px);background: rgba(16,185,129,0.95);color: #fff;padding: 0.9rem 1.6rem;border-radius: 14px;font-weight: 500;font-size: 0.95rem;display: flex;align-items: center;gap: 0.6rem;box-shadow: 0 6px 20px rgba(0,0,0,0.5);opacity: 0;pointer-events: none;transition: all 0.5s ease;z-index: 9999;}
+.toast.show {opacity: 1;transform: translateX(-50%) translateY(0);}
+.toast i { font-size: 1.2rem; }
+.toast.error { background: rgba(255, 60, 60, 0.95); }
 </style>
 </head>
 
@@ -140,7 +59,6 @@ body{
   <p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
 </header>
 
-<!-- 🖥 SERVER STATUS -->
 <div id="server-status">
   <span style="color:#aaa;">Server Status: </span>
   <span id="server-indicator" style="color:#ff0;">Checking...</span>
@@ -151,29 +69,17 @@ body{
 
 <div class="container">
 
-<!-- 🧩 DOWNLOAD -->
 <section class="section" id="download">
   <div class="section-title"><i class="fas fa-server"></i> HOST & DOWNLOAD</div>
   <div class="btn-grid">
-    <button class="btn" onclick="copyHost(this)"><i class="fas fa-copy"></i>Copy IP
-      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
-    </button>
-    <button class="btn" onclick="downloadHost(this)"><i class="fas fa-download"></i>Download Host
-      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
-    </button>
-    <button class="btn" onclick="copyPowerTunnel(this)"><i class="fas fa-link"></i>PowerTunnel URL
-      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
-    </button>
-    <button class="btn" onclick="copyHostGoURL(this)"><i class="fas fa-globe"></i>Host GO URL
-      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
-    </button>
-    <button class="btn btn-full" onclick="copyIOS(this)"><i class="fab fa-apple"></i>iOS Host
-      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
-    </button>
+    <button class="btn" onclick="copyHost(this)"><i class="fas fa-copy"></i>Copy IP</button>
+    <button class="btn" onclick="downloadHost(this)"><i class="fas fa-download"></i>Download Host</button>
+    <button class="btn" onclick="copyPowerTunnel(this)"><i class="fas fa-link"></i>PowerTunnel URL</button>
+    <button class="btn" onclick="copyHostGoURL(this)"><i class="fas fa-globe"></i>Host GO URL</button>
+    <button class="btn btn-full" onclick="copyIOS(this)"><i class="fab fa-apple"></i>iOS Host</button>
   </div>
 </section>
 
-<!-- 🌐 COMMUNITY -->
 <section class="section" id="community">
   <div class="section-title"><i class="fab fa-discord"></i> COMMUNITY</div>
   <div class="btn-grid">
@@ -181,7 +87,6 @@ body{
   </div>
 </section>
 
-<!-- 📌 UPDATE -->
 <section class="section" id="guide">
   <div class="section-title"><i class="fas fa-bolt"></i> UPDATE</div>
   <p style="color:#aaa;font-size:0.92rem;">Coming Soon!</p>
@@ -193,7 +98,6 @@ body{
   Copyright © <strong>AngkorPS</strong>
 </footer>
 
-<!-- 🔔 TOAST -->
 <div id="toast" class="toast"><i class="fas fa-check-circle"></i><span></span></div>
 
 <script>
@@ -202,7 +106,6 @@ const PT_URL = "https://angkorps.vercel.app/api/ping";
 const HOST_GO_URL = "https://angkorps.vercel.app/go-host";
 const IOS_HOST = "angkorps.vercel.app";
 
-// 💥 Show Toast
 function showToast(message, type="success"){
   const toast = document.getElementById("toast");
   const icon = toast.querySelector("i");
@@ -216,35 +119,22 @@ function showToast(message, type="success"){
   setTimeout(()=>toast.classList.remove("show"),2000);
 }
 
-// 💥 Bounce label above button
-function showBounceLabel(btn, message, type="success"){
-  const label = btn.querySelector(".bounce-label");
-  label.innerHTML = type==="success" ? `<i class="fas fa-check-circle"></i>${message}` : `<i class="fas fa-times-circle"></i>${message}`;
-  label.classList.remove("error","show");
-  if(type==="error") label.classList.add("error");
-  label.classList.add("show");
-  setTimeout(()=>label.classList.remove("show"),1000);
-}
-
-// 💥 Copy function
-function copyText(t,btn=null){
+function copyText(t){
   navigator.clipboard.writeText(t).then(()=>{
-    showToast(t,"success");                 // just show value
-    if(btn) showBounceLabel(btn,t,"success"); // just show value
+    showToast(t,"success");
   }).catch(()=>{
     showToast("Failed","error");
-    if(btn) showBounceLabel(btn,"Failed","error");
   });
 }
 
 // Functions
-function copyHost(btn){copyText(HOST_IP,btn);}
-function copyPowerTunnel(btn){copyText(PT_URL,btn);}
-function copyHostGoURL(btn){copyText(HOST_GO_URL,btn);}
-function copyIOS(btn){copyText(IOS_HOST,btn);}
-function downloadHost(btn){window.open(PT_URL,"_blank"); showBounceLabel(btn,"Opened!","success");}
+function copyHost(){copyText(HOST_IP);}
+function copyPowerTunnel(){copyText(PT_URL);}
+function copyHostGoURL(){copyText(HOST_GO_URL);}
+function copyIOS(){copyText(IOS_HOST);}
+function downloadHost(){window.open(PT_URL,"_blank"); showToast("Opened!","success");}
 
-// 💻 Server status
+// Server status
 fetch("https://angkorps.vercel.app/api/ping")
 .then(res=>res.json()).then(data=>{
   const s=document.getElementById("server-indicator"),o=document.getElementById("online-count");
@@ -258,4 +148,3 @@ fetch("https://angkorps.vercel.app/api/ping")
 
 </body>
 </html>
-
