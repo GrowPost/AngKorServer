@@ -7,13 +7,16 @@
 <meta name="theme-color" content="#10b981">
 <title>AngkorPS</title>
 
+<!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
+<!-- Favicon -->
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
 <link rel="apple-touch-icon" href="assets/AngkorPS.png">
 
 <style>
+/* 🌌 GLOBAL */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{font-family:'Inter',sans-serif;background:radial-gradient(circle at top,#111827,#0d1117 60%,#000 100%);color:#e0e0e0;min-height:100vh;overflow-x:hidden;}
 .container{max-width:1000px;margin:0 auto;padding:2rem 1rem;}
@@ -37,6 +40,7 @@ body{font-family:'Inter',sans-serif;background:radial-gradient(circle at top,#11
 .footer{text-align:center;padding:3rem 0 2rem;color:#777;font-size:.95rem;border-top:1px solid rgba(255,255,255,0.06);}
 .footer strong{color:#10b981;}
 @keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
+/* 🔥 BOUNCE LABEL */
 .bounce-label {position: absolute;top: -28px;left: 50%;transform: translateX(-50%) scale(0);background: #10b981;color: #fff;font-size: 0.85rem;font-weight: 500;padding: 0.35rem 0.7rem;border-radius: 8px;pointer-events: none;opacity: 0;display: flex;align-items: center;gap: 0.4rem;transition: all 0.3s ease;}
 .bounce-label.show {transform: translateX(-50%) translateY(-5px) scale(1);opacity: 1;}
 .bounce-label.error { background: #ff3c3c; }
@@ -63,19 +67,24 @@ body{font-family:'Inter',sans-serif;background:radial-gradient(circle at top,#11
 <section class="section" id="download">
   <div class="section-title"><i class="fas fa-server"></i> HOST & DOWNLOAD</div>
   <div class="btn-grid">
-    <button class="btn" onclick="copyHost(this)"><i class="fas fa-copy"></i>Copy IP
+    <button class="btn" onclick="copyHost(this)">
+      <i class="fas fa-copy"></i>Copy IP
       <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied: angkorps.vercel.app</span>
     </button>
-    <button class="btn" onclick="downloadHost(this)"><i class="fas fa-download"></i>Download Host
+    <button class="btn" onclick="downloadHost(this)">
+      <i class="fas fa-download"></i>Download Host
       <span class="bounce-label"><i class="fas fa-check-circle"></i>Opened!</span>
     </button>
-    <button class="btn" onclick="copyPowerTunnel(this)"><i class="fas fa-link"></i>PowerTunnel URL
+    <button class="btn" onclick="copyPowerTunnel(this)">
+      <i class="fas fa-link"></i>PowerTunnel URL
       <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied: angkorps.vercel.app</span>
     </button>
-    <button class="btn" onclick="copyHostGoURL(this)"><i class="fas fa-globe"></i>Host GO URL
+    <button class="btn" onclick="copyHostGoURL(this)">
+      <i class="fas fa-globe"></i>Host GO URL
       <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied: angkorps.vercel.app</span>
     </button>
-    <button class="btn btn-full" onclick="copyIOS(this)"><i class="fab fa-apple"></i>iOS Host
+    <button class="btn btn-full" onclick="copyIOS(this)">
+      <i class="fab fa-apple"></i>iOS Host
       <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied: angkorps.vercel.app</span>
     </button>
   </div>
@@ -84,7 +93,9 @@ body{font-family:'Inter',sans-serif;background:radial-gradient(circle at top,#11
 <section class="section" id="community">
   <div class="section-title"><i class="fab fa-discord"></i> COMMUNITY</div>
   <div class="btn-grid">
-    <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord"></i>Join Discord Server</button>
+    <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">
+      <i class="fab fa-discord"></i>Join Discord Server
+    </button>
   </div>
 </section>
 
@@ -105,8 +116,8 @@ const PT_URL = "https://angkorps.vercel.app/api/ping";
 const HOST_GO_URL = "https://angkorps.vercel.app/go-host";
 const IOS_HOST = "angkorps.vercel.app";
 
-// Show bounce label only
-function showBounceLabel(btn,message,type="success"){
+// Show bounce label above button
+function showBounceLabel(btn, message, type="success"){
   const label = btn.querySelector(".bounce-label");
   label.innerHTML = type==="success"? `<i class="fas fa-check-circle"></i>${message}` : `<i class="fas fa-times-circle"></i>${message}`;
   label.classList.remove("error","show");
@@ -115,8 +126,10 @@ function showBounceLabel(btn,message,type="success"){
   setTimeout(()=>label.classList.remove("show"),1000);
 }
 
-function copyText(text,btn){
-  navigator.clipboard.writeText(text).then(()=>showBounceLabel(btn,text)).catch(()=>showBounceLabel(btn,"Failed","error"));
+function copyText(text, btn){
+  navigator.clipboard.writeText(text)
+    .then(()=>showBounceLabel(btn, `Copied: ${text}`))
+    .catch(()=>showBounceLabel(btn,"Failed","error"));
 }
 
 function copyHost(btn){ copyText(HOST_IP,btn); }
@@ -132,6 +145,6 @@ fetch("https://angkorps.vercel.app/api/ping").then(r=>r.json()).then(data=>{
   else{s.style.color="red";s.textContent="OFFLINE";o.textContent=0;}
 }).catch(()=>{document.getElementById("server-indicator").textContent="OFFLINE";document.getElementById("server-indicator").style.color="red";document.getElementById("online-count").textContent=0;});
 </script>
+
 </body>
 </html>
-
