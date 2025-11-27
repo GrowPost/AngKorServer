@@ -1,33 +1,28 @@
-import { MongoClient } from "mongodb";
+// api/leaderboard.js
 
-const uri = process.env.MONGO_URI;
-const client = new MongoClient(uri);
+let lastLeaderboard = null;
 
-export default async function handler(req, res) {
-  if (req.method !== "POST")
-    return res.status(405).json({ error: "Only POST allowed" });
+export default function handler(req, res) {
+  // POST → store leaderboard data
+  if (req.method === "POST") {
+    try {
+      const body = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
-  try {
-    const data = req.body;
-    if (!data || !data.leaderboard)
-      return res.status(400).json({ error: "Invalid Data" });
+      if (!body.leaderboard)
+        return res.status(400).json({ success: false, error: "Missing leaderboard" });
 
-    await client.connect();
-    const collection = client.db("growtopia").collection("leaderboard");
-
-    await collection.updateOne(
-      { type: "wl" },
-      {
-        $set: {
-          leaderboard: data.leaderboard,
-          timestamp: data.timestamp,
-        },
-      },
-      { upsert: true }
-    );
-
-    return res.status(200).json({ success: true, saved: true });
-  } catch (err) {
-    return res.status(500).json({ error: err.message });
+      lastLeaderboard = body;
+      return res.status(200).json({ success: true });
+    } catch {
+      return res.status(400).json({ success: false, error: "Invalid JSON" });
+    }
   }
+
+  // GET → return the latest leaderboard ONLY
+  if (req.method === "GET") {
+    return res.status(200).json(lastLeaderboard || { leaderboard: [] });
+  }
+
+  res.setHeader("Allow", "POST, GET");
+  return res.status(405).json({ error: "Method Not Allowed" });
 }
