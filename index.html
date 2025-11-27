@@ -9,7 +9,7 @@
 
 <!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
@@ -184,19 +184,19 @@ body{
   <div class="section-title"><i class="fas fa-server"></i> HOST & DOWNLOAD</div>
   <div class="btn-grid">
     <button class="btn" onclick="copyHost(this)"><i class="fas fa-copy"></i>Copy IP
-      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
     </button>
     <button class="btn" onclick="downloadHost(this)"><i class="fas fa-download"></i>Download Host
-      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
     </button>
     <button class="btn" onclick="copyPowerTunnel(this)"><i class="fas fa-link"></i>PowerTunnel URL
-      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
     </button>
     <button class="btn" onclick="copyHostGoURL(this)"><i class="fas fa-globe"></i>Host GO URL
-      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
     </button>
     <button class="btn btn-full" onclick="copyIOS(this)"><i class="fab fa-apple"></i>iOS Host
-      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+      <span class="bounce-label"><i class="fas fa-check-circle"></i></span>
     </button>
   </div>
 </section>
@@ -222,7 +222,7 @@ body{
 </footer>
 
 <!-- 🔔 TOAST -->
-<div id="toast" class="toast"><i class="fas fa-check-circle"></i><span>Copied!</span></div>
+<div id="toast" class="toast"><i class="fas fa-check-circle"></i><span></span></div>
 
 <script>
 const HOST_IP = "angkorps.vercel.app";
@@ -257,10 +257,10 @@ function showBounceLabel(btn, message, type="success"){
 // 💥 Copy function
 function copyText(t,btn=null){
   navigator.clipboard.writeText(t).then(()=>{
-    showToast(`Copied "${t}"`,"success");
-    if(btn) showBounceLabel(btn,"Copied!","success");
+    showToast(t,"success");                 // just show value
+    if(btn) showBounceLabel(btn,t,"success"); // just show value
   }).catch(()=>{
-    showToast("Failed to copy","error");
+    showToast("Failed","error");
     if(btn) showBounceLabel(btn,"Failed","error");
   });
 }
