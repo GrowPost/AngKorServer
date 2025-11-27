@@ -106,34 +106,6 @@ body{
 /* 🎞 ANIMATIONS */
 @keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
 
-/* 🔔 TOAST NOTIFICATION */
-.toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: rgba(16,185,129,0.95);
-  color: #fff;
-  padding: 0.9rem 1.6rem;
-  border-radius: 14px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.5s ease;
-  z-index: 9999;
-}
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-.toast i { font-size: 1.2rem; }
-.toast.error { background: rgba(255, 60, 60, 0.95); }
-
 /* 🔥 BUTTON BOUNCE LABEL */
 .bounce-label {
   position: absolute;
@@ -221,30 +193,13 @@ body{
   Copyright © <strong>AngkorPS</strong>
 </footer>
 
-<!-- 🔔 TOAST -->
-<div id="toast" class="toast"><i class="fas fa-check-circle"></i><span></span></div>
-
 <script>
 const HOST_IP = "angkorps.vercel.app";
 const PT_URL = "https://angkorps.vercel.app/api/ping";
 const HOST_GO_URL = "https://angkorps.vercel.app/go-host";
 const IOS_HOST = "angkorps.vercel.app";
 
-// 💥 Show Toast
-function showToast(message, type="success"){
-  const toast = document.getElementById("toast");
-  const icon = toast.querySelector("i");
-  const text = toast.querySelector("span");
-
-  text.textContent = message;
-  if(type==="success"){toast.classList.remove("error"); icon.className="fas fa-check-circle";}
-  else {toast.classList.add("error"); icon.className="fas fa-times-circle";}
-
-  toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"),2000);
-}
-
-// 💥 Bounce label above button
+// 💥 Bounce label above button only
 function showBounceLabel(btn, message, type="success"){
   const label = btn.querySelector(".bounce-label");
   label.innerHTML = type==="success" ? `<i class="fas fa-check-circle"></i>${message}` : `<i class="fas fa-times-circle"></i>${message}`;
@@ -257,10 +212,8 @@ function showBounceLabel(btn, message, type="success"){
 // 💥 Copy function
 function copyText(t,btn=null){
   navigator.clipboard.writeText(t).then(()=>{
-    showToast(t,"success");                 // just show value
-    if(btn) showBounceLabel(btn,t,"success"); // just show value
+    if(btn) showBounceLabel(btn,t,"success");
   }).catch(()=>{
-    showToast("Failed","error");
     if(btn) showBounceLabel(btn,"Failed","error");
   });
 }
