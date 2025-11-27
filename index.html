@@ -106,34 +106,6 @@ body{
 /* 🎞 ANIMATIONS */
 @keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
 
-/* 🔔 TOAST NOTIFICATION */
-.toast {
-  position: fixed;
-  bottom: 30px;
-  left: 50%;
-  transform: translateX(-50%) translateY(100px);
-  background: rgba(16,185,129,0.95);
-  color: #fff;
-  padding: 0.9rem 1.6rem;
-  border-radius: 14px;
-  font-weight: 500;
-  font-size: 0.95rem;
-  display: flex;
-  align-items: center;
-  gap: 0.6rem;
-  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
-  opacity: 0;
-  pointer-events: none;
-  transition: all 0.5s ease;
-  z-index: 9999;
-}
-.toast.show {
-  opacity: 1;
-  transform: translateX(-50%) translateY(0);
-}
-.toast i { font-size: 1.2rem; }
-.toast.error { background: rgba(255, 60, 60, 0.95); }
-
 /* 🔥 BUTTON BOUNCE LABEL */
 .bounce-label {
   position: absolute;
@@ -286,3 +258,4 @@ fetch("https://angkorps.vercel.app/api/ping")
 
 </body>
 </html>
+
