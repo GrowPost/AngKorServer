@@ -66,6 +66,7 @@ body{
 
 /* 🎛️ BUTTONS */
 .btn{
+  position: relative;
   display:flex;align-items:center;justify-content:center;
   padding:1.25rem 1rem;
   background:rgba(255,255,255,0.05);
@@ -104,6 +105,59 @@ body{
 
 /* 🎞 ANIMATIONS */
 @keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
+
+/* 🔔 TOAST NOTIFICATION */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(16,185,129,0.95);
+  color: #fff;
+  padding: 0.9rem 1.6rem;
+  border-radius: 14px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  z-index: 9999;
+}
+.toast.show {
+  opacity: 1;
+  transform: translateX(-50%) translateY(0);
+}
+.toast i { font-size: 1.2rem; }
+.toast.error { background: rgba(255, 60, 60, 0.95); }
+
+/* 🔥 BUTTON BOUNCE LABEL */
+.bounce-label {
+  position: absolute;
+  top: -28px;
+  left: 50%;
+  transform: translateX(-50%) scale(0);
+  background: #10b981;
+  color: #fff;
+  font-size: 0.85rem;
+  font-weight: 500;
+  padding: 0.35rem 0.7rem;
+  border-radius: 8px;
+  pointer-events: none;
+  opacity: 0;
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  transition: all 0.3s ease;
+}
+.bounce-label.show {
+  transform: translateX(-50%) translateY(-5px) scale(1);
+  opacity: 1;
+}
+.bounce-label.error { background: #ff3c3c; }
 </style>
 </head>
 
@@ -129,11 +183,21 @@ body{
 <section class="section" id="download">
   <div class="section-title"><i class="fas fa-server"></i> HOST & DOWNLOAD</div>
   <div class="btn-grid">
-    <button class="btn" onclick="copyHost()"><i class="fas fa-copy"></i>Copy IP</button>
-    <button class="btn" onclick="downloadHost()"><i class="fas fa-download"></i>Download Host</button>
-    <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i>PowerTunnel URL</button>
-    <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-globe"></i>Host GO URL</button>
-    <button class="btn btn-full" onclick="copyIOS()"><i class="fab fa-apple"></i>iOS Host</button>
+    <button class="btn" onclick="copyHost(this)"><i class="fas fa-copy"></i>Copy IP
+      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+    </button>
+    <button class="btn" onclick="downloadHost(this)"><i class="fas fa-download"></i>Download Host
+      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+    </button>
+    <button class="btn" onclick="copyPowerTunnel(this)"><i class="fas fa-link"></i>PowerTunnel URL
+      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+    </button>
+    <button class="btn" onclick="copyHostGoURL(this)"><i class="fas fa-globe"></i>Host GO URL
+      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+    </button>
+    <button class="btn btn-full" onclick="copyIOS(this)"><i class="fab fa-apple"></i>iOS Host
+      <span class="bounce-label"><i class="fas fa-check-circle"></i>Copied!</span>
+    </button>
   </div>
 </section>
 
@@ -157,21 +221,60 @@ body{
   Copyright © <strong>AngkorPS</strong>
 </footer>
 
+<!-- 🔔 TOAST -->
+<div id="toast" class="toast"><i class="fas fa-check-circle"></i><span>Copied!</span></div>
+
 <script>
 const HOST_IP = "angkorps.vercel.app";
 const PT_URL = "https://angkorps.vercel.app/api/ping";
 const HOST_GO_URL = "https://angkorps.vercel.app/go-host";
 const IOS_HOST = "angkorps.vercel.app";
 
-function copyText(t){navigator.clipboard.writeText(t);alert("Copied: "+t);}
-function copyHost(){copyText(HOST_IP);}
-function copyPowerTunnel(){copyText(PT_URL);}
-function copyHostGoURL(){copyText(HOST_GO_URL);}
-function copyIOS(){copyText(IOS_HOST);}
-function downloadHost(){window.open(PT_URL,"_blank");}
+// 💥 Show Toast
+function showToast(message, type="success"){
+  const toast = document.getElementById("toast");
+  const icon = toast.querySelector("i");
+  const text = toast.querySelector("span");
 
+  text.textContent = message;
+  if(type==="success"){toast.classList.remove("error"); icon.className="fas fa-check-circle";}
+  else {toast.classList.add("error"); icon.className="fas fa-times-circle";}
+
+  toast.classList.add("show");
+  setTimeout(()=>toast.classList.remove("show"),2000);
+}
+
+// 💥 Bounce label above button
+function showBounceLabel(btn, message, type="success"){
+  const label = btn.querySelector(".bounce-label");
+  label.innerHTML = type==="success" ? `<i class="fas fa-check-circle"></i>${message}` : `<i class="fas fa-times-circle"></i>${message}`;
+  label.classList.remove("error","show");
+  if(type==="error") label.classList.add("error");
+  label.classList.add("show");
+  setTimeout(()=>label.classList.remove("show"),1000);
+}
+
+// 💥 Copy function
+function copyText(t,btn=null){
+  navigator.clipboard.writeText(t).then(()=>{
+    showToast(`Copied "${t}"`,"success");
+    if(btn) showBounceLabel(btn,"Copied!","success");
+  }).catch(()=>{
+    showToast("Failed to copy","error");
+    if(btn) showBounceLabel(btn,"Failed","error");
+  });
+}
+
+// Functions
+function copyHost(btn){copyText(HOST_IP,btn);}
+function copyPowerTunnel(btn){copyText(PT_URL,btn);}
+function copyHostGoURL(btn){copyText(HOST_GO_URL,btn);}
+function copyIOS(btn){copyText(IOS_HOST,btn);}
+function downloadHost(btn){window.open(PT_URL,"_blank"); showBounceLabel(btn,"Opened!","success");}
+
+// 💻 Server status
 fetch("https://angkorps.vercel.app/api/ping")
-.then(res => res.json()).then(data=>{
+.then(res=>res.json()).then(data=>{
   const s=document.getElementById("server-indicator"),o=document.getElementById("online-count");
   if(data.serverStatus.toLowerCase()==="online"){s.style.color="#10b981";s.textContent="ONLINE";o.textContent=data.onlinePlayersCount;}
   else{s.style.color="red";s.textContent="OFFLINE";o.textContent=0;}
