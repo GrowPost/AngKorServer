@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -209,7 +209,7 @@ function showBounceLabel(btn, message, type="success"){
   setTimeout(()=>label.classList.remove("show"),1000);
 }
 
-// 💥 Copy function
+// 💥 Copy function (no alert)
 function copyText(t,btn=null){
   navigator.clipboard.writeText(t).then(()=>{
     if(btn) showBounceLabel(btn,t,"success");
@@ -219,11 +219,11 @@ function copyText(t,btn=null){
 }
 
 // Functions
-function copyHost(btn){copyText(HOST_IP,btn);}
-function copyPowerTunnel(btn){copyText(PT_URL,btn);}
-function copyHostGoURL(btn){copyText(HOST_GO_URL,btn);}
-function copyIOS(btn){copyText(IOS_HOST,btn);}
-function downloadHost(btn){window.open(PT_URL,"_blank"); showBounceLabel(btn,"Opened!","success");}
+function copyHost(btn){ copyText(HOST_IP, btn); }
+function copyPowerTunnel(btn){ copyText(PT_URL, btn); }
+function copyHostGoURL(btn){ copyText(HOST_GO_URL, btn); }
+function copyIOS(btn){ copyText(IOS_HOST, btn); }
+function downloadHost(btn){ window.open(PT_URL,"_blank"); showBounceLabel(btn,"Opened!","success"); }
 
 // 💻 Server status
 fetch("https://angkorps.vercel.app/api/ping")
