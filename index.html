@@ -1,15 +1,17 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
-
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
 <meta name="description" content="Growtopia Private Server with exciting gameplay and stable system.">
 <meta name="theme-color" content="#10b981">
 <title>AngkorPS</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
-<!-- ⭐ Favicon -->
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" integrity="sha512-..." crossorigin="anonymous" referrerpolicy="no-referrer" />
+
+<!-- Favicon -->
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
 <link rel="apple-touch-icon" href="assets/AngkorPS.png">
 
@@ -26,7 +28,7 @@ body{
 .container{max-width:1000px;margin:0 auto;padding:2rem 1rem;}
 
 /* 🌟 HEADER */
-.header{text-align:center;margin-bottom:1rem;padding:1.25rem 0;animation:fadeIn .8s ease-out forwards;}
+.header{text-align:center;margin-bottom:1rem;padding:1.5rem 0;animation:fadeIn .8s ease-out forwards;}
 .title{
   font-size:clamp(2.7rem,6vw,4rem);
   font-weight:800;
@@ -38,21 +40,25 @@ body{
 
 /* 🧊 SECTIONS */
 .section{
-  background:rgba(255,255,255,0.045);
-  backdrop-filter:blur(10px);
+  background:rgba(255,255,255,0.05);
+  backdrop-filter:blur(12px);
   border:1px solid rgba(255,255,255,0.08);
   border-radius:18px;
   padding:2rem;
   margin-bottom:1.5rem;
-  box-shadow:0px 4px 14px rgba(0,0,0,0.6);
-  transition:.2s;
+  box-shadow:0 6px 20px rgba(0,0,0,0.7);
+  transition:.3s;
 }
-.section:hover{transform:translateY(-2px);}
+.section:hover{transform:translateY(-3px) scale(1.02);}
 
 /* 🏷️ TITLES */
 .section-title{
-  font-size:1.32rem;font-weight:600;margin-bottom:1.5rem;
+  font-size:1.35rem;font-weight:600;margin-bottom:1.5rem;
   display:flex;align-items:center;gap:.75rem;color:#fff;
+}
+.section-title i{
+  color:#10b981;
+  font-size:1.3rem;
 }
 
 /* 🧱 BUTTON GRID */
@@ -60,26 +66,36 @@ body{
 
 /* 🎛️ BUTTONS */
 .btn{
-  padding:1.25rem;
+  display:flex;align-items:center;justify-content:center;
+  padding:1.25rem 1rem;
   background:rgba(255,255,255,0.05);
   border:1px solid rgba(255,255,255,0.125);
   border-radius:14px;
   color:#e0e0e0;font-size:1rem;font-weight:500;
   cursor:pointer;transition:.25s;
+  gap:0.6rem;
+  box-shadow:0 4px 14px rgba(0,0,0,0.5);
 }
+.btn i{transition: transform .3s ease;}
 .btn:hover{
-  background:rgba(255,255,255,0.09);
+  background:rgba(255,255,255,0.08);
   border-color:rgba(16,185,129,0.5);
   transform:translateY(-3px);
 }
+.btn:hover i{transform:translateY(-2px) rotate(10deg);}
 .btn-full{grid-column:1/-1;}
 .btn-discord{background:rgba(88,101,242,0.15);border-color:rgba(88,101,242,0.3);color:#7b8df7;}
 .btn-discord:hover{background:rgba(88,101,242,0.25);}
 
 /* 🖥 SERVER STATUS */
 #server-status{
-  text-align:center;padding-bottom:.5rem;margin-bottom:1rem;
-  font-weight:600;}
+  text-align:center;padding:1rem 0;margin-bottom:2rem;
+  font-weight:600;
+  border:1px solid rgba(255,255,255,0.1);
+  border-radius:14px;
+  background:rgba(0,0,0,0.3);
+  box-shadow:0 4px 15px rgba(0,0,0,0.6);
+}
 #server-indicator,#online-count{font-weight:800;}
 
 /* 👣 FOOTER */
@@ -111,37 +127,36 @@ body{
 
 <!-- 🧩 DOWNLOAD -->
 <section class="section" id="download">
-<div class="section-title">HOST & DOWNLOAD</div>
-<div class="btn-grid">
-<button class="btn" onclick="copyHost()">Copy IP</button>
-<button class="btn" onclick="downloadHost()">Download Host</button>
-<button class="btn" onclick="copyPowerTunnel()">PowerTunnel URL</button>
-<button class="btn" onclick="copyHostGoURL()">Host GO URL</button>
-<button class="btn btn-full" onclick="copyIOS()">iOS Host</button>
-</div>
+  <div class="section-title"><i class="fas fa-server"></i> HOST & DOWNLOAD</div>
+  <div class="btn-grid">
+    <button class="btn" onclick="copyHost()"><i class="fas fa-copy"></i>Copy IP</button>
+    <button class="btn" onclick="downloadHost()"><i class="fas fa-download"></i>Download Host</button>
+    <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i>PowerTunnel URL</button>
+    <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-globe"></i>Host GO URL</button>
+    <button class="btn btn-full" onclick="copyIOS()"><i class="fab fa-apple"></i>iOS Host</button>
+  </div>
 </section>
 
 <!-- 🌐 COMMUNITY -->
 <section class="section" id="community">
-<div class="section-title">COMMUNITY</div>
-<div class="btn-grid">
-<button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">Join Discord Server</button>
-</div>
+  <div class="section-title"><i class="fab fa-discord"></i> COMMUNITY</div>
+  <div class="btn-grid">
+    <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord"></i>Join Discord Server</button>
+  </div>
 </section>
 
 <!-- 📌 UPDATE -->
 <section class="section" id="guide">
-<div class="section-title">UPDATE</div>
-<p style="color:#aaa;font-size:0.92rem;">Coming Soon!</p>
+  <div class="section-title"><i class="fas fa-bolt"></i> UPDATE</div>
+  <p style="color:#aaa;font-size:0.92rem;">Coming Soon!</p>
 </section>
 
 </div>
 
 <footer class="footer">
-Copyright © <strong>AngkorPS</strong>
+  Copyright © <strong>AngkorPS</strong>
 </footer>
 
-<!-- 🧠 JAVASCRIPT -->
 <script>
 const HOST_IP = "angkorps.vercel.app";
 const PT_URL = "https://angkorps.vercel.app/api/ping";
