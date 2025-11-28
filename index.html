@@ -8,6 +8,7 @@
 <title>AngkorPS</title>
 
 <!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Icons -->
@@ -21,201 +22,138 @@
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   font-family:'Inter',sans-serif;
-  background:#0d1117;
-  color:#e5e5e5;
+  background:radial-gradient(circle at top,#111827,#0d1117 60%,#000 100%);
+  color:#e0e0e0;
   min-height:100vh;
-  padding-bottom:40px;
+  overflow-x:hidden;
 }
-
-/* Top Section */
-.header{
-  text-align:center;
-  padding:40px 0 20px 0;
-}
-.app-icon{
-  width:110px;
-  height:110px;
-  border-radius:20px;
-  box-shadow:0 8px 22px rgba(0,0,0,0.4);
-}
-.main-title{
-  margin-top:16px;
-  font-size:2rem;
+.container{max-width:1000px;margin:0 auto;padding:2rem 1rem;}
+.header{text-align:center;margin-bottom:1rem;padding:1.5rem 0;animation:fadeIn .8s ease-out forwards;}
+.title{
+  font-family: 'Orbitron', sans-serif;
+  font-size:clamp(2rem,5vw,3rem);
   font-weight:700;
-  color:white;
-}
-
-/* Premium Status Card */
-.status-card {
-  width:90%;
-  max-width:420px;
-  margin:0 auto 28px auto;
-  padding:24px 22px;
-
-  background:#111418;
-  border:1px solid rgba(255,255,255,0.04);
-  border-radius:18px;
-
-  box-shadow:0 8px 20px rgba(0,0,0,0.45);
-  text-align:left;
-
-  display:flex;
-  flex-direction:column;
-  gap:14px;
-}
-
-.status-header {
-  display:flex;
-  align-items:center;
-  gap:10px;
-  font-size:1.05rem;
-  font-weight:600;
-  color:white;
-}
-
-.status-header i {
   color:#10b981;
-  font-size:1.2rem;
-}
-
-.status-line {
+  letter-spacing:-1px;
   display:flex;
-  justify-content:space-between;
   align-items:center;
+  justify-content:center;
+  gap:0.6rem;
+  text-shadow: 0 0 15px rgba(16,185,129,0.7);
+}
+.title img{
+  width:36px; height:36px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #10b981;
+}
+.subtitle{
+  font-size:1rem;
+  color:#aaa;
+  margin-top:.5rem;
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
+  line-height:1.4;
+  text-shadow:0 0 5px rgba(0,0,0,0.5);
 }
 
-.status-line .label {
-  color:#9ea2a8;
-  font-size:0.95rem;
-}
-
-.status-line .value {
-  color:white;
-  font-weight:600;
-  font-size:0.95rem;
-}
-
-/* Section Container */
-.container{
-  max-width:900px;
-  margin:0 auto;
-  padding:0 1rem;
-}
-
-/* Sections */
 .section{
-  background:#111418;
-  border:1px solid rgba(255,255,255,0.04);
+  background:rgba(30,30,35,0.75);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(16,185,129,0.3);
   border-radius:18px;
-  padding:24px;
-  margin-bottom:20px;
-  box-shadow:0 8px 20px rgba(0,0,0,0.45);
+  padding:2rem;
+  margin-bottom:1.5rem;
+  box-shadow:0 6px 25px rgba(0,0,0,0.7);
+  transition:.3s;
 }
-
+.section:hover{transform:translateY(-3px) scale(1.02);}
 .section-title{
-  font-size:1.1rem;
-  font-weight:600;
-  color:white;
-  display:flex;
-  align-items:center;
-  gap:10px;
-  margin-bottom:18px;
+  font-size:1.3rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;color:#fff;
 }
-.section-title i{
-  color:#10b981;
-}
+.section-title i{color:#10b981;font-size:1.4rem;}
 
-/* Buttons */
-.btn-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(170px,1fr));
-  gap:14px;
-}
+.btn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
 
+/* â­ CLEAN NEW BUTTON STYLE â­ */
 .btn{
-  padding:13px;
-  background:#1a1f25;
-  border:1px solid rgba(255,255,255,0.05);
+  padding: 14px;
+  background:#2a2d33;
+  border:none;
   border-radius:12px;
   color:white;
-  font-size:0.9rem;
+  font-size:0.95rem;
   font-weight:600;
   cursor:pointer;
-  transition:.2s ease;
+  transition: .2s ease;
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
-.btn:hover{background:#222831;}
+.btn:hover{filter:brightness(1.15);}
+.btn-full{grid-column:1/-1;}
 
+/* Discord button soft purple */
 .btn-discord{
-  background:#5865F2;
+  background:#4654d4;
 }
-.btn-discord:hover{
-  background:#6572ff;
-}
+.btn-discord:hover{filter:brightness(1.15);}
 
-/* Footer */
-.footer{
-  margin-top:25px;
-  text-align:center;
-  color:#aaa;
-  font-size:0.9rem;
+#server-status{
+  text-align:center;padding:1rem 0;margin-bottom:2rem;
+  font-weight:600;
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:14px;
+  background:rgba(0,0,0,0.5);
+  box-shadow:0 4px 15px rgba(0,0,0,0.7);
 }
+#server-indicator{font-weight:800;}
+#online-count{font-weight:800;}
+
+.footer{text-align:center;padding:3rem 0 2rem;color:#777;font-size:.9rem;border-top:1px solid rgba(255,255,255,0.06);}
+.footer strong{color:#10b981;}
+
+@keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
 
 /* Toast */
-.toast{
-  position:fixed;
-  bottom:30px;
-  left:50%;
-  transform:translateX(-50%) translateY(100px);
-  background:#1a1f25;
-  border:1px solid rgba(255,255,255,0.08);
-  color:white;
-  padding:0.85rem 1.4rem;
-  border-radius:12px;
-  font-size:0.9rem;
-  display:flex;
-  align-items:center;
-  gap:8px;
-  box-shadow:0 6px 18px rgba(0,0,0,0.4);
-  opacity:0;
-  pointer-events:none;
-  transition:.45s ease;
-  z-index:9999;
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(16,185,129,0.95);
+  color: #fff;
+  padding: 0.9rem 1.6rem;
+  border-radius: 14px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  z-index: 9999;
 }
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-.toast i{
-  color:#10b981;
-}
-.toast.error i{
-  color:#ff4d4d;
-}
+.toast.show {opacity: 1;transform: translateX(-50%) translateY(0);}
+.toast i { font-size: 1.2rem; }
+.toast.error { background: rgba(255, 60, 60, 0.95); }
 </style>
 </head>
 
 <body>
 
 <header class="header">
-  <img src="assets/AngkorPS.png" class="app-icon">
-  <h1 class="main-title">AngkorPS</h1>
+  <h1 class="title"><img src="assets/AngkorPS.png" alt="AngkorPS Icon"> AngkorPS</h1>
+  <p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
 </header>
 
-<div id="server-status" class="status-card">
-  <div class="status-header">
-    <i class="fas fa-server"></i>
-    <span>Server Status</span>
-  </div>
-
-  <div class="status-line">
-    <span class="label">Status:</span>
-    <span id="server-indicator" class="value">Checking...</span>
-  </div>
-
-  <div class="status-line">
-    <span class="label">Players Online:</span>
-    <span id="online-count" class="value">0</span>
-  </div>
+<div id="server-status">
+  <span style="color:#aaa;">Server Status: </span>
+  <span id="server-indicator">Checking...</span>
+  <br>
+  <span style="color:#aaa;">Players Online: </span>
+  <span id="online-count">0</span>
 </div>
 
 <div class="container">
@@ -240,13 +178,13 @@ body{
 
 <section class="section">
   <div class="section-title"><i class="fas fa-bolt"></i> UPDATE</div>
-  <p style="color:#888;font-size:0.9rem;">Coming Soon!</p>
+  <p style="color:#aaa;font-size:0.92rem;">Coming Soon!</p>
 </section>
 
 </div>
 
 <footer class="footer">
-  © AngkorPS
+  Copyright Â© <strong>AngkorPS</strong>
 </footer>
 
 <div id="toast" class="toast"><i class="fas fa-check-circle"></i><span></span></div>
@@ -262,25 +200,25 @@ const HOST_GO_URL = "https://angkorps.vercel.app/angkor.host";
 const IOS_HOST = "https://angkorps.vercel.app/ios.txt";
 
 function showToast(message, type="success"){
-  const toast=document.getElementById("toast");
-  const icon=toast.querySelector("i");
-  const text=toast.querySelector("span");
-  text.textContent=message;
+  const toast = document.getElementById("toast");
+  const icon = toast.querySelector("i");
+  const text = toast.querySelector("span");
+  text.textContent = message;
   if(type==="success"){
     toast.classList.remove("error");
-    icon.className="fas fa-check-circle";
-  }else{
+    icon.className = "fas fa-check-circle";
+  } else {
     toast.classList.add("error");
-    icon.className="fas fa-times-circle";
+    icon.className = "fas fa-times-circle";
   }
   toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"),1800);
+  setTimeout(()=>toast.classList.remove("show"),2000);
 }
 
-function copyText(content){
+function copyText(content) {
   navigator.clipboard.writeText(content)
-    .then(()=>showToast("Copied"))
-    .catch(()=>showToast("Failed","error"));
+    .then(() => showToast("Copied"))
+    .catch(() => showToast("Failed", "error"));
 }
 
 function copyHost(){ copyText(HOST_IP_TEXT); }
@@ -288,44 +226,47 @@ function copyPowerTunnel(){ copyText(PT_URL); }
 function copyHostGoURL(){ copyText(HOST_GO_URL); }
 function copyIOS(){ copyText(IOS_HOST); }
 
-function downloadHost(){
-  const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;
-  a.download="angkor.host";
+function downloadHost() {
+  const blob = new Blob([HOST_IP_TEXT], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "angkor.host";
   document.body.appendChild(a);
   a.click();
-  a.remove();
+  document.body.removeChild(a);
+
   URL.revokeObjectURL(url);
+
   showToast("Downloaded!");
 }
 
-const indicator=document.getElementById("server-indicator");
-const onlineCount=document.getElementById("online-count");
+const indicator = document.getElementById("server-indicator");
+const onlineCount = document.getElementById("online-count");
 
 async function updateServer(){
   try{
-    const res=await fetch("https://angkorps.vercel.app/api/ping");
-    const data=await res.json();
+    const res = await fetch("https://angkorps.vercel.app/api/ping");
+    const data = await res.json();
     if(data.serverStatus.toLowerCase()==="online"){
-      indicator.textContent="ONLINE";
-      indicator.style.color="#10b981";
-      onlineCount.textContent=data.onlinePlayersCount;
-    }else{
-      indicator.textContent="OFFLINE";
-      indicator.style.color="red";
-      onlineCount.textContent=0;
+      indicator.textContent = "ONLINE";
+      indicator.style.color = "#10b981";
+      onlineCount.textContent = data.onlinePlayersCount;
+    } else {
+      indicator.textContent = "OFFLINE";
+      indicator.style.color = "red";
+      onlineCount.textContent = 0;
     }
-  }catch{
-    indicator.textContent="OFFLINE";
-    indicator.style.color="red";
-    onlineCount.textContent=0;
+  } catch(e){
+    indicator.textContent = "OFFLINE";
+    indicator.style.color = "red";
+    onlineCount.textContent = 0;
   }
 }
 
 updateServer();
-setInterval(updateServer,5000);
+setInterval(updateServer, 5000);
 </script>
 
 </body>
