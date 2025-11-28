@@ -3,122 +3,191 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-<meta name="description" content="AngkorPS Growtopia Private Server with stable system and exciting gameplay.">
+<meta name="description" content="Growtopia Private Server with exciting gameplay and stable system.">
 <meta name="theme-color" content="#10b981">
 <title>AngkorPS</title>
 
+<!-- Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Icons -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Favicon -->
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+<link rel="apple-touch-icon" href="assets/AngkorPS.png">
 
 <style>
-body {
-    font-family: Arial, sans-serif;
-    background: #0F1115;
-    color: white;
-    margin: 0;
-    padding: 20px;
-    text-align: center;
+*{margin:0;padding:0;box-sizing:border-box;}
+body{
+  font-family:'Inter',sans-serif;
+  background:radial-gradient(circle at top,#111827,#0d1117 60%,#000 100%);
+  color:#e0e0e0;
+  min-height:100vh;
+  overflow-x:hidden;
 }
-header img {
-    width: 120px;
-    height: 120px;
-    border-radius: 18px;
+.container{max-width:1000px;margin:0 auto;padding:2rem 1rem;}
+.header{text-align:center;margin-bottom:1rem;padding:1.5rem 0;animation:fadeIn .8s ease-out forwards;}
+.title{
+  font-family: 'Orbitron', sans-serif;
+  font-size:clamp(2rem,5vw,3rem);
+  font-weight:700;
+  color:#10b981;
+  letter-spacing:-1px;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:0.6rem;
+  text-shadow: 0 0 15px rgba(16,185,129,0.7);
 }
-.section {
-    background: #1a1d23;
-    padding: 18px;
-    border-radius: 14px;
-    margin-top: 18px;
+.title img{
+  width:36px; height:36px;
+  border-radius:50%;
+  object-fit:cover;
+  border:2px solid #10b981;
 }
-.section-title {
-    font-size: 20px;
-    margin-bottom: 12px;
+.subtitle{
+  font-size:1rem;
+  color:#aaa;
+  margin-top:.5rem;
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
+  line-height:1.4;
+  text-shadow:0 0 5px rgba(0,0,0,0.5);
 }
-.btn-grid {
-    display: grid;
-    gap: 10px;
+
+.section{
+  background:rgba(30,30,35,0.75);
+  backdrop-filter:blur(8px);
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:18px;
+  padding:2rem;
+  margin-bottom:1.5rem;
+  box-shadow:0 6px 25px rgba(0,0,0,0.7);
+  transition:.3s;
 }
-.btn {
-    width: 100%;
-    padding: 12px;
-    font-size: 16px;
-    border-radius: 10px;
-    border: none;
-    background: #10b981;
-    color: white;
-    font-weight: bold;
+.section:hover{transform:translateY(-3px) scale(1.02);}
+.section-title{
+  font-size:1.3rem;font-weight:600;margin-bottom:1.5rem;display:flex;align-items:center;gap:.75rem;color:#fff;
 }
-.btn-discord {
-    background: #5865F2;
+.section-title i{color:#10b981;font-size:1.4rem;}
+
+.btn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
+
+/* ⭐ CLEAN NEW BUTTON STYLE ⭐ */
+.btn{
+  padding: 14px;
+  background:#2a2d33;
+  border:none;
+  border-radius:12px;
+  color:white;
+  font-size:0.95rem;
+  font-weight:600;
+  cursor:pointer;
+  transition: .2s ease;
+  box-shadow:0 4px 12px rgba(0,0,0,0.4);
 }
+.btn:hover{filter:brightness(1.15);}
+.btn-full{grid-column:1/-1;}
+
+/* Discord button soft purple */
+.btn-discord{
+  background:#4654d4;
+}
+.btn-discord:hover{filter:brightness(1.15);}
+
+#server-status{
+  text-align:center;padding:1rem 0;margin-bottom:2rem;
+  font-weight:600;
+  border:1px solid rgba(16,185,129,0.3);
+  border-radius:14px;
+  background:rgba(0,0,0,0.5);
+  box-shadow:0 4px 15px rgba(0,0,0,0.7);
+}
+#server-indicator{font-weight:800;}
+#online-count{font-weight:800;}
+
+.footer{text-align:center;padding:3rem 0 2rem;color:#777;font-size:.9rem;border-top:1px solid rgba(255,255,255,0.06);}
+.footer strong{color:#10b981;}
+
+@keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
+
+/* Toast */
 .toast {
-    position: fixed;
-    bottom: 22px;
-    left: 50%;
-    transform: translateX(-50%) translateY(40px);
-    background: #10b981;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 10px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-    font-size: 15px;
-    opacity: 0;
-    transition: 0.25s;
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(100px);
+  background: rgba(16,185,129,0.95);
+  color: #fff;
+  padding: 0.9rem 1.6rem;
+  border-radius: 14px;
+  font-weight: 500;
+  font-size: 0.95rem;
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  box-shadow: 0 6px 20px rgba(0,0,0,0.5);
+  opacity: 0;
+  pointer-events: none;
+  transition: all 0.5s ease;
+  z-index: 9999;
 }
-.toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0px);
-}
-.toast.error {
-    background: #d9534f;
-}
-.server-box {
-    font-size: 18px;
-    padding: 5px;
-}
+.toast.show {opacity: 1;transform: translateX(-50%) translateY(0);}
+.toast i { font-size: 1.2rem; }
+.toast.error { background: rgba(255, 60, 60, 0.95); }
 </style>
 </head>
 
 <body>
 
-<header>
-    <img src="assets/AngkorPS.png" alt="AngkorPS">
-    <h2>AngkorPS</h2>
+<header class="header">
+  <h1 class="title"><img src="assets/AngkorPS.png" alt="AngkorPS Icon"> AngkorPS</h1>
+  <p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
 </header>
 
-<section class="section">
-    <div class="section-title"><i class="fas fa-server"></i> SERVER STATUS</div>
-    <div class="server-box">
-        Status: <span id="server-indicator">Checking...</span><br>
-        Players Online: <span id="online-count">0</span>
-    </div>
-</section>
+<div id="server-status">
+  <span style="color:#aaa;">Server Status: </span>
+  <span id="server-indicator">Checking...</span>
+  <br>
+  <span style="color:#aaa;">Players Online: </span>
+  <span id="online-count">0</span>
+</div>
+
+<div class="container">
 
 <section class="section">
-    <div class="section-title"><i class="fas fa-download"></i> DOWNLOAD</div>
-    <div class="btn-grid">
-        <button class="btn" onclick="copyPowerTunnel()">Copy PowerTunnel Link</button>
-        <button class="btn" onclick="copyIOS()">Copy iOS Host</button>
-        <button class="btn" onclick="copyHost()">Copy Host IP</button>
-        <button class="btn" onclick="copyHostGoURL()">Copy Host Go Link</button>
-        <button class="btn" onclick="downloadHost()">Download Host File</button>
-    </div>
+  <div class="section-title"><i class="fas fa-server"></i> HOST & DOWNLOAD</div>
+  <div class="btn-grid">
+    <button class="btn" onclick="copyHost()">Copy IP</button>
+    <button class="btn" onclick="downloadHost()">Download Host</button>
+    <button class="btn" onclick="copyPowerTunnel()">PowerTunnel URL</button>
+    <button class="btn" onclick="copyHostGoURL()">Host GO URL</button>
+    <button class="btn btn-full" onclick="copyIOS()">iOS Host</button>
+  </div>
 </section>
 
 <section class="section">
   <div class="section-title"><i class="fab fa-discord"></i> DISCORD</div>
   <div class="btn-grid">
-    <!-- ICON REMOVED HERE -->
     <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">Join</button>
   </div>
 </section>
 
-<div id="toast" class="toast">
-    <i class="fas fa-check-circle"></i>
-    <span>Copied</span>
+<section class="section">
+  <div class="section-title"><i class="fas fa-bolt"></i> UPDATE</div>
+  <p style="color:#aaa;font-size:0.92rem;">Coming Soon!</p>
+</section>
+
 </div>
+
+<footer class="footer">
+  Copyright © <strong>AngkorPS</strong>
+</footer>
+
+<div id="toast" class="toast"><i class="fas fa-check-circle"></i><span></span></div>
 
 <script>
 const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
@@ -135,7 +204,6 @@ function showToast(message, type="success"){
   const icon = toast.querySelector("i");
   const text = toast.querySelector("span");
   text.textContent = message;
-
   if(type==="success"){
     toast.classList.remove("error");
     icon.className = "fas fa-check-circle";
@@ -143,7 +211,6 @@ function showToast(message, type="success"){
     toast.classList.add("error");
     icon.className = "fas fa-times-circle";
   }
-
   toast.classList.add("show");
   setTimeout(()=>toast.classList.remove("show"),2000);
 }
@@ -154,10 +221,10 @@ function copyText(content) {
     .catch(() => showToast("Failed", "error"));
 }
 
-function copyHost() { copyText(HOST_IP_TEXT); }
-function copyPowerTunnel() { copyText(PT_URL); }
-function copyHostGoURL() { copyText(HOST_GO_URL); }
-function copyIOS() { copyText(IOS_HOST); }
+function copyHost(){ copyText(HOST_IP_TEXT); }
+function copyPowerTunnel(){ copyText(PT_URL); }
+function copyHostGoURL(){ copyText(HOST_GO_URL); }
+function copyIOS(){ copyText(IOS_HOST); }
 
 function downloadHost() {
   const blob = new Blob([HOST_IP_TEXT], { type: "text/plain" });
@@ -171,10 +238,10 @@ function downloadHost() {
   document.body.removeChild(a);
 
   URL.revokeObjectURL(url);
+
   showToast("Downloaded!");
 }
 
-/* SERVER STATUS */
 const indicator = document.getElementById("server-indicator");
 const onlineCount = document.getElementById("online-count");
 
@@ -182,8 +249,7 @@ async function updateServer(){
   try{
     const res = await fetch("https://angkorps.vercel.app/api/ping");
     const data = await res.json();
-
-    if(data.serverStatus.toLowerCase() === "online"){
+    if(data.serverStatus.toLowerCase()==="online"){
       indicator.textContent = "ONLINE";
       indicator.style.color = "#10b981";
       onlineCount.textContent = data.onlinePlayersCount;
