@@ -3,11 +3,10 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AngkorPS Growtopia Private Server with stable system and exciting gameplay.">
+<meta name="description" content="AngkorPS Growtopia Private Server">
 <meta name="theme-color" content="#10b981">
 <title>AngkorPS</title>
 
-<!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
@@ -19,11 +18,10 @@
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
 }
-
 body {
     font-family: "Poppins", sans-serif;
     margin: 0;
-    padding: 0;
+    padding: 16px;
     text-align: center;
     background: linear-gradient(270deg, #17191f, #0f1115, #1a1d23);
     background-size: 600% 600%;
@@ -33,144 +31,102 @@ body {
 
 /* HEADER */
 header {
-    margin: 20px 0;
+    margin: 16px 0;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
 }
-
 header img {
-    width: 150px;
-    height: 150px;
+    width: 130px;
+    height: 130px;
     border-radius: 24px;
     animation: float 3s ease-in-out infinite;
 }
-
 @keyframes float {
-    0%, 100% {transform: translateY(0);}
-    50% {transform: translateY(-10px);}
+    0%,100%{transform:translateY(0);}
+    50%{transform:translateY(-8px);}
 }
-
 header h2 {
-    font-size: 36px;
+    font-size: 32px;
     font-weight: 700;
+    margin: 8px 0;
 }
 
 /* SECTION TITLES */
 .section-title {
-    font-size: 22px;
+    font-size: 20px;
     font-weight: 600;
     display: flex;
     align-items: center;
     justify-content: center;
-    gap: 10px;
-    margin: 24px 0 12px 0;
-}
-
-/* BUTTONS */
-.btn-grid {
-    display: grid;
-    gap: 14px;
-    max-width: 400px;
-    margin: 0 auto 24px auto;
-}
-
-.btn {
-    display: flex;
-    align-items: center;
-    justify-content: center;
     gap: 8px;
-    width: 100%;
-    padding: 14px;
-    font-size: 16px;
-    font-weight: 500;
-    border-radius: 16px;
-    border: 1px solid #20242c;
-    background: linear-gradient(145deg, #15181d, #1a1d23);
-    color: #e6e7eb;
-    cursor: pointer;
-    transition: all 0.3s ease;
-}
-.btn i { font-size: 18px; }
-.btn:hover {
-    background: linear-gradient(145deg, #1f242a, #10b98133);
-    border-color: #10b981;
-    color: #fff;
-    transform: translateY(-2px);
-}
-
-/* DISCORD BUTTON */
-.btn-discord {
-    background: #1c1f24;
-    border: 1px solid #2C2F33;
-}
-.btn-discord:hover {
-    background: #23272A;
-    border-color: #5865F2;
-    color: #5865F2;
+    margin: 20px 0 8px;
 }
 
 /* SERVER STATUS */
 .server-box {
     font-size: 18px;
-    line-height: 1.6em;
-    letter-spacing: 0.3px;
-    margin-bottom: 24px;
+    margin-bottom: 16px;
 }
+#server-indicator.online { color: #10b981; font-weight: 700; animation: pulse 1.5s infinite;}
+#server-indicator.offline { color: #d9534f; font-weight: 700;}
+@keyframes pulse {0%,100%{text-shadow:0 0 6px #10b98166;}50%{text-shadow:0 0 20px #10b98155;}}
 
-#server-indicator.online {
-    color: #10b981;
-    font-weight: 700;
-    animation: pulse 1.5s infinite;
+/* BUTTONS */
+.btn-grid {
+    display: grid;
+    gap: 10px;
+    max-width: 360px;
+    margin: 0 auto 16px;
 }
-#server-indicator.offline {
-    color: #d9534f;
-    font-weight: 700;
+.btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 6px;
+    padding: 12px;
+    font-size: 15px;
+    font-weight: 500;
+    border-radius: 14px;
+    border: 1px solid #20242c;
+    background: #15181d;
+    color: #e6e7eb;
+    cursor: pointer;
+    transition: all 0.25s ease;
 }
-
-@keyframes pulse {
-    0%, 100% { text-shadow: 0 0 6px #10b98166; }
-    50% { text-shadow: 0 0 20px #10b98155; }
-}
+.btn i { font-size: 16px; }
+.btn:hover { background: #1f242a; border-color: #10b981; color: #fff; transform: translateY(-1px); }
+.btn-discord:hover { border-color: #5865F2; color:#5865F2; }
 
 /* TOAST */
 .toast {
     position: fixed;
-    bottom: 28px;
+    bottom: 20px;
     left: 50%;
     transform: translateX(-50%) translateY(35px);
     background: #1d2025;
     color: #fff;
-    padding: 12px 22px;
-    border-radius: 14px;
+    padding: 10px 18px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    gap: 10px;
-    font-size: 15px;
+    gap: 8px;
+    font-size: 14px;
     opacity: 0;
     transition: all 0.3s ease;
     border: 1px solid #2a2f38;
-    box-shadow: 0 0 14px rgba(0,0,0,0.45);
 }
-.toast.show {
-    opacity: 1;
-    transform: translateX(-50%) translateY(0px) scale(1);
-}
-.toast.error {
-    background: #d9534f;
-    border-color: #a94442;
-}
+.toast.show { opacity: 1; transform: translateX(-50%) translateY(0px) scale(1);}
+.toast.error { background: #d9534f; border-color:#a94442;}
 
 /* RESPONSIVE */
 @media (max-width: 600px) {
-    header img { width: 120px; height: 120px; }
-    header h2 { font-size: 28px; }
+    header img { width: 110px; height: 110px; }
+    header h2 { font-size: 26px; }
     .btn-grid { max-width: 100%; }
 }
 </style>
 </head>
-
 <body>
 
 <header>
@@ -199,8 +155,7 @@ header h2 {
 </div>
 
 <div id="toast" class="toast">
-    <i class="fas fa-check-circle"></i>
-    <span>Copied</span>
+    <i class="fas fa-check-circle"></i><span>Copied</span>
 </div>
 
 <script>
@@ -212,15 +167,15 @@ const PT_URL = "https://angkorps.vercel.app/angkor.txt";
 const HOST_GO_URL = "https://angkorps.vercel.app/angkor.host";
 const IOS_HOST = "https://angkorps.vercel.app/ios.txt";
 
-function showToast(message, type="success") {
-  const toast = document.getElementById("toast");
-  const icon = toast.querySelector("i");
-  const text = toast.querySelector("span");
-  text.textContent = message;
-  if(type==="success"){ toast.classList.remove("error"); icon.className="fas fa-check-circle"; }
-  else { toast.classList.add("error"); icon.className="fas fa-times-circle"; }
-  toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"),2000);
+function showToast(msg,type="success"){
+    const toast=document.getElementById("toast");
+    const icon=toast.querySelector("i");
+    const text=toast.querySelector("span");
+    text.textContent=msg;
+    if(type==="success"){ toast.classList.remove("error"); icon.className="fas fa-check-circle"; }
+    else{ toast.classList.add("error"); icon.className="fas fa-times-circle"; }
+    toast.classList.add("show");
+    setTimeout(()=>toast.classList.remove("show"),2000);
 }
 
 function copyText(content){ navigator.clipboard.writeText(content).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error")); }
@@ -229,24 +184,24 @@ function copyPowerTunnel(){copyText(PT_URL);}
 function copyHostGoURL(){copyText(HOST_GO_URL);}
 function copyIOS(){copyText(IOS_HOST);}
 function downloadHost(){
-  const blob = new Blob([HOST_IP_TEXT], { type: "text/plain" });
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href=url; a.download="angkor.host"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
-  URL.revokeObjectURL(url); showToast("Downloaded!");
+    const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"});
+    const url=URL.createObjectURL(blob);
+    const a=document.createElement("a");
+    a.href=url; a.download="angkor.host"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+    URL.revokeObjectURL(url); showToast("Downloaded!");
 }
 
 /* SERVER STATUS */
-const indicator = document.getElementById("server-indicator");
-const onlineCount = document.getElementById("online-count");
+const indicator=document.getElementById("server-indicator");
+const onlineCount=document.getElementById("online-count");
 
 async function updateServer(){
     try{
-        const res = await fetch("https://angkorps.vercel.app/api/ping");
-        const data = await res.json();
+        const res=await fetch("https://angkorps.vercel.app/api/ping");
+        const data=await res.json();
         if(data.serverStatus.toLowerCase()==="online"){
             indicator.textContent="ONLINE"; indicator.classList.remove("offline"); indicator.classList.add("online");
-            onlineCount.textContent = data.onlinePlayersCount;
+            onlineCount.textContent=data.onlinePlayersCount;
         } else {
             indicator.textContent="OFFLINE"; indicator.classList.remove("online"); indicator.classList.add("offline");
             onlineCount.textContent=0;
