@@ -12,14 +12,13 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 
 <!-- Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css" crossorigin="anonymous" referrerpolicy="no-referrer" />
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <!-- Favicon -->
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
 <link rel="apple-touch-icon" href="assets/AngkorPS.png">
 
 <style>
-/* 🌌 Global */
 *{margin:0;padding:0;box-sizing:border-box;}
 body{
   font-family:'Inter',sans-serif;
@@ -59,7 +58,6 @@ body{
   text-shadow:0 0 5px rgba(0,0,0,0.5);
 }
 
-/* 🌟 Sections */
 .section{
   background:rgba(30,30,35,0.75);
   backdrop-filter:blur(8px);
@@ -76,7 +74,6 @@ body{
 }
 .section-title i{color:#10b981;font-size:1.4rem;}
 
-/* Buttons */
 .btn-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:1rem;}
 .btn{
   display:flex;align-items:center;justify-content:center;
@@ -90,19 +87,16 @@ body{
   gap:0.5rem;
   box-shadow:0 4px 14px rgba(0,0,0,0.5);
 }
-.btn i{transition: transform .3s ease;}
 .btn:hover{
   background:rgba(16,185,129,0.25);
   border-color:#10b981;
   transform:translateY(-2px) scale(1.03);
   box-shadow:0 6px 20px rgba(16,185,129,0.5);
 }
-.btn:hover i{transform:translateY(-1px) rotate(8deg);}
 .btn-full{grid-column:1/-1;}
 .btn-discord{background:rgba(88,101,242,0.15);border-color:rgba(88,101,242,0.3);color:#7b8df7;}
 .btn-discord:hover{background:rgba(88,101,242,0.25);box-shadow:0 6px 20px rgba(88,101,242,0.5);}
 
-/* Server Status */
 #server-status{
   text-align:center;padding:1rem 0;margin-bottom:2rem;
   font-weight:600;
@@ -111,16 +105,12 @@ body{
   background:rgba(0,0,0,0.5);
   box-shadow:0 4px 15px rgba(0,0,0,0.7);
 }
-#server-indicator{
-  font-weight:800;
-}
+#server-indicator{font-weight:800;}
 #online-count{font-weight:800;}
 
-/* Footer */
 .footer{text-align:center;padding:3rem 0 2rem;color:#777;font-size:.9rem;border-top:1px solid rgba(255,255,255,0.06);}
 .footer strong{color:#10b981;}
 
-/* Animations */
 @keyframes fadeIn{0%{opacity:0;transform:scale(.9);}100%{opacity:1;transform:scale(1);}}
 
 /* Toast */
@@ -157,7 +147,6 @@ body{
   <p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
 </header>
 
-<!-- 🖥 Server Status -->
 <div id="server-status">
   <span style="color:#aaa;">Server Status: </span>
   <span id="server-indicator">Checking...</span>
@@ -168,8 +157,7 @@ body{
 
 <div class="container">
 
-<!-- 🧩 DOWNLOAD -->
-<section class="section" id="download">
+<section class="section">
   <div class="section-title"><i class="fas fa-server"></i> HOST & DOWNLOAD</div>
   <div class="btn-grid">
     <button class="btn" onclick="copyHost()"><i class="fas fa-copy"></i>Copy IP</button>
@@ -180,16 +168,14 @@ body{
   </div>
 </section>
 
-<!-- 🌐 COMMUNITY -->
-<section class="section" id="community">
+<section class="section">
   <div class="section-title"><i class="fab fa-discord"></i> COMMUNITY</div>
   <div class="btn-grid">
     <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord"></i>Join Discord Server</button>
   </div>
 </section>
 
-<!-- 📌 UPDATE -->
-<section class="section" id="guide">
+<section class="section">
   <div class="section-title"><i class="fas fa-bolt"></i> UPDATE</div>
   <p style="color:#aaa;font-size:0.92rem;">Coming Soon!</p>
 </section>
@@ -200,14 +186,14 @@ body{
   Copyright © <strong>AngkorPS</strong>
 </footer>
 
-<!-- 🔔 TOAST -->
 <div id="toast" class="toast"><i class="fas fa-check-circle"></i><span></span></div>
 
 <script>
-const HOST_IP = "5.39.13.21 growtopia1.com
+const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
-5.39.13.21 www.growtopia2.com";
+5.39.13.21 www.growtopia2.com`;
+
 const PT_URL = "https://angkorps.vercel.app/angkor.txt";
 const HOST_GO_URL = "https://angkorps.vercel.app/angkor.host";
 const IOS_HOST = "https://angkorps.vercel.app/ios.txt";
@@ -217,20 +203,44 @@ function showToast(message, type="success"){
   const icon = toast.querySelector("i");
   const text = toast.querySelector("span");
   text.textContent = message;
-  if(type==="success"){toast.classList.remove("error"); icon.className="fas fa-check-circle";}
-  else {toast.classList.add("error"); icon.className="fas fa-times-circle";}
+  if(type==="success"){
+    toast.classList.remove("error");
+    icon.className = "fas fa-check-circle";
+  } else {
+    toast.classList.add("error");
+    icon.className = "fas fa-times-circle";
+  }
   toast.classList.add("show");
   setTimeout(()=>toast.classList.remove("show"),2000);
 }
 
-function copyText(t){navigator.clipboard.writeText(t).then(()=>{showToast(t,"success");}).catch(()=>{showToast("Failed","error");});}
-function copyHost(){copyText(HOST_IP);}
-function copyPowerTunnel(){copyText(PT_URL);}
-function copyHostGoURL(){copyText(HOST_GO_URL);}
-function copyIOS(){copyText(IOS_HOST);}
-function downloadHost(){window.open(PT_URL,"_blank"); showToast("Opened!","success");}
+function copyText(content) {
+  navigator.clipboard.writeText(content)
+    .then(() => showToast("Copied"))
+    .catch(() => showToast("Failed", "error"));
+}
 
-// Server status updates every 5 seconds
+function copyHost(){ copyText(HOST_IP_TEXT); }
+function copyPowerTunnel(){ copyText(PT_URL); }
+function copyHostGoURL(){ copyText(HOST_GO_URL); }
+function copyIOS(){ copyText(IOS_HOST); }
+
+function downloadHost() {
+  const blob = new Blob([HOST_IP_TEXT], { type: "text/plain" });
+  const url = URL.createObjectURL(blob);
+
+  const a = document.createElement("a");
+  a.href = url;
+  a.download = "angkor.host";
+  document.body.appendChild(a);
+  a.click();
+  document.body.removeChild(a);
+
+  URL.revokeObjectURL(url);
+
+  showToast("Downloaded!");
+}
+
 const indicator = document.getElementById("server-indicator");
 const onlineCount = document.getElementById("online-count");
 
@@ -238,7 +248,7 @@ async function updateServer(){
   try{
     const res = await fetch("https://angkorps.vercel.app/api/ping");
     const data = await res.json();
-    if(data.serverStatus.toLowerCase() === "online"){
+    if(data.serverStatus.toLowerCase()==="online"){
       indicator.textContent = "ONLINE";
       indicator.style.color = "#10b981";
       onlineCount.textContent = data.onlinePlayersCount;
@@ -260,13 +270,3 @@ setInterval(updateServer, 5000);
 
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
