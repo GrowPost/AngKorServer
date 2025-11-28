@@ -7,12 +7,16 @@
 <meta name="theme-color" content="#10b981">
 <title>AngkorPS</title>
 
+<!-- NEW PREMIUM FONT -->
+<link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
+/* BASE */
 body {
-    font-family: Arial, sans-serif;
+    font-family: "Poppins", sans-serif;
     background: #0F1115;
     color: white;
     margin: 0;
@@ -23,35 +27,49 @@ body {
 header img {
     width: 120px;
     height: 120px;
-    border-radius: 18px;
+    border-radius: 22px;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+}
+
+header h2 {
+    margin: 10px 0 0;
+    font-weight: 600;
+    font-size: 26px;
+    letter-spacing: 0.5px;
 }
 
 .section {
     background: #1a1d23;
-    padding: 18px;
-    border-radius: 14px;
-    margin-top: 18px;
+    padding: 20px;
+    border-radius: 16px;
+    margin-top: 20px;
+    box-shadow: 0 0 14px rgba(0,0,0,0.3);
 }
 
 .section-title {
     font-size: 20px;
-    margin-bottom: 12px;
+    font-weight: 500;
+    margin-bottom: 14px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 8px;
 }
 
-/* NEW CLEAN BUTTON STYLE */
+/* BUTTONS */
 .btn-grid {
     display: grid;
-    gap: 10px;
+    gap: 12px;
 }
 
 .btn {
     width: 100%;
-    padding: 12px;
+    padding: 13px;
     font-size: 16px;
-    border-radius: 10px;
+    border-radius: 12px;
     border: 1px solid #2a2f38;
-    background: #181b20;
-    color: #d1d5db;
+    background: #191c21;
+    color: #e2e6ea;
     font-weight: 500;
     transition: 0.25s;
 }
@@ -59,37 +77,43 @@ header img {
 .btn:hover {
     background: #22262d;
     border-color: #10b981;
-    color: white;
+    color: #ffffff;
+    transform: translateY(-2px);
 }
 
 .btn-discord {
     background: #23272A;
     border-color: #2C2F33;
-    color: #d1d5db;
 }
 
 .btn-discord:hover {
     background: #2C2F33;
     border-color: #5865F2;
     color: white;
+    transform: translateY(-2px);
+}
+
+.server-box {
+    font-size: 18px;
+    letter-spacing: 0.3px;
 }
 
 /* TOAST */
 .toast {
     position: fixed;
-    bottom: 22px;
+    bottom: 25px;
     left: 50%;
-    transform: translateX(-50%) translateY(40px);
+    transform: translateX(-50%) translateY(35px);
     background: #23272A;
     color: white;
-    padding: 12px 18px;
-    border-radius: 10px;
+    padding: 12px 22px;
+    border-radius: 12px;
     display: flex;
     align-items: center;
-    gap: 8px;
+    gap: 10px;
     font-size: 15px;
     opacity: 0;
-    transition: 0.25s;
+    transition: .25s;
 }
 
 .toast.show {
@@ -99,11 +123,6 @@ header img {
 
 .toast.error {
     background: #d9534f;
-}
-
-.server-box {
-    font-size: 18px;
-    padding: 5px;
 }
 </style>
 </head>
@@ -116,7 +135,9 @@ header img {
 </header>
 
 <section class="section">
-    <div class="section-title"><i class="fas fa-server"></i> SERVER STATUS</div>
+    <div class="section-title">
+        <i class="fas fa-server"></i> SERVER STATUS
+    </div>
     <div class="server-box">
         Status: <span id="server-indicator">Checking...</span><br>
         Players Online: <span id="online-count">0</span>
@@ -124,7 +145,10 @@ header img {
 </section>
 
 <section class="section">
-    <div class="section-title"><i class="fas fa-download"></i> DOWNLOAD</div>
+    <div class="section-title">
+        <i class="fas fa-download"></i> DOWNLOAD
+    </div>
+
     <div class="btn-grid">
         <button class="btn" onclick="copyPowerTunnel()">Copy PowerTunnel Link</button>
         <button class="btn" onclick="copyIOS()">Copy iOS Host</button>
@@ -135,7 +159,9 @@ header img {
 </section>
 
 <section class="section">
-  <div class="section-title"><i class="fab fa-discord"></i> DISCORD</div>
+  <div class="section-title">
+    <i class="fab fa-discord"></i> DISCORD
+  </div>
   <div class="btn-grid">
     <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">Join</button>
   </div>
@@ -156,13 +182,13 @@ const PT_URL = "https://angkorps.vercel.app/angkor.txt";
 const HOST_GO_URL = "https://angkorps.vercel.app/angkor.host";
 const IOS_HOST = "https://angkorps.vercel.app/ios.txt";
 
-function showToast(message, type="success"){
+function showToast(message, type="success") {
   const toast = document.getElementById("toast");
   const icon = toast.querySelector("i");
   const text = toast.querySelector("span");
   text.textContent = message;
 
-  if(type==="success"){
+  if (type === "success") {
     toast.classList.remove("error");
     icon.className = "fas fa-check-circle";
   } else {
@@ -171,7 +197,7 @@ function showToast(message, type="success"){
   }
 
   toast.classList.add("show");
-  setTimeout(()=>toast.classList.remove("show"),2000);
+  setTimeout(() => toast.classList.remove("show"), 2000);
 }
 
 function copyText(content) {
@@ -204,12 +230,12 @@ function downloadHost() {
 const indicator = document.getElementById("server-indicator");
 const onlineCount = document.getElementById("online-count");
 
-async function updateServer(){
-  try{
+async function updateServer() {
+  try {
     const res = await fetch("https://angkorps.vercel.app/api/ping");
     const data = await res.json();
 
-    if(data.serverStatus.toLowerCase() === "online"){
+    if (data.serverStatus.toLowerCase() === "online") {
       indicator.textContent = "ONLINE";
       indicator.style.color = "#10b981";
       onlineCount.textContent = data.onlinePlayersCount;
@@ -218,7 +244,7 @@ async function updateServer(){
       indicator.style.color = "red";
       onlineCount.textContent = 0;
     }
-  } catch(e){
+  } catch (e) {
     indicator.textContent = "OFFLINE";
     indicator.style.color = "red";
     onlineCount.textContent = 0;
