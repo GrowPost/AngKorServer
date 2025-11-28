@@ -2,108 +2,124 @@
 <html lang="en">
 <head>
 <meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="AngkorPS Growtopia Private Server with stable system and exciting gameplay.">
 <meta name="theme-color" content="#10b981">
 <title>AngkorPS</title>
 
-<!-- PREMIUM FONT -->
+<!-- Fonts & Icons -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* GLOBAL */
+/* ANIMATED BACKGROUND */
+@keyframes gradientBG {
+    0%{background-position:0% 50%;}
+    50%{background-position:100% 50%;}
+    100%{background-position:0% 50%;}
+}
+
 body {
     font-family: "Poppins", sans-serif;
-    background: radial-gradient(circle at top, #17191f, #0f1115);
-    color: white;
     margin: 0;
-    padding: 16px;
+    padding: 0;
     text-align: center;
-    transition: all 0.3s ease;
+    background: linear-gradient(270deg, #17191f, #0f1115, #1a1d23);
+    background-size: 600% 600%;
+    animation: gradientBG 30s ease infinite;
+    color: #fff;
 }
 
 /* HEADER */
 header {
-    margin-top: 12px;
+    margin: 20px 0;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 12px;
 }
 
 header img {
-    width: 140px;
-    height: 140px;
+    width: 150px;
+    height: 150px;
     border-radius: 24px;
-    box-shadow: 0 0 20px rgba(0,0,0,0.6);
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    box-shadow: 0 0 30px rgba(16,185,129,0.5);
+    animation: float 3s ease-in-out infinite;
 }
-header img:hover {
-    transform: rotate(-5deg) scale(1.05);
-    box-shadow: 0 0 30px #10b98155;
+
+@keyframes float {
+    0%, 100% {transform: translateY(0);}
+    50% {transform: translateY(-10px);}
 }
 
 header h2 {
-    margin-top: 12px;
-    font-size: 32px;
-    font-weight: 600;
-    letter-spacing: 1px;
-    text-shadow: 0 0 8px rgba(0,0,0,0.4);
+    font-size: 36px;
+    font-weight: 700;
+    text-shadow: 0 0 12px rgba(16,185,129,0.5);
 }
 
-/* GLASS SECTIONS */
+/* SECTIONS */
 .section {
-    background: rgba(255, 255, 255, 0.05);
+    max-width: 500px;
+    margin: 20px auto;
+    padding: 24px;
+    border-radius: 22px;
+    background: rgba(255,255,255,0.05);
     backdrop-filter: blur(16px);
-    padding: 20px;
-    border-radius: 20px;
-    margin-top: 20px;
-    box-shadow: 0 0 24px rgba(0,0,0,0.35);
-    border: 1px solid rgba(255,255,255,0.07);
-    transition: transform 0.25s ease, box-shadow 0.25s ease;
+    border: 1px solid rgba(255,255,255,0.08);
+    box-shadow: 0 0 30px rgba(0,0,0,0.3);
+    transition: all 0.3s ease;
 }
 .section:hover {
-    transform: translateY(-2px);
-    box-shadow: 0 0 28px rgba(16,185,129,0.3);
+    transform: translateY(-4px);
+    box-shadow: 0 0 40px rgba(16,185,129,0.5);
 }
 
-/* SECTION TITLE */
 .section-title {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
     font-size: 20px;
-    font-weight: 500;
+    font-weight: 600;
     padding: 10px 16px;
     border-radius: 12px;
     margin-bottom: 16px;
-    background: linear-gradient(90deg, #0f1115 0%, #161a22 100%);
+    background: linear-gradient(90deg, #0f1115, #161a22);
     box-shadow: inset 0 0 14px rgba(0,0,0,0.3);
-    display: inline-flex;
-    gap: 10px;
-    align-items: center;
 }
 
 /* BUTTONS */
 .btn-grid {
     display: grid;
-    gap: 12px;
+    gap: 14px;
 }
 
 .btn {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
     width: 100%;
     padding: 14px;
     font-size: 16px;
-    border-radius: 14px;
+    font-weight: 500;
+    border-radius: 16px;
     border: 1px solid #20242c;
     background: linear-gradient(145deg, #15181d, #1a1d23);
     color: #e6e7eb;
-    font-weight: 500;
-    transition: 0.28s;
-    letter-spacing: 0.2px;
     cursor: pointer;
+    transition: all 0.3s ease;
+}
+.btn i {
+    font-size: 18px;
 }
 .btn:hover {
     background: linear-gradient(145deg, #1f242a, #10b98133);
     border-color: #10b981;
-    color: white;
+    color: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 0 12px #10b98155;
+    box-shadow: 0 0 14px #10b98155;
 }
 
 /* DISCORD BUTTON */
@@ -114,26 +130,30 @@ header h2 {
 .btn-discord:hover {
     background: #23272A;
     border-color: #5865F2;
-    box-shadow: 0 0 12px #5865F255;
+    box-shadow: 0 0 16px #5865F2;
+    color: #5865F2;
 }
 
-/* SERVER BOX */
+/* SERVER STATUS */
 .server-box {
     font-size: 18px;
-    letter-spacing: 0.3px;
     line-height: 1.6em;
+    letter-spacing: 0.3px;
 }
+
 #server-indicator.online {
     color: #10b981;
+    font-weight: 700;
+    text-shadow: 0 0 10px #10b98166;
     animation: pulse 1.5s infinite;
 }
 #server-indicator.offline {
     color: #d9534f;
+    font-weight: 700;
 }
 
-/* SERVER PULSE ANIMATION */
 @keyframes pulse {
-    0%, 100% { text-shadow: 0 0 4px #10b981aa; }
+    0%, 100% { text-shadow: 0 0 6px #10b98166; }
     50% { text-shadow: 0 0 20px #10b98155; }
 }
 
@@ -144,7 +164,7 @@ header h2 {
     left: 50%;
     transform: translateX(-50%) translateY(35px);
     background: #1d2025;
-    color: white;
+    color: #fff;
     padding: 12px 22px;
     border-radius: 14px;
     display: flex;
@@ -164,6 +184,13 @@ header h2 {
     background: #d9534f;
     border-color: #a94442;
 }
+
+/* RESPONSIVE */
+@media (max-width: 600px) {
+    .section { margin: 16px; padding: 18px; }
+    header img { width: 120px; height: 120px; }
+    header h2 { font-size: 28px; }
+}
 </style>
 </head>
 
@@ -175,9 +202,7 @@ header h2 {
 </header>
 
 <section class="section">
-    <div class="section-title">
-        <i class="fas fa-server"></i> SERVER STATUS
-    </div>
+    <div class="section-title"><i class="fas fa-server"></i> SERVER STATUS</div>
     <div class="server-box">
         Status: <span id="server-indicator" class="offline">Checking...</span><br>
         Players Online: <span id="online-count">0</span>
@@ -185,25 +210,21 @@ header h2 {
 </section>
 
 <section class="section">
-    <div class="section-title">
-        <i class="fas fa-download"></i> DOWNLOAD
-    </div>
+    <div class="section-title"><i class="fas fa-download"></i> DOWNLOAD</div>
     <div class="btn-grid">
-        <button class="btn" onclick="copyPowerTunnel()">Copy PowerTunnel Link</button>
-        <button class="btn" onclick="copyIOS()">Copy iOS Host</button>
-        <button class="btn" onclick="copyHost()">Copy Host IP</button>
-        <button class="btn" onclick="copyHostGoURL()">Copy Host Go Link</button>
-        <button class="btn" onclick="downloadHost()">Download Host File</button>
+        <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i> PowerTunnel Link</button>
+        <button class="btn" onclick="copyIOS()"><i class="fab fa-apple"></i> iOS Host</button>
+        <button class="btn" onclick="copyHost()"><i class="fas fa-network-wired"></i> Host IP</button>
+        <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-globe"></i> Go Link</button>
+        <button class="btn" onclick="downloadHost()"><i class="fas fa-file-download"></i> Download Host</button>
     </div>
 </section>
 
 <section class="section">
-  <div class="section-title">
-    <i class="fab fa-discord"></i> DISCORD
-  </div>
-  <div class="btn-grid">
-    <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">Join</button>
-  </div>
+    <div class="section-title"><i class="fab fa-discord"></i> DISCORD</div>
+    <div class="btn-grid">
+        <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord"></i> Join</button>
+    </div>
 </section>
 
 <div id="toast" class="toast">
@@ -216,7 +237,6 @@ const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
 5.39.13.21 www.growtopia2.com`;
-
 const PT_URL = "https://angkorps.vercel.app/angkor.txt";
 const HOST_GO_URL = "https://angkorps.vercel.app/angkor.host";
 const IOS_HOST = "https://angkorps.vercel.app/ios.txt";
@@ -227,74 +247,47 @@ function showToast(message, type="success") {
   const text = toast.querySelector("span");
   text.textContent = message;
 
-  if (type === "success") {
-    toast.classList.remove("error");
-    icon.className = "fas fa-check-circle";
-  } else {
-    toast.classList.add("error");
-    icon.className = "fas fa-times-circle";
-  }
+  if(type==="success"){ toast.classList.remove("error"); icon.className="fas fa-check-circle"; }
+  else { toast.classList.add("error"); icon.className="fas fa-times-circle"; }
 
   toast.classList.add("show");
-  setTimeout(() => toast.classList.remove("show"), 2000);
+  setTimeout(()=>toast.classList.remove("show"),2000);
 }
 
-function copyText(content) {
-  navigator.clipboard.writeText(content)
-    .then(() => showToast("Copied"))
-    .catch(() => showToast("Failed", "error"));
-}
-
-function copyHost() { copyText(HOST_IP_TEXT); }
-function copyPowerTunnel() { copyText(PT_URL); }
-function copyHostGoURL() { copyText(HOST_GO_URL); }
-function copyIOS() { copyText(IOS_HOST); }
-
-function downloadHost() {
+function copyText(content){ navigator.clipboard.writeText(content).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error")); }
+function copyHost(){copyText(HOST_IP_TEXT);}
+function copyPowerTunnel(){copyText(PT_URL);}
+function copyHostGoURL(){copyText(HOST_GO_URL);}
+function copyIOS(){copyText(IOS_HOST);}
+function downloadHost(){
   const blob = new Blob([HOST_IP_TEXT], { type: "text/plain" });
   const url = URL.createObjectURL(blob);
-
   const a = document.createElement("a");
-  a.href = url;
-  a.download = "angkor.host";
-  document.body.appendChild(a);
-  a.click();
-  document.body.removeChild(a);
-
-  URL.revokeObjectURL(url);
-  showToast("Downloaded!");
+  a.href=url; a.download="angkor.host"; document.body.appendChild(a); a.click(); document.body.removeChild(a);
+  URL.revokeObjectURL(url); showToast("Downloaded!");
 }
 
 /* SERVER STATUS */
 const indicator = document.getElementById("server-indicator");
 const onlineCount = document.getElementById("online-count");
 
-async function updateServer() {
-  try {
-    const res = await fetch("https://angkorps.vercel.app/api/ping");
-    const data = await res.json();
-
-    if (data.serverStatus.toLowerCase() === "online") {
-      indicator.textContent = "ONLINE";
-      indicator.classList.remove("offline");
-      indicator.classList.add("online");
-      onlineCount.textContent = data.onlinePlayersCount;
-    } else {
-      indicator.textContent = "OFFLINE";
-      indicator.classList.remove("online");
-      indicator.classList.add("offline");
-      onlineCount.textContent = 0;
+async function updateServer(){
+    try{
+        const res = await fetch("https://angkorps.vercel.app/api/ping");
+        const data = await res.json();
+        if(data.serverStatus.toLowerCase()==="online"){
+            indicator.textContent="ONLINE"; indicator.classList.remove("offline"); indicator.classList.add("online");
+            onlineCount.textContent = data.onlinePlayersCount;
+        } else {
+            indicator.textContent="OFFLINE"; indicator.classList.remove("online"); indicator.classList.add("offline");
+            onlineCount.textContent=0;
+        }
+    }catch(e){
+        indicator.textContent="OFFLINE"; indicator.classList.remove("online"); indicator.classList.add("offline");
+        onlineCount.textContent=0;
     }
-  } catch (e) {
-    indicator.textContent = "OFFLINE";
-    indicator.classList.remove("online");
-    indicator.classList.add("offline");
-    onlineCount.textContent = 0;
-  }
 }
-
-updateServer();
-setInterval(updateServer, 5000);
+updateServer(); setInterval(updateServer,5000);
 </script>
 
 </body>
