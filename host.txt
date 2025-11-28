@@ -1,0 +1,4 @@
+51.79.150.106 growtopia1.com
+51.79.150.106 growtopia2.com
+51.79.150.106 www.growtopia1.com
+51.79.150.106 www.growtopia2.com
