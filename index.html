@@ -44,7 +44,6 @@ header img {
     width: 150px;
     height: 150px;
     border-radius: 24px;
-    box-shadow: 0 0 30px rgba(16,185,129,0.5);
     animation: float 3s ease-in-out infinite;
 }
 
@@ -56,43 +55,25 @@ header img {
 header h2 {
     font-size: 36px;
     font-weight: 700;
-    text-shadow: 0 0 12px rgba(16,185,129,0.5);
 }
 
-/* SECTIONS */
-.section {
-    max-width: 500px;
-    margin: 20px auto;
-    padding: 24px;
-    border-radius: 22px;
-    background: rgba(255,255,255,0.05);
-    backdrop-filter: blur(16px);
-    border: 1px solid rgba(255,255,255,0.08);
-    box-shadow: 0 0 30px rgba(0,0,0,0.3);
-    transition: all 0.3s ease;
-}
-.section:hover {
-    transform: translateY(-4px);
-    box-shadow: 0 0 40px rgba(16,185,129,0.5);
-}
-
+/* SECTION TITLES */
 .section-title {
-    display: inline-flex;
-    align-items: center;
-    gap: 10px;
-    font-size: 20px;
+    font-size: 22px;
     font-weight: 600;
-    padding: 10px 16px;
-    border-radius: 12px;
-    margin-bottom: 16px;
-    background: linear-gradient(90deg, #0f1115, #161a22);
-    box-shadow: inset 0 0 14px rgba(0,0,0,0.3);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: 10px;
+    margin: 24px 0 12px 0;
 }
 
 /* BUTTONS */
 .btn-grid {
     display: grid;
     gap: 14px;
+    max-width: 400px;
+    margin: 0 auto 24px auto;
 }
 
 .btn {
@@ -111,15 +92,12 @@ header h2 {
     cursor: pointer;
     transition: all 0.3s ease;
 }
-.btn i {
-    font-size: 18px;
-}
+.btn i { font-size: 18px; }
 .btn:hover {
     background: linear-gradient(145deg, #1f242a, #10b98133);
     border-color: #10b981;
     color: #fff;
     transform: translateY(-2px);
-    box-shadow: 0 0 14px #10b98155;
 }
 
 /* DISCORD BUTTON */
@@ -130,7 +108,6 @@ header h2 {
 .btn-discord:hover {
     background: #23272A;
     border-color: #5865F2;
-    box-shadow: 0 0 16px #5865F2;
     color: #5865F2;
 }
 
@@ -139,12 +116,12 @@ header h2 {
     font-size: 18px;
     line-height: 1.6em;
     letter-spacing: 0.3px;
+    margin-bottom: 24px;
 }
 
 #server-indicator.online {
     color: #10b981;
     font-weight: 700;
-    text-shadow: 0 0 10px #10b98166;
     animation: pulse 1.5s infinite;
 }
 #server-indicator.offline {
@@ -187,9 +164,9 @@ header h2 {
 
 /* RESPONSIVE */
 @media (max-width: 600px) {
-    .section { margin: 16px; padding: 18px; }
     header img { width: 120px; height: 120px; }
     header h2 { font-size: 28px; }
+    .btn-grid { max-width: 100%; }
 }
 </style>
 </head>
@@ -201,31 +178,25 @@ header h2 {
     <h2>AngkorPS</h2>
 </header>
 
-<section class="section">
-    <div class="section-title"><i class="fas fa-server"></i> SERVER STATUS</div>
-    <div class="server-box">
-        Status: <span id="server-indicator" class="offline">Checking...</span><br>
-        Players Online: <span id="online-count">0</span>
-    </div>
-</section>
+<div class="section-title"><i class="fas fa-server"></i> SERVER STATUS</div>
+<div class="server-box">
+    Status: <span id="server-indicator" class="offline">Checking...</span><br>
+    Players Online: <span id="online-count">0</span>
+</div>
 
-<section class="section">
-    <div class="section-title"><i class="fas fa-download"></i> DOWNLOAD</div>
-    <div class="btn-grid">
-        <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i> PowerTunnel Link</button>
-        <button class="btn" onclick="copyIOS()"><i class="fab fa-apple"></i> iOS Host</button>
-        <button class="btn" onclick="copyHost()"><i class="fas fa-network-wired"></i> Host IP</button>
-        <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-globe"></i> Go Link</button>
-        <button class="btn" onclick="downloadHost()"><i class="fas fa-file-download"></i> Download Host</button>
-    </div>
-</section>
+<div class="section-title"><i class="fas fa-download"></i> DOWNLOAD</div>
+<div class="btn-grid">
+    <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i> PowerTunnel Link</button>
+    <button class="btn" onclick="copyIOS()"><i class="fab fa-apple"></i> iOS Host</button>
+    <button class="btn" onclick="copyHost()"><i class="fas fa-network-wired"></i> Host IP</button>
+    <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-globe"></i> Go Link</button>
+    <button class="btn" onclick="downloadHost()"><i class="fas fa-file-download"></i> Download Host</button>
+</div>
 
-<section class="section">
-    <div class="section-title"><i class="fab fa-discord"></i> DISCORD</div>
-    <div class="btn-grid">
-        <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord"></i> Join</button>
-    </div>
-</section>
+<div class="section-title"><i class="fab fa-discord"></i> DISCORD</div>
+<div class="btn-grid">
+    <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord"></i> Join</button>
+</div>
 
 <div id="toast" class="toast">
     <i class="fas fa-check-circle"></i>
@@ -246,10 +217,8 @@ function showToast(message, type="success") {
   const icon = toast.querySelector("i");
   const text = toast.querySelector("span");
   text.textContent = message;
-
   if(type==="success"){ toast.classList.remove("error"); icon.className="fas fa-check-circle"; }
   else { toast.classList.add("error"); icon.className="fas fa-times-circle"; }
-
   toast.classList.add("show");
   setTimeout(()=>toast.classList.remove("show"),2000);
 }
