@@ -7,53 +7,66 @@
 <meta name="theme-color" content="#10b981">
 <title>AngkorPS</title>
 
-<!-- NEW PREMIUM FONT -->
+<!-- PREMIUM FONT -->
 <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 
 <style>
-/* BASE */
+/* GLOBAL */
 body {
     font-family: "Poppins", sans-serif;
-    background: #0F1115;
+    background: radial-gradient(circle at top, #17191f, #0f1115);
     color: white;
     margin: 0;
-    padding: 20px;
+    padding: 24px;
     text-align: center;
 }
 
+/* HEADER */
+header {
+    margin-top: 10px;
+}
+
 header img {
-    width: 120px;
-    height: 120px;
+    width: 125px;
+    height: 125px;
     border-radius: 22px;
-    box-shadow: 0 0 12px rgba(0,0,0,0.4);
+    box-shadow: 0 0 16px rgba(0,0,0,0.5);
 }
 
 header h2 {
-    margin: 10px 0 0;
+    margin-top: 12px;
+    font-size: 28px;
     font-weight: 600;
-    font-size: 26px;
-    letter-spacing: 0.5px;
+    letter-spacing: 0.8px;
 }
 
+/* GLASS SECTIONS */
 .section {
-    background: #1a1d23;
-    padding: 20px;
-    border-radius: 16px;
-    margin-top: 20px;
-    box-shadow: 0 0 14px rgba(0,0,0,0.3);
+    background: rgba(255, 255, 255, 0.04);
+    backdrop-filter: blur(14px);
+    padding: 22px;
+    border-radius: 18px;
+    margin-top: 22px;
+    box-shadow: 0 0 18px rgba(0,0,0,0.35);
+    border: 1px solid rgba(255,255,255,0.06);
 }
 
+/* SECTION TITLE */
 .section-title {
     font-size: 20px;
     font-weight: 500;
-    margin-bottom: 14px;
-    display: flex;
-    justify-content: center;
+    padding: 10px 12px;
+    border-radius: 10px;
+    margin-bottom: 16px;
+
+    background: linear-gradient(90deg, #0f1115 0%, #161a22 100%);
+    box-shadow: inset 0 0 12px rgba(0,0,0,0.25);
+    display: inline-flex;
+    gap: 10px;
     align-items: center;
-    gap: 8px;
 }
 
 /* BUTTONS */
@@ -67,44 +80,49 @@ header h2 {
     padding: 13px;
     font-size: 16px;
     border-radius: 12px;
-    border: 1px solid #2a2f38;
-    background: #191c21;
-    color: #e2e6ea;
+    border: 1px solid #20242c;
+    background: #15181d;
+    color: #e6e7eb;
     font-weight: 500;
-    transition: 0.25s;
+    transition: 0.28s;
+    letter-spacing: 0.2px;
 }
 
+/* PREMIUM HOVER EFFECT */
 .btn:hover {
-    background: #22262d;
+    background: #1f242a;
     border-color: #10b981;
-    color: #ffffff;
+    color: white;
     transform: translateY(-2px);
+    box-shadow: 0 0 8px #10b98155;
 }
 
+/* DISCORD BUTTON */
 .btn-discord {
-    background: #23272A;
-    border-color: #2C2F33;
+    background: #1c1f24;
+    border: 1px solid #2C2F33;
 }
 
 .btn-discord:hover {
-    background: #2C2F33;
+    background: #23272A;
     border-color: #5865F2;
-    color: white;
-    transform: translateY(-2px);
+    box-shadow: 0 0 10px #5865F255;
 }
 
+/* SERVER BOX */
 .server-box {
     font-size: 18px;
     letter-spacing: 0.3px;
+    line-height: 1.7em;
 }
 
 /* TOAST */
 .toast {
     position: fixed;
-    bottom: 25px;
+    bottom: 26px;
     left: 50%;
     transform: translateX(-50%) translateY(35px);
-    background: #23272A;
+    background: #1d2025;
     color: white;
     padding: 12px 22px;
     border-radius: 12px;
@@ -114,6 +132,8 @@ header h2 {
     font-size: 15px;
     opacity: 0;
     transition: .25s;
+    border: 1px solid #2a2f38;
+    box-shadow: 0 0 12px rgba(0,0,0,0.4);
 }
 
 .toast.show {
@@ -123,6 +143,7 @@ header h2 {
 
 .toast.error {
     background: #d9534f;
+    border-color: #a94442;
 }
 </style>
 </head>
@@ -167,6 +188,7 @@ header h2 {
   </div>
 </section>
 
+<!-- TOAST -->
 <div id="toast" class="toast">
     <i class="fas fa-check-circle"></i>
     <span>Copied</span>
