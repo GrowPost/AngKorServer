@@ -45,7 +45,7 @@ body{
 /* Container */
 .wrapper{max-width:500px;margin:18px auto;padding:18px;}
 
-/* Header / Hero */
+/* Header */
 .header{
   display:flex;
   gap:16px;
@@ -71,23 +71,40 @@ body{
   font-size:0.82rem;color:var(--muted);margin-top:2px;
 }
 
-/* Status Row */
-.status-row{
+/* Status Cards */
+.status-cards{
   display:flex;
-  justify-content:space-between;
-  background:var(--glass);
-  border:1px solid var(--glass-border);
-  border-radius:var(--card-radius);
-  padding:12px 16px;
+  gap:12px;
   margin-top:18px;
-  box-shadow:0 10px 30px rgba(0,0,0,0.55);
+  flex-wrap:wrap;
 }
-.status-row span{font-weight:700;font-size:1.05rem;}
+.card{
+  flex:1 1 48%;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:var(--card-radius);
+  padding:18px;
+  text-align:center;
+  box-shadow:0 12px 30px rgba(0,0,0,0.55);
+  border:1px solid var(--glass-border);
+}
+.card h3{
+  font-size:0.9rem;
+  color:var(--muted);
+  margin-bottom:6px;
+}
+.card span{
+  display:block;
+  font-size:1.3rem;
+  font-weight:700;
+  margin-top:4px;
+}
 
 /* Host & Downloads panel */
 .panel{
   background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
-  border-radius:14px;padding:14px;border:1px solid var(--glass-border);
+  border-radius:14px;
+  padding:16px;
+  border:1px solid var(--glass-border);
   box-shadow: 0 18px 40px rgba(0,0,0,0.6);
   margin-top:18px;
 }
@@ -96,26 +113,39 @@ body{
 .grid-download{
   display:grid;
   grid-template-columns:1fr;
-  gap:10px;
+  gap:12px;
   margin-top:12px;
 }
 .btn{
   width:100%;
-  padding:12px 10px;
+  padding:14px 10px;
   display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:8px;
-  border-radius:10px;
+  gap:10px;
+  border-radius:14px;
   font-weight:700;
   cursor:pointer;
-  border:1px solid rgba(255,255,255,0.04);
-  background:linear-gradient(180deg,#12141a,#0d1013);
-  color:#e6eef3;
+  border:none;
+  background: linear-gradient(90deg,var(--accent), #22d192);
+  color:#041019;
+  font-size:0.95rem;
+  transition:0.3s ease;
+  box-shadow:0 6px 20px rgba(0,0,0,0.5);
 }
-.btn.green{background:linear-gradient(90deg,var(--accent), #22d192);color:#041019;border:none}
-.btn.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.04);color:var(--muted)}
-.btn:active{transform:translateY(1px)}
+.btn:hover{
+  transform:translateY(-2px);
+  box-shadow:0 12px 28px rgba(0,0,0,0.6);
+}
+.btn.ghost{
+  background:transparent;
+  color:var(--muted);
+  border:1px dashed rgba(255,255,255,0.04);
+}
+.btn.ghost:hover{
+  color:var(--accent-2);
+  border-color:var(--accent-2);
+}
 
 /* Toast */
 #toast{
@@ -123,10 +153,11 @@ body{
 }
 #toast.show{transform:translateX(-50%) translateY(0);opacity:1}
 
-/* responsive */
+/* Responsive */
 @media (max-width:600px){
   .wrapper{padding:12px;margin:12px auto;}
-  .status-row{flex-direction:column;gap:8px;}
+  .status-cards{flex-direction:column;}
+  .card{flex:1 1 100%;}
 }
 </style>
 
@@ -147,11 +178,17 @@ body{
     </div>
   </div>
 
-  <!-- Status Row -->
+  <!-- Status Cards -->
 
-  <div class="status-row">
-    <div>Server Status: <span id="serverStatus">Checking...</span></div>
-    <div>Players Online: <span id="playersCount">—</span></div>
+  <div class="status-cards">
+    <div class="card">
+      <h3>Server Status</h3>
+      <span id="serverStatus">Checking...</span>
+    </div>
+    <div class="card">
+      <h3>Players Online</h3>
+      <span id="playersCount">—</span>
+    </div>
   </div>
 
   <!-- Host & Downloads Panel -->
@@ -162,7 +199,7 @@ body{
 
 ```
 <div class="grid-download">
-  <button class="btn green" onclick="downloadHost()"><i class="fas fa-download"></i> Download Host</button>
+  <button class="btn" onclick="downloadHost()"><i class="fas fa-download"></i> Download Host</button>
   <button class="btn" onclick="copyHost()"><i class="fas fa-file-archive"></i> Copy IP Text</button>
   <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i> PowerTunnel URL</button>
   <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-globe"></i> Host GO URL</button>
