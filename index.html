@@ -1,170 +1,314 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
-<meta name="description" content="AngkorPS Growtopia Private Server">
-<meta name="theme-color" content="#10b981">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1,maximum-scale=5.0,user-scalable=yes" />
+<meta name="description" content="Growtopia Private Server with exciting gameplay and stable system." />
+<meta name="theme-color" content="#10b981" />
 <title>AngkorPS</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&display=swap" rel="stylesheet">
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Orbitron:wght@600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="assets/AngkorPS.png">
+<link rel="apple-touch-icon" href="assets/AngkorPS.png">
 
 <style>
-    body {
-        margin: 0;
-        font-family: "Inter", sans-serif;
-        background: #0f0f0f;
-        color: white;
-    }
+  :root{
+    --bg:#0b0b0c;
+    --panel:#0f1112;
+    --muted:#9aa3ab;
+    --accent:#10b981;
+    --card-border: rgba(255,255,255,0.03);
+    --glass: rgba(255,255,255,0.02);
+    --radius:12px;
+    --gap:14px;
+    --max-width:1100px;
+  }
 
-    .container {
-        max-width: 1100px;
-        margin: 0 auto;
-        padding: 20px;
-        display: grid;
-        grid-template-columns: 1fr 1fr;
-        gap: 20px;
-    }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+    background: linear-gradient(180deg, #060606 0%, #0b0b0c 100%);
+    color:#e6eef3;
+    -webkit-font-smoothing:antialiased;
+    -moz-osx-font-smoothing:grayscale;
+    line-height:1.35;
+  }
 
-    /* Cards */
-    .card {
-        background: #1a1a1a;
-        padding: 20px;
-        border-radius: 14px;
-        border: 1px solid #222;
-    }
+  /* layout */
+  .wrap{max-width:var(--max-width);margin:28px auto;padding:20px;display:grid;grid-template-columns: 1fr;gap:18px;}
+  @media(min-width:900px){ .wrap{grid-template-columns: 1fr 420px;align-items:start;} }
 
-    .card-title {
-        font-size: 20px;
-        font-weight: 700;
-        margin-bottom: 10px;
-    }
+  /* header */
+  .header{
+    display:flex;align-items:center;gap:12px;padding:14px;border-radius:var(--radius);
+    background:var(--panel);border:1px solid var(--card-border);
+  }
+  .logo{
+    width:48px;height:48px;border-radius:10px;object-fit:cover;flex:0 0 48px;
+    border:1px solid rgba(255,255,255,0.03);
+  }
+  .brand{
+    display:flex;flex-direction:column;
+  }
+  .brand h1{font-family: 'Orbitron', sans-serif;font-size:1.25rem;color:var(--accent);margin:0}
+  .brand p{font-size:0.82rem;color:var(--muted);margin-top:4px}
 
-    .status-online {
-        color: #10b981;
-        font-weight: 700;
-    }
+  /* main area left (content) */
+  .main{
+    display:flex;flex-direction:column;gap:14px;
+  }
 
-    .status-offline {
-        color: #ef4444;
-        font-weight: 700;
-    }
+  /* status row */
+  .status-row{
+    display:flex;gap:12px;
+    align-items:stretch;
+    width:100%;
+  }
+  .card{
+    background: linear-gradient(180deg, rgba(255,255,255,0.01), rgba(255,255,255,0.00));
+    border-radius:12px;padding:14px;border:1px solid var(--card-border);
+    display:flex;flex-direction:column;gap:8px;
+  }
+  /* When narrow, stack */
+  .status-row .card{flex:1;min-width:0}
+  @media(max-width:560px){ .status-row{flex-direction:column;} }
 
-    .big-title {
-        font-size: 32px;
-        font-weight: 700;
-        margin-bottom: 15px;
-    }
+  .card .label{font-size:0.82rem;color:var(--muted);font-weight:600}
+  .status-value{font-size:1.6rem;font-weight:800;color:#e6eef3}
+  .status-online{color:var(--accent)}
+  .status-offline{color:#ff6666}
 
-    .copy-box {
-        background: #111;
-        padding: 15px;
-        border-radius: 12px;
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        border: 1px solid #222;
-        margin-top: 10px;
-    }
+  /* controls card */
+  .controls{display:flex;flex-direction:column;gap:10px}
+  .btn-row{display:flex;gap:10px;flex-wrap:wrap}
+  .btn{
+    background:transparent;border:1px solid var(--card-border);padding:10px 12px;border-radius:10px;
+    color: #e6eef3;font-weight:600;cursor:pointer;font-size:0.95rem;
+    transition: all .12s ease;
+  }
+  .btn:hover{transform:translateY(-2px);border-color:rgba(255,255,255,0.06)}
+  .btn.primary{background:var(--accent);color:#06100b;border:none}
+  .copy-input{display:flex;align-items:center;gap:8px;background:var(--glass);border-radius:10px;padding:10px;border:1px solid var(--card-border)}
+  .copy-input span{flex:1;color:var(--muted);font-size:0.95rem;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 
-    .copy-btn {
-        padding: 8px 16px;
-        border: none;
-        background: #10b981;
-        color: white;
-        border-radius: 8px;
-        cursor: pointer;
-        font-weight: 600;
-    }
+  /* right column */
+  .aside{display:flex;flex-direction:column;gap:12px}
+  .about{padding:14px;border-radius:var(--radius);background:var(--panel);border:1px solid var(--card-border)}
+  .about h3{margin:0 0 6px 0;font-size:1rem}
+  .about p{margin:0;color:var(--muted);font-size:0.92rem}
 
-    /* Copy toast bottom */
-    .toast {
-        position: fixed;
-        bottom: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        background: rgba(0, 0, 0, 0.85);
-        padding: 12px 20px;
-        border-radius: 10px;
-        display: none;
-        font-size: 15px;
-        border: 1px solid #10b981;
-    }
+  /* small meta */
+  .meta-row{display:flex;gap:8px;align-items:center;flex-wrap:wrap}
+  .pill{font-size:0.82rem;padding:8px 10px;border-radius:999px;border:1px solid var(--card-border);background:transparent;color:var(--muted)}
 
-    @media (max-width: 768px) {
-        .container {
-            grid-template-columns: 1fr;
-        }
-    }
+  /* footer */
+  footer{margin-top:8px;padding:12px;text-align:center;color:var(--muted);font-size:0.85rem}
+
+  /* toast */
+  .toast{
+    position:fixed;left:50%;bottom:26px;transform:translateX(-50%);padding:10px 14px;border-radius:10px;
+    background:#121212;border:1px solid rgba(255,255,255,0.04);color:var(--accent);font-weight:700;display:none;
+  }
 </style>
-
 </head>
 <body>
 
-<div class="container">
+<div class="wrap">
 
-    <!-- LEFT SIDE -->
-    <div>
-        <!-- Server Status -->
-        <div class="card">
-            <div class="card-title">Server Status</div>
-            <div id="serverStatus" class="status-offline">Checking...</div>
-        </div>
-
-        <!-- Player Online -->
-        <div class="card">
-            <div class="card-title">Players Online</div>
-            <div id="onlinePlayers" style="font-size: 20px; font-weight: 600;">Loading...</div>
-        </div>
+  <!-- LEFT: main content -->
+  <div>
+    <!-- header -->
+    <div class="header" role="banner">
+      <img src="assets/AngkorPS.png" alt="AngkorPS" class="logo">
+      <div class="brand">
+        <h1>AngkorPS</h1>
+        <p>Private Growtopia server — stable, fast, community-driven</p>
+      </div>
     </div>
 
-    <!-- RIGHT SIDE -->
-    <div>
-        <div class="big-title">AngkorPS</div>
+    <!-- status cards -->
+    <div class="status-row" style="margin-top:14px">
+      <div class="card" aria-live="polite">
+        <div class="label">Server Status</div>
+        <div id="server-indicator" class="status-value status-offline">Checking...</div>
+        <div style="color:var(--muted);font-size:0.88rem">Last checked: <span id="last-checked">—</span></div>
+      </div>
 
-        <div class="card">
-            <div class="card-title">Server IP</div>
-
-            <div class="copy-box">
-                <span id="serverIP">angkorps.vercel.app</span>
-                <button class="copy-btn" onclick="copyIP()">Copy</button>
-            </div>
-        </div>
+      <div class="card" aria-live="polite">
+        <div class="label">Players Online</div>
+        <div id="online-count" class="status-value">0</div>
+        <div style="color:var(--muted);font-size:0.88rem">Peak (24h): <span id="peak-24h">—</span></div>
+      </div>
     </div>
+
+    <!-- controls & actions -->
+    <div class="card controls" style="margin-top:14px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div style="display:flex;flex-direction:column">
+          <div style="font-weight:700">Host & Downloads</div>
+          <div style="color:var(--muted);font-size:0.92rem">Quick copy / download links</div>
+        </div>
+
+        <div class="meta-row">
+          <div class="pill"><i class="fas fa-server" style="margin-right:6px"></i> Game Server</div>
+          <div class="pill"><i class="fab fa-discord" style="margin-right:6px"></i> Discord</div>
+        </div>
+      </div>
+
+      <div class="copy-input" style="margin-top:10px">
+        <span id="host-text">5.39.13.21 growtopia1.com</span>
+        <button class="btn" onclick="copyHost()">Copy</button>
+      </div>
+
+      <div class="btn-row">
+        <button class="btn primary" onclick="downloadHost()"><i class="fas fa-download" style="margin-right:8px"></i>Download .host</button>
+        <button class="btn" onclick="copyPowerTunnel()">PowerTunnel URL</button>
+        <button class="btn" onclick="copyHostGoURL()">Host GO URL</button>
+        <button class="btn" onclick="copyIOS()">iOS Host</button>
+        <button class="btn" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord" style="margin-right:8px"></i>Discord</button>
+      </div>
+    </div>
+
+    <!-- updates -->
+    <div class="card" style="margin-top:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center">
+        <div>
+          <div style="font-weight:700">Updates</div>
+          <div style="color:var(--muted);font-size:0.92rem;margin-top:6px">No scheduled maintenance. Latest patch notes will appear here.</div>
+        </div>
+        <div style="text-align:right;color:var(--muted);font-size:0.9rem">v1.0.0</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- RIGHT: aside -->
+  <aside class="aside">
+    <div class="about">
+      <h3>About AngkorPS</h3>
+      <p>Minimal, fast and reliable private server for Growtopia enthusiasts. Use the buttons below to quickly copy or download the host file.</p>
+      <div style="margin-top:12px;display:flex;gap:8px">
+        <div class="pill">Stable</div>
+        <div class="pill">Low-latency</div>
+        <div class="pill">Community</div>
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px">
+      <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:10px">
+        <div style="font-weight:700">Quick Links</div>
+        <div style="color:var(--muted);font-size:13px">safe & minimal</div>
+      </div>
+
+      <div style="display:flex;flex-direction:column;gap:8px">
+        <button class="btn" onclick="location.href='https://angkorps.vercel.app/angkor.txt'">Open angkor.txt</button>
+        <button class="btn" onclick="location.href='https://angkorps.vercel.app/angkor.host'">Open angkor.host</button>
+        <button class="btn" onclick="location.href='https://angkorps.vercel.app/ios.txt'">Open ios.txt</button>
+      </div>
+    </div>
+
+    <div class="card" style="padding:12px;text-align:center">
+      <div style="font-weight:700;margin-bottom:8px">Need help?</div>
+      <div style="color:var(--muted);font-size:0.92rem;margin-bottom:12px">Join our Discord for support and announcements.</div>
+      <button class="btn primary" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord" style="margin-right:8px"></i>Join Discord</button>
+    </div>
+  </aside>
 
 </div>
 
-<!-- Toast -->
-<div id="toast" class="toast">Copied: angkorps.vercel.app</div>
+<footer>
+  Copyright © <strong style="color:var(--accent)">AngkorPS</strong> — All rights reserved
+</footer>
+
+<div id="toast" class="toast" role="status" aria-live="polite"></div>
 
 <script>
-    function copyIP() {
-        const text = "angkorps.vercel.app";
-        navigator.clipboard.writeText(text);
+  // constants
+  const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
+5.39.13.21 growtopia2.com
+5.39.13.21 www.growtopia1.com
+5.39.13.21 www.growtopia2.com`;
 
-        const toast = document.getElementById("toast");
-        toast.style.display = "block";
-        setTimeout(() => toast.style.display = "none", 2500);
+  const PT_URL = "https://angkorps.vercel.app/angkor.txt";
+  const HOST_GO_URL = "https://angkorps.vercel.app/angkor.host";
+  const IOS_HOST = "https://angkorps.vercel.app/ios.txt";
+  const PING_API = "https://angkorps.vercel.app/api/ping";
+
+  // tiny toast
+  function showToast(msg, timeout = 1800){
+    const t = document.getElementById('toast');
+    t.textContent = msg;
+    t.style.display = 'block';
+    clearTimeout(t._timer);
+    t._timer = setTimeout(()=> t.style.display = 'none', timeout);
+  }
+
+  function copyText(content){
+    navigator.clipboard.writeText(content).then(()=> showToast('Copied')).catch(()=> showToast('Copy failed'));
+  }
+
+  function copyHost(){ copyText(HOST_IP_TEXT) }
+  function copyPowerTunnel(){ copyText(PT_URL) }
+  function copyHostGoURL(){ copyText(HOST_GO_URL) }
+  function copyIOS(){ copyText(IOS_HOST) }
+
+  function downloadHost(){
+    const blob = new Blob([HOST_IP_TEXT], { type: "text/plain" });
+    const url = URL.createObjectURL(blob);
+    const a = document.createElement('a');
+    a.href = url; a.download = 'angkor.host';
+    document.body.appendChild(a); a.click(); a.remove();
+    URL.revokeObjectURL(url);
+    showToast('Downloaded angkor.host');
+  }
+
+  // server update
+  const indicatorEl = document.getElementById('server-indicator');
+  const onlineEl = document.getElementById('online-count');
+  const lastCheckedEl = document.getElementById('last-checked');
+  const peak24El = document.getElementById('peak-24h');
+
+  let peak24 = 0;
+  async function updateServer(){
+    try{
+      const res = await fetch(PING_API, {cache: "no-store"});
+      if(!res.ok) throw new Error('network');
+      const data = await res.json();
+      const status = (data.serverStatus || data.status || "").toString().toLowerCase();
+      const online = Number(data.onlinePlayersCount ?? data.online ?? 0);
+
+      if(status === "online" || online > 0){
+        indicatorEl.textContent = 'ONLINE';
+        indicatorEl.className = 'status-value status-online';
+      } else {
+        indicatorEl.textContent = 'OFFLINE';
+        indicatorEl.className = 'status-value status-offline';
+      }
+
+      onlineEl.textContent = (Number.isFinite(online) ? online : 0);
+      if(online > peak24) peak24 = online;
+      peak24El.textContent = peak24 || '—';
+
+      const now = new Date();
+      lastCheckedEl.textContent = now.toLocaleString();
+    } catch(err){
+      indicatorEl.textContent = 'OFFLINE';
+      indicatorEl.className = 'status-value status-offline';
+      onlineEl.textContent = 0;
+      lastCheckedEl.textContent = new Date().toLocaleString();
     }
+  }
 
-    // Auto server checking mock
-    function updateServerStatus() {
-        const statusElement = document.getElementById("serverStatus");
-        const online = true; // Replace with real API later
+  // start
+  updateServer();
+  setInterval(updateServer, 5000);
 
-        if (online) {
-            statusElement.textContent = "Online";
-            statusElement.className = "status-online";
-        } else {
-            statusElement.textContent = "Offline";
-            statusElement.className = "status-offline";
-        }
-
-        document.getElementById("onlinePlayers").textContent = Math.floor(40 + Math.random() * 30) + " Players";
-    }
-
-    setInterval(updateServerStatus, 3000);
-    updateServerStatus();
+  // accessibility: allow copy when clicking host text
+  document.getElementById('host-text').addEventListener('click', ()=> copyHost());
 </script>
 
 </body>
