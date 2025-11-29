@@ -1,148 +1,394 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 <title>AngkorPS</title>
 
-<!-- Font -->
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<!-- Fonts & Icons -->
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Favicon -->
+<link rel="icon" type="image/png" href="assets/AngkorPS.png">
 
 <style>
-body {
-  margin:0;
-  font-family:'Inter', sans-serif;
-  background:#0f1115;
-  color:white;
+:root{
+  --bg-1:#081018;
+  --bg-2:#0f1216;
+  --panel:#0f1720;
+  --accent:#10b981;
+  --accent-2:#6dd3ff;
+  --muted:#9aa3ab;
+  --glass: rgba(255,255,255,0.03);
+  --glass-border: rgba(255,255,255,0.06);
+  --card-radius:12px;
+  --pad:16px;
 }
 
-/* Header */
-.header {
-  text-align:center;
-  padding:1.2rem 0 0.7rem 0;
-}
-
-.header h1 {
-  font-size:2rem;
-  font-weight:700;
-  letter-spacing:0.5px;
-  color:white;
-}
-
-.subtitle {
-  margin-top:0.35rem;
-  font-size:0.95rem;
-  color:#b7b7b7;
-  max-width:600px;
-  margin-left:auto;
-  margin-right:auto;
-  line-height:1.3;
-  margin-bottom:0.4rem;
+/* Reset + base */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg-1), var(--bg-2));
+  color:#e7eef3;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.35;
+  padding-bottom:40px;
 }
 
 /* Container */
-.container {
-  width:90%;
-  max-width:900px;
-  margin:auto;
-}
+.wrapper{max-width:1100px;margin:18px auto;padding:18px;}
 
-/* Status Cards */
-.status-grid {
-  display:grid;
-  grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
-  gap:14px;
-  margin-top:1.4rem;
+/* Header / Hero */
+.header{
+  display:flex;
+  gap:16px;
+  align-items:center;
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid var(--glass-border);
+  padding:12px 16px;
+  border-radius:14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
 }
-
-.status-card {
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(255,255,255,0.08);
-  border-radius:12px;
-  padding:14px 10px;
-  text-align:center;
-  transition:0.25s ease;
+.brand{
+  display:flex;gap:12px;align-items:center;
 }
-
-.status-card:hover {
-  transform:translateY(-2px);
-  background:rgba(255,255,255,0.08);
-}
-
-.status-card h3 {
-  margin:0;
-  font-size:0.9rem;
-  font-weight:600;
-  color:#cfcfcf;
-}
-
-.status-card p {
-  margin-top:6px;
-  font-size:1.05rem;
+.brand img{width:44px;height:44px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.04)}
+.brand h1{
+  font-family:Orbitron, sans-serif;
   font-weight:700;
-  color:#10b981; /* green but not glowing */
+  font-size:1.35rem;
+  color:var(--accent);
+  letter-spacing:0.5px;
+}
+.brand p{
+  font-size:0.82rem;color:var(--muted);margin-top:2px;
 }
 
-/* Buttons */
-.btn-section {
-  text-align:center;
-  margin-top:1.5rem;
+/* top actions */
+.top-actions{margin-left:auto;display:flex;gap:10px;align-items:center}
+.action-btn{
+  display:inline-flex;align-items:center;gap:10px;padding:9px 12px;border-radius:10px;background:transparent;border:1px solid var(--glass-border);color:var(--muted);font-weight:600;font-size:0.9rem;cursor:pointer;
+}
+.action-btn.primary{background:linear-gradient(90deg,var(--accent), #22d192);color:#041019;border:none}
+.action-btn:active{transform:translateY(1px)}
+
+/* layout grid */
+.grid{
+  display:grid;
+  grid-template-columns: 1fr 320px;
+  gap:18px;
+  margin-top:18px;
 }
 
-.btn {
+/* left column */
+.col-left{
+  display:flex;
+  flex-direction:column;
+  gap:14px;
+}
+
+/* status bar (compact) */
+.status-row{
+  display:flex;
+  gap:12px;
+  align-items:stretch;
+}
+.card{
+  flex:1;
+  background:var(--glass);
+  border-radius:var(--card-radius);
+  padding:12px;
+  border:1px solid var(--glass-border);
+  display:flex;
+  flex-direction:column;
+  justify-content:center;
+  box-shadow:0 10px 30px rgba(0,0,0,0.55);
+}
+.card.small{padding:10px}
+.card h4{font-size:0.82rem;color:var(--muted);margin-bottom:6px;font-weight:700}
+.stat-value{
+  font-weight:700;font-size:1.05rem;color:var(--accent);
   display:inline-block;
-  padding:10px 22px;
-  background:#10b981;
-  border-radius:8px;
-  color:black;
-  text-decoration:none;
-  font-weight:600;
-  transition:0.25s;
+  padding:6px 10px;border-radius:8px;background:rgba(16,185,129,0.06); /* subtle pill */
 }
 
-.btn:hover {
-  filter:brightness(1.1);
+/* bigger control panel */
+.panel{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:14px;padding:14px;border:1px solid var(--glass-border);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.6);
 }
 
-/* Footer */
-.footer {
-  text-align:center;
-  margin-top:2rem;
-  padding:1rem 0;
-  color:#8d8d8d;
-  font-size:0.85rem;
+/* host & download grid */
+.grid-download{
+  display:grid;
+  grid-template-columns:repeat(2,1fr);
+  gap:10px;
+}
+.btn{
+  width:100%;
+  padding:12px 10px;
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  gap:8px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,0.04);
+  background:linear-gradient(180deg,#12141a,#0d1013);
+  color:#e6eef3;
+}
+.btn.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.04);color:var(--muted)}
+.btn.green{background:linear-gradient(90deg,var(--accent), #22d192);color:#041019;border:none}
+.btn:active{transform:translateY(1px)}
+
+/* right column */
+.col-right{display:flex;flex-direction:column;gap:14px;}
+
+/* small widgets */
+.widget{background:var(--glass);border-radius:12px;padding:12px;border:1px solid var(--glass-border);box-shadow:0 8px 22px rgba(0,0,0,0.5);}
+
+/* discord widget */
+.discord-join{display:flex;gap:12px;align-items:center}
+.discord-join .info{flex:1}
+.discord-join .join{
+  padding:10px 12px;border-radius:10px;background:#5866ff;color:white;font-weight:700;border:none;cursor:pointer;
+}
+
+/* footer */
+.small-print{text-align:center;color:var(--muted);font-size:0.86rem;margin-top:12px}
+
+/* subtle accent lines */
+.sep{height:1px;background:linear-gradient(90deg, rgba(255,255,255,0.03), rgba(255,255,255,0.01));margin:6px 0;border-radius:2px}
+
+/* toast */
+#toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120%);background:var(--accent);color:#041019;padding:10px 14px;border-radius:12px;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:300ms;
+}
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* responsive */
+@media (max-width:980px){
+  .grid{grid-template-columns:1fr; }
+  .grid-download{grid-template-columns:1fr}
+  .top-actions{margin-left:0}
 }
 </style>
 </head>
-
 <body>
 
-<div class="header">
-  <h1>AngkorPS</h1>
-  <p class="subtitle">Experience a smooth & exciting Growtopia private server with stable performance.</p>
-</div>
+<div class="wrapper">
 
-<div class="container">
-
-  <div class="status-grid">
-    <div class="status-card">
-      <h3>Server Status</h3>
-      <p id="serverStatus">OFFLINE</p>
+  <!-- Header -->
+  <div class="header">
+    <div class="brand">
+      <img src="assets/AngkorPS.png" alt="AngkorPS logo" />
+      <div>
+        <h1>AngkorPS</h1>
+        <p style="margin-top:4px;font-size:0.82rem;color:var(--muted)">Private Growtopia server — stable, fast, community-driven.</p>
+      </div>
     </div>
 
-    <div class="status-card">
-      <h3>Online Players</h3>
-      <p id="onlinePlayers">0</p>
+    <div class="top-actions" role="region" aria-label="top actions">
+      <button class="action-btn" onclick="copyHost()"><i class="fas fa-clipboard"></i> Copy IP</button>
+      <button class="action-btn primary" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord"></i> Discord</button>
     </div>
   </div>
 
-  <div class="btn-section">
-    <a class="btn" href="#">Join Our Discord</a>
-  </div>
+  <!-- main grid -->
+  <div class="grid">
 
-</div>
+    <!-- LEFT COLUMN -->
+    <div class="col-left">
 
-<div class="footer">© 2025 AngkorPS — All Rights Reserved</div>
+      <!-- status row -->
+      <div class="status-row">
+        <div class="card small">
+          <h4>Server Status</h4>
+          <div><span id="serverStatus" class="stat-value">Checking...</span></div>
+        </div>
 
+        <div class="card small">
+          <h4>Players Online</h4>
+          <div><span id="playersCount" class="stat-value" style="color:#9fb4c2;background:transparent;padding:6px 10px;border-radius:6px;font-weight:800;">—</span></div>
+        </div>
+      </div>
+
+      <!-- main panel: host & downloads -->
+      <div class="panel">
+        <div style="display:flex;align-items:center;justify-content:space-between;gap:12px">
+          <div>
+            <h3 style="margin:0;font-size:1.05rem;font-weight:800;color:#dceff1">Host & Downloads</h3>
+            <p style="margin:6px 0 0;color:var(--muted);font-size:0.9rem">Get the client, host files, and quick connection helpers.</p>
+          </div>
+          <div style="color:var(--muted);font-weight:700;font-size:0.85rem">v1.0</div>
+        </div>
+
+        <div class="sep"></div>
+
+        <div style="margin-top:12px" class="grid-download" role="list">
+          <button class="btn green" onclick="downloadHost()"><i class="fas fa-download"></i> Download Host</button>
+          <button class="btn" onclick="copyHost()"><i class="fas fa-file-archive"></i> Copy IP Text</button>
+
+          <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i> PowerTunnel URL</button>
+          <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-globe"></i> Host GO URL</button>
+        </div>
+
+        <div style="margin-top:14px;display:flex;gap:10px;flex-wrap:wrap;align-items:center;">
+          <button class="btn ghost" onclick="copyIOS()"><i class="fas fa-mobile-alt"></i> iOS Host</button>
+          <button class="btn ghost" onclick="showToast('Manual install guide copied'); navigator.clipboard.writeText('https://angkorps.vercel.app/install-guide')"><i class="fas fa-book"></i> Install Guide</button>
+        </div>
+      </div>
+
+      <!-- update / features -->
+      <div class="panel" aria-live="polite">
+        <h3 style="margin:0;font-size:1.05rem;font-weight:800;color:#dceff1">Server Updates</h3>
+        <p style="margin-top:8px;color:var(--muted)">Latest news, patches, and scheduled maintenance appear here. (Coming soon)</p>
+
+        <div class="sep"></div>
+
+        <div style="display:flex;gap:10px;margin-top:12px;flex-wrap:wrap">
+          <div style="flex:1;min-width:160px" class="widget">
+            <strong style="display:block;color:#e6f8f0">Uptime</strong>
+            <span style="color:var(--muted)">24/7 monitored</span>
+          </div>
+          <div style="flex:1;min-width:160px" class="widget">
+            <strong style="display:block;color:#e6f8f0">Region</strong>
+            <span style="color:var(--muted)">Asia (recommended)</span>
+          </div>
+        </div>
+      </div>
+
+    </div> <!-- end left -->
+
+    <!-- RIGHT COLUMN -->
+    <aside class="col-right" aria-label="sidebar">
+
+      <div class="widget">
+        <h4 style="margin:0 0 8px 0;font-size:0.95rem;color:#dceff1">Quick Connect</h4>
+        <p style="color:var(--muted);margin:0 0 10px 0;font-size:0.88rem">Use these tools to quickly copy the config you need.</p>
+        <div style="display:flex;gap:8px;flex-wrap:wrap">
+          <button class="btn" onclick="copyHost()"><i class="fas fa-copy"></i> Copy Host</button>
+          <button class="btn" onclick="showToast('IP copied'); copyPowerTunnel()"><i class="fas fa-terminal"></i> PT URL</button>
+        </div>
+      </div>
+
+      <div class="widget">
+        <h4 style="margin:0 0 8px 0;font-size:0.95rem;color:#dceff1">Community</h4>
+        <div class="discord-join">
+          <img src="https://cdn.jsdelivr.net/gh/edent/SuperTinyIcons/images/svg/discord.svg" alt="discord" width="48" height="48" style="opacity:0.9">
+          <div class="info">
+            <div style="font-weight:800;color:#e6f8f0">Join our Discord</div>
+            <div style="color:var(--muted);font-size:0.86rem;margin-top:4px">Chat, support, and events.</div>
+          </div>
+          <button class="join" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord"></i> Join</button>
+        </div>
+      </div>
+
+      <div class="widget">
+        <h4 style="margin:0 0 8px 0;font-size:0.95rem;color:#dceff1">Server Info</h4>
+        <div style="display:flex;flex-direction:column;gap:6px;color:var(--muted)">
+          <div style="display:flex;justify-content:space-between"><span>IP</span><strong>5.39.13.21</strong></div>
+          <div style="display:flex;justify-content:space-between"><span>Port</span><strong>17002</strong></div>
+          <div style="display:flex;justify-content:space-between"><span>Mode</span><strong>Classic</strong></div>
+        </div>
+      </div>
+
+      <div class="widget small-print">
+        © <strong>AngkorPS</strong> · Built with care
+      </div>
+
+    </aside>
+
+  </div> <!-- end grid -->
+
+</div> <!-- end wrapper -->
+
+<!-- toast -->
+<div id="toast" role="status" aria-live="polite"><i class="fas fa-check-circle" style="margin-right:8px"></i><span id="toast-text"></span></div>
+
+<script>
+/* ---------- Toast ---------- */
+function showToast(msg, duration = 1600){
+  const t = document.getElementById('toast');
+  const txt = document.getElementById('toast-text');
+  txt.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(()=> t.classList.remove('show'), duration);
+}
+
+/* ---------- Copy / Download helpers ---------- */
+const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
+5.39.13.21 growtopia2.com
+5.39.13.21 www.growtopia1.com
+5.39.13.21 www.growtopia2.com`;
+
+const PT_URL = "https://angkorps.vercel.app/angkor.txt";
+const HOST_GO_URL = "https://angkorps.vercel.app/angkor.host";
+const IOS_HOST = "https://angkorps.vercel.app/ios.txt";
+
+function copyText(text){
+  navigator.clipboard.writeText(text).then(()=> showToast('Copied')).catch(()=> showToast('Copy failed'));
+}
+function copyHost(){ copyText(HOST_IP_TEXT) }
+function copyPowerTunnel(){ copyText(PT_URL) }
+function copyHostGoURL(){ copyText(HOST_GO_URL) }
+function copyIOS(){ copyText(IOS_HOST) }
+
+function downloadHost(){
+  const blob = new Blob([HOST_IP_TEXT], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'angkor.host';
+  document.body.appendChild(a); a.click();
+  document.body.removeChild(a);
+  URL.revokeObjectURL(url);
+  showToast('Downloaded');
+}
+
+/* ---------- Server status ----------- */
+/* Uses your existing API route. keeps OFFLINE/0 plain (no glow). */
+const serverStatusEl = document.getElementById('serverStatus');
+const playersCountEl = document.getElementById('playersCount');
+
+async function fetchStatus(){
+  try{
+    const res = await fetch('https://angkorps.vercel.app/api/ping', { cache: 'no-store' });
+    const data = await res.json();
+
+    // adapt to both shapes: { serverStatus: "online", onlinePlayersCount: 3 } or { server: { status: 'online', playerCount: 3 } }
+    const statusText = (data.serverStatus || data.server?.status || '').toString().toLowerCase();
+    const players = data.onlinePlayersCount ?? data.server?.playerCount ?? 0;
+
+    if(statusText === 'online'){
+      serverStatusEl.textContent = 'ONLINE';
+      serverStatusEl.style.color = 'var(--accent)';
+    } else {
+      serverStatusEl.textContent = 'OFFLINE';
+      serverStatusEl.style.color = '#cbd5dc'; // muted plain color (no glow)
+    }
+
+    // players: show number but keep style plain when zero
+    playersCountEl.textContent = players || '0';
+    playersCountEl.style.color = players > 0 ? 'var(--accent)' : '#cbd5dc';
+
+  }catch(err){
+    serverStatusEl.textContent = 'OFFLINE';
+    serverStatusEl.style.color = '#cbd5dc';
+    playersCountEl.textContent = '0';
+    playersCountEl.style.color = '#cbd5dc';
+  }
+}
+
+/* initial + interval */
+fetchStatus();
+setInterval(fetchStatus, 5000);
+</script>
 </body>
 </html>
