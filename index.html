@@ -2,16 +2,13 @@
 
 <html lang="en">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0" />
 <title>AngkorPS</title>
 
-<!-- Fonts -->
+<!-- Fonts & Icons -->
 
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Icons -->
-
+<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@600;700&family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <!-- Favicon -->
@@ -19,206 +16,184 @@
 <link rel="icon" type="image/png" href="assets/AngkorPS.png">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
+:root{
+  --bg-1:#081018;
+  --bg-2:#0f1216;
+  --panel:#0f1720;
+  --accent:#10b981;
+  --accent-2:#6dd3ff;
+  --muted:#9aa3ab;
+  --glass: rgba(255,255,255,0.03);
+  --glass-border: rgba(255,255,255,0.06);
+  --card-radius:12px;
+  --pad:16px;
+}
+
+/* Reset + base */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
 body{
-  font-family:'Inter',sans-serif;
-  background: radial-gradient(circle at top,#0e141b,#0b0f13 65%,#000);
-  color:#e4e4e4;
-  min-height:100vh;
-  overflow-x:hidden;
-  line-height:1.4;
+  font-family:Inter, system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  background: linear-gradient(180deg,var(--bg-1), var(--bg-2));
+  color:#e7eef3;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  line-height:1.35;
+  padding-bottom:40px;
 }
 
-.container{max-width:500px;margin:0 auto;padding:1.5rem 1rem;}
+/* Container */
+.wrapper{max-width:500px;margin:18px auto;padding:18px;}
 
-/* Header */
+/* Header / Hero */
 .header{
-  text-align:center;
-  padding:1.2rem 0 0.8rem;
-}
-.title{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(2rem,5vw,2.5rem);
-  font-weight:700;
-  color:#10b981;
   display:flex;
-  justify-content:center;
+  gap:16px;
   align-items:center;
-  gap:0.55rem;
-  text-shadow:0 0 12px rgba(16,185,129,0.55);
+  background: linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border:1px solid var(--glass-border);
+  padding:12px 16px;
+  border-radius:14px;
+  box-shadow: 0 8px 30px rgba(0,0,0,0.6);
 }
-.title img{
-  width:36px;height:36px;border-radius:50%;border:2px solid #10b981;object-fit:cover;
+.brand{
+  display:flex;gap:12px;align-items:center;
 }
-.subtitle{
-  margin-top:0.3rem;
-  font-size:0.92rem;
-  color:#9ea7af;
-  line-height:1.3;
-  max-width:480px;
-  margin-inline:auto;
-  text-align:center;
+.brand img{width:44px;height:44px;border-radius:10px;object-fit:cover;border:2px solid rgba(255,255,255,0.04)}
+.brand h1{
+  font-family:Orbitron, sans-serif;
+  font-weight:700;
+  font-size:1.35rem;
+  color:var(--accent);
+  letter-spacing:0.5px;
 }
-
-/* Sections */
-.section{
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(16,185,129,0.25);
-  border-radius:18px;
-  padding:1.7rem;
-  margin-bottom:1.6rem;
-  box-shadow:0 5px 22px rgba(0,0,0,0.55);
-  backdrop-filter:blur(7px);
-  transition:.25s;
-}
-.section:hover{
-  transform:translateY(-3px);
-}
-.section-title{
-  display:flex;align-items:center;gap:0.7rem;
-  font-size:1.2rem;font-weight:600;margin-bottom:1.2rem;
-}
-.section-title i{
-  color:#10b981;font-size:1.35rem;
+.brand p{
+  font-size:0.82rem;color:var(--muted);margin-top:2px;
 }
 
-/* Buttons in Host & Downloads */
-.btn-grid{
+/* Host & Downloads panel */
+.panel{
+  background:linear-gradient(180deg, rgba(255,255,255,0.02), rgba(255,255,255,0.01));
+  border-radius:14px;padding:14px;border:1px solid var(--glass-border);
+  box-shadow: 0 18px 40px rgba(0,0,0,0.6);
+  margin-top:18px;
+}
+
+/* download grid */
+.grid-download{
   display:grid;
   grid-template-columns:1fr;
-  gap:0.9rem;
+  gap:10px;
+  margin-top:12px;
 }
 .btn{
-  padding:14px;
-  background:#1f2226;
-  border:none;
-  border-radius:12px;
-  color:white;
-  font-weight:600;
-  font-size:0.95rem;
-  cursor:pointer;
-  transition:.2s;
-  box-shadow:0 4px 14px rgba(0,0,0,0.45);
-  display:flex;
+  width:100%;
+  padding:12px 10px;
+  display:inline-flex;
   align-items:center;
   justify-content:center;
-  gap:0.6rem;
+  gap:8px;
+  border-radius:10px;
+  font-weight:700;
+  cursor:pointer;
+  border:1px solid rgba(255,255,255,0.04);
+  background:linear-gradient(180deg,#12141a,#0d1013);
+  color:#e6eef3;
 }
-.btn:hover{
-  filter:brightness(1.13);
-}
-.btn-discord{background:#5562ff;}
-
-/* Footer */
-.footer{
-  text-align:center;
-  margin-top:2rem;
-  padding:2rem 0;
-  color:#7d7d7d;
-  font-size:0.88rem;
-  border-top:1px solid rgba(255,255,255,0.06);
-}
-.footer strong{color:#10b981;}
+.btn.green{background:linear-gradient(90deg,var(--accent), #22d192);color:#041019;border:none}
+.btn.ghost{background:transparent;border:1px dashed rgba(255,255,255,0.04);color:var(--muted)}
+.btn:active{transform:translateY(1px)}
 
 /* Toast */
-.toast{
-  position:fixed;
-  bottom:28px;left:50%;
-  transform:translateX(-50%) translateY(100px);
-  background:rgba(16,185,129,0.95);
-  color:#fff;
-  padding:0.85rem 1.4rem;
-  border-radius:14px;
-  font-size:0.92rem;
-  display:flex;align-items:center;gap:0.55rem;
-  pointer-events:none;
-  opacity:0;
-  transition:.45s;
-  z-index:9999;
+#toast{
+  position:fixed;left:50%;bottom:22px;transform:translateX(-50%) translateY(120%);background:var(--accent);color:#041019;padding:10px 14px;border-radius:12px;font-weight:700;box-shadow:0 12px 30px rgba(0,0,0,0.5);z-index:9999;opacity:0;transition:300ms;
 }
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
+#toast.show{transform:translateX(-50%) translateY(0);opacity:1}
+
+/* responsive */
+@media (max-width:600px){
+  .wrapper{padding:12px;margin:12px auto;}
 }
-.toast.error{background:rgba(255,60,60,0.95);}
 </style>
 
 </head>
-
 <body>
 
-<header class="header">
-  <h1 class="title"><img src="assets/AngkorPS.png"> AngkorPS</h1>
-  <p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
-</header>
+<div class="wrapper">
 
-<div class="container">
+  <!-- Header -->
 
-<!-- Host & Downloads Section -->
-
-<section class="section">
-  <div class="section-title"><i class="fas fa-server"></i>HOST & DOWNLOADS</div>
-  <div class="btn-grid">
-    <button class="btn" onclick="copyHost()"><i class="fas fa-copy"></i> Copy IP Text</button>
-    <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i> PowerTunnel URL</button>
-    <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-globe"></i> Host GO URL</button>
-    <button class="btn" onclick="copyIOS()"><i class="fab fa-apple"></i> iOS Host</button>
-    <button class="btn" onclick="downloadHost()"><i class="fas fa-download"></i> Download Host</button>
-    <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')"><i class="fab fa-discord"></i> Join Discord</button>
+  <div class="header">
+    <div class="brand">
+      <img src="assets/AngkorPS.png" alt="AngkorPS logo" />
+      <div>
+        <h1>AngkorPS</h1>
+        <p style="margin-top:4px;font-size:0.82rem;color:var(--muted)">Private Growtopia server — stable, fast, community-driven.</p>
+      </div>
+    </div>
   </div>
-</section>
+
+  <!-- Host & Downloads Panel -->
+
+  <div class="panel">
+    <h3 style="margin:0;font-size:1.05rem;font-weight:800;color:#dceff1">Host & Downloads</h3>
+    <p style="margin-top:6px;color:var(--muted);font-size:0.88rem">Get the client, host files, and quick connection helpers.</p>
+
+```
+<div class="grid-download">
+  <button class="btn green" onclick="downloadHost()"><i class="fas fa-download"></i> Download Host</button>
+  <button class="btn" onclick="copyHost()"><i class="fas fa-file-archive"></i> Copy IP Text</button>
+  <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i> PowerTunnel URL</button>
+  <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-globe"></i> Host GO URL</button>
+  <button class="btn ghost" onclick="copyIOS()"><i class="fas fa-mobile-alt"></i> iOS Host</button>
+</div>
+```
+
+  </div>
 
 </div>
 
-<footer class="footer">
-  © <strong>AngkorPS</strong>
-</footer>
+<!-- toast -->
 
-<!-- Toast -->
-
-<div id="toast" class="toast"><i class="fas fa-check-circle"></i><span></span></div>
+<div id="toast" role="status" aria-live="polite"><i class="fas fa-check-circle" style="margin-right:8px"></i><span id="toast-text"></span></div>
 
 <script>
-function showToast(msg,type="success"){
-  const t=document.getElementById("toast");
-  const icon=t.querySelector("i");
-  t.querySelector("span").textContent=msg;
-
-  if(type==="success"){t.classList.remove("error");icon.className="fas fa-check-circle";}
-  else{t.classList.add("error");icon.className="fas fa-times-circle";}
-
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),2000);
+/* ---------- Toast ---------- */
+function showToast(msg, duration = 1600){
+  const t = document.getElementById('toast');
+  const txt = document.getElementById('toast-text');
+  txt.textContent = msg;
+  t.classList.add('show');
+  clearTimeout(t._hideTimer);
+  t._hideTimer = setTimeout(()=> t.classList.remove('show'), duration);
 }
 
-const HOST_IP_TEXT=`5.39.13.21 growtopia1.com
+/* ---------- Copy / Download helpers ---------- */
+const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
 5.39.13.21 www.growtopia2.com`;
-const PT_URL="https://angkorps.vercel.app/angkor.txt";
-const HOST_GO_URL="https://angkorps.vercel.app/angkor.host";
-const IOS_HOST="https://angkorps.vercel.app/ios.txt";
+const PT_URL = "https://angkorps.vercel.app/angkor.txt";
+const HOST_GO_URL = "https://angkorps.vercel.app/angkor.host";
+const IOS_HOST = "https://angkorps.vercel.app/ios.txt";
 
-function copyText(x){
-  navigator.clipboard.writeText(x)
-  .then(()=>showToast("Copied"))
-  .catch(()=>showToast("Failed","error"));
+function copyText(text){
+  navigator.clipboard.writeText(text).then(()=> showToast('Copied')).catch(()=> showToast('Copy failed'));
 }
-
-function copyHost(){copyText(HOST_IP_TEXT);}
-function copyPowerTunnel(){copyText(PT_URL);}
-function copyHostGoURL(){copyText(HOST_GO_URL);}
-function copyIOS(){copyText(IOS_HOST);}
+function copyHost(){ copyText(HOST_IP_TEXT) }
+function copyPowerTunnel(){ copyText(PT_URL) }
+function copyHostGoURL(){ copyText(HOST_GO_URL) }
+function copyIOS(){ copyText(IOS_HOST) }
 
 function downloadHost(){
-  const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;a.download="angkor.host";
-  document.body.appendChild(a);a.click();
+  const blob = new Blob([HOST_IP_TEXT], { type: 'text/plain' });
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement('a');
+  a.href = url; a.download = 'angkor.host';
+  document.body.appendChild(a); a.click();
   document.body.removeChild(a);
   URL.revokeObjectURL(url);
-  showToast("Downloaded!");
+  showToast('Downloaded');
 }
 </script>
 
