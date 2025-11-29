@@ -71,29 +71,18 @@ body{
   font-size:0.82rem;color:var(--muted);margin-top:2px;
 }
 
-/* Status Cards */
+/* Status Row */
 .status-row{
   display:flex;
-  gap:12px;
-  margin-top:18px;
-}
-.card{
-  flex:1;
+  justify-content:space-between;
   background:var(--glass);
-  border-radius:var(--card-radius);
-  padding:12px;
   border:1px solid var(--glass-border);
-  display:flex;
-  flex-direction:column;
-  justify-content:center;
+  border-radius:var(--card-radius);
+  padding:12px 16px;
+  margin-top:18px;
   box-shadow:0 10px 30px rgba(0,0,0,0.55);
 }
-.card h4{font-size:0.82rem;color:var(--muted);margin-bottom:6px;font-weight:700}
-.stat-value{
-  font-weight:700;font-size:1.05rem;color:var(--accent);
-  display:inline-block;
-  padding:6px 10px;border-radius:8px;background:rgba(16,185,129,0.06);
-}
+.status-row span{font-weight:700;font-size:1.05rem;}
 
 /* Host & Downloads panel */
 .panel{
@@ -137,7 +126,7 @@ body{
 /* responsive */
 @media (max-width:600px){
   .wrapper{padding:12px;margin:12px auto;}
-  .status-row{flex-direction:column;gap:10px;}
+  .status-row{flex-direction:column;gap:8px;}
 }
 </style>
 
@@ -158,17 +147,11 @@ body{
     </div>
   </div>
 
-  <!-- Status Cards -->
+  <!-- Status Row -->
 
   <div class="status-row">
-    <div class="card">
-      <h4>Server Status</h4>
-      <div><span id="serverStatus" class="stat-value">Checking...</span></div>
-    </div>
-    <div class="card">
-      <h4>Players Online</h4>
-      <div><span id="playersCount" class="stat-value" style="color:#9fb4c2;background:transparent;padding:6px 10px;border-radius:6px;font-weight:800;">—</span></div>
-    </div>
+    <div>Server Status: <span id="serverStatus">Checking...</span></div>
+    <div>Players Online: <span id="playersCount">—</span></div>
   </div>
 
   <!-- Host & Downloads Panel -->
