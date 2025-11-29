@@ -5,302 +5,144 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
 <title>AngkorPS</title>
 
-<!-- Fonts -->
-<link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@500;700&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
-<!-- Icons -->
-<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
-<!-- Favicon -->
-<link rel="icon" type="image/png" href="assets/AngkorPS.png">
+<!-- Font -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;600;700&display=swap" rel="stylesheet">
 
 <style>
-*{margin:0;padding:0;box-sizing:border-box;}
-body{
-  font-family:'Inter',sans-serif;
-  background: radial-gradient(circle at top,#0e141b,#0b0f13 65%,#000);
-  color:#e4e4e4;
-  min-height:100vh;
-  overflow-x:hidden;
+body {
+  margin:0;
+  font-family:'Inter', sans-serif;
+  background:#0f1115;
+  color:white;
 }
-
-.container{max-width:960px;margin:0 auto;padding:1.5rem 1rem;}
 
 /* Header */
-.header{
+.header {
   text-align:center;
-  padding:1.2rem 0 0.8rem;
-  animation:fadeIn .7s ease-out forwards;
+  padding:1.2rem 0 0.7rem 0;
 }
-.title{
-  font-family:'Orbitron',sans-serif;
-  font-size:clamp(1.9rem,5vw,2.7rem);
+
+.header h1 {
+  font-size:2rem;
   font-weight:700;
-  color:#10b981;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  gap:0.55rem;
-  text-shadow:0 0 12px rgba(16,185,129,0.55);
+  letter-spacing:0.5px;
+  color:white;
 }
-.title img{
-  width:34px;height:34px;border-radius:50%;border:2px solid #10b981;object-fit:cover;
-}
-.subtitle{
-  margin-top:0.3rem;
-  font-size:0.92rem;
-  color:#9ea7af;
+
+.subtitle {
+  margin-top:0.35rem;
+  font-size:0.95rem;
+  color:#b7b7b7;
+  max-width:600px;
+  margin-left:auto;
+  margin-right:auto;
   line-height:1.3;
-  max-width:520px;
-  margin-inline:auto;
+  margin-bottom:0.4rem;
+}
+
+/* Container */
+.container {
+  width:90%;
+  max-width:900px;
+  margin:auto;
 }
 
 /* Status Cards */
-.status-grid{
+.status-grid {
   display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  grid-template-columns:repeat(auto-fit, minmax(150px, 1fr));
   gap:14px;
-  margin:1.4rem 0 2rem;
+  margin-top:1.4rem;
 }
-.status-card{
+
+.status-card {
   background:rgba(255,255,255,0.05);
-  border:1px solid rgba(16,185,129,0.25);
-  padding:12px;
-  border-radius:14px;
-  text-align:center;
-  backdrop-filter:blur(6px);
-  box-shadow:0 4px 16px rgba(0,0,0,0.45);
-  transition:.25s;
-}
-.status-card:hover{
-  transform:translateY(-2px);
-  filter:brightness(1.09);
-}
-.status-card h3{
-  font-size:0.88rem;
-  color:#cfd3d6;
-  margin-bottom:6px;
-  letter-spacing:0.3px;
-}
-.status-card p{
-  font-size:1.05rem;
-  font-weight:600;
-  color:#10b981;
-  text-shadow:0 0 5px rgba(16,185,129,0.45);
-}
-
-/* Sections */
-.section{
-  background:rgba(255,255,255,0.05);
-  border:1px solid rgba(16,185,129,0.25);
-  border-radius:18px;
-  padding:1.7rem;
-  margin-bottom:1.6rem;
-  box-shadow:0 5px 22px rgba(0,0,0,0.55);
-  backdrop-filter:blur(7px);
-  transition:.25s;
-}
-.section:hover{
-  transform:translateY(-3px);
-}
-.section-title{
-  display:flex;align-items:center;gap:0.7rem;
-  font-size:1.18rem;font-weight:600;margin-bottom:1.2rem;
-}
-.section-title i{
-  color:#10b981;font-size:1.3rem;
-}
-
-.btn-grid{
-  display:grid;
-  grid-template-columns:repeat(auto-fit,minmax(160px,1fr));
-  gap:0.9rem;
-}
-
-.btn{
-  padding:13px;
-  background:#1f2226;
-  border:none;
+  border:1px solid rgba(255,255,255,0.08);
   border-radius:12px;
-  color:white;
-  font-weight:600;
-  font-size:0.92rem;
-  cursor:pointer;
-  transition:.2s;
-  box-shadow:0 4px 14px rgba(0,0,0,0.45);
-}
-.btn:hover{
-  filter:brightness(1.13);
+  padding:14px 10px;
+  text-align:center;
+  transition:0.25s ease;
 }
 
-.btn-discord{background:#5562ff;}
+.status-card:hover {
+  transform:translateY(-2px);
+  background:rgba(255,255,255,0.08);
+}
+
+.status-card h3 {
+  margin:0;
+  font-size:0.9rem;
+  font-weight:600;
+  color:#cfcfcf;
+}
+
+.status-card p {
+  margin-top:6px;
+  font-size:1.05rem;
+  font-weight:700;
+  color:#10b981; /* green but not glowing */
+}
+
+/* Buttons */
+.btn-section {
+  text-align:center;
+  margin-top:1.5rem;
+}
+
+.btn {
+  display:inline-block;
+  padding:10px 22px;
+  background:#10b981;
+  border-radius:8px;
+  color:black;
+  text-decoration:none;
+  font-weight:600;
+  transition:0.25s;
+}
+
+.btn:hover {
+  filter:brightness(1.1);
+}
 
 /* Footer */
-.footer{
+.footer {
   text-align:center;
   margin-top:2rem;
-  padding:2rem 0;
-  color:#7d7d7d;
-  font-size:0.88rem;
-  border-top:1px solid rgba(255,255,255,0.06);
+  padding:1rem 0;
+  color:#8d8d8d;
+  font-size:0.85rem;
 }
-.footer strong{color:#10b981;}
-
-@keyframes fadeIn{
-  from{opacity:0;transform:scale(.92);}
-  to{opacity:1;transform:scale(1);}
-}
-
-/* Toast */
-.toast{
-  position:fixed;
-  bottom:28px;left:50%;
-  transform:translateX(-50%) translateY(100px);
-  background:rgba(16,185,129,0.95);
-  color:#fff;
-  padding:0.85rem 1.4rem;
-  border-radius:14px;
-  font-size:0.92rem;
-  display:flex;align-items:center;gap:0.55rem;
-  pointer-events:none;
-  opacity:0;
-  transition:.45s;
-  z-index:9999;
-}
-.toast.show{
-  opacity:1;
-  transform:translateX(-50%) translateY(0);
-}
-.toast.error{background:rgba(255,60,60,0.95);}
 </style>
 </head>
 
 <body>
 
-<header class="header">
-  <h1 class="title"><img src="assets/AngkorPS.png"> AngkorPS</h1>
-  <p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
-</header>
+<div class="header">
+  <h1>AngkorPS</h1>
+  <p class="subtitle">Experience a smooth & exciting Growtopia private server with stable performance.</p>
+</div>
 
 <div class="container">
 
-<!-- Status -->
-<div class="status-grid">
-  <div class="status-card">
-    <h3>Server Status</h3>
-    <p id="serverStatus">Checking...</p>
+  <div class="status-grid">
+    <div class="status-card">
+      <h3>Server Status</h3>
+      <p id="serverStatus">OFFLINE</p>
+    </div>
+
+    <div class="status-card">
+      <h3>Online Players</h3>
+      <p id="onlinePlayers">0</p>
+    </div>
   </div>
 
-  <div class="status-card">
-    <h3>Players Online</h3>
-    <p id="playersCount">Loading...</p>
+  <div class="btn-section">
+    <a class="btn" href="#">Join Our Discord</a>
   </div>
-</div>
-
-<!-- Host Section -->
-<section class="section">
-  <div class="section-title"><i class="fas fa-server"></i>HOST & DOWNLOAD</div>
-  <div class="btn-grid">
-    <button class="btn" onclick="copyHost()">Copy IP</button>
-    <button class="btn" onclick="downloadHost()">Download Host</button>
-    <button class="btn" onclick="copyPowerTunnel()">PowerTunnel URL</button>
-    <button class="btn" onclick="copyHostGoURL()">Host GO URL</button>
-    <button class="btn" onclick="copyIOS()">iOS Host</button>
-  </div>
-</section>
-
-<!-- Discord -->
-<section class="section">
-  <div class="section-title"><i class="fab fa-discord"></i>DISCORD</div>
-  <div class="btn-grid">
-    <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">Join</button>
-  </div>
-</section>
-
-<!-- Update -->
-<section class="section">
-  <div class="section-title"><i class="fas fa-bolt"></i>UPDATE</div>
-  <p style="color:#9ea7af;font-size:0.9rem;">Coming Soon!</p>
-</section>
 
 </div>
 
-<footer class="footer">
-  © <strong>AngkorPS</strong>
-</footer>
-
-<!-- Toast -->
-<div id="toast" class="toast"><i class="fas fa-check-circle"></i><span></span></div>
-
-<script>
-function showToast(msg,type="success"){
-  const t=document.getElementById("toast");
-  const icon=t.querySelector("i");
-  t.querySelector("span").textContent=msg;
-
-  if(type==="success"){t.classList.remove("error");icon.className="fas fa-check-circle";}
-  else{t.classList.add("error");icon.className="fas fa-times-circle";}
-
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),2000);
-}
-
-const HOST_IP_TEXT=`5.39.13.21 growtopia1.com
-5.39.13.21 growtopia2.com
-5.39.13.21 www.growtopia1.com
-5.39.13.21 www.growtopia2.com`;
-const PT_URL="https://angkorps.vercel.app/angkor.txt";
-const HOST_GO_URL="https://angkorps.vercel.app/angkor.host";
-const IOS_HOST="https://angkorps.vercel.app/ios.txt";
-
-function copyText(x){
-  navigator.clipboard.writeText(x)
-  .then(()=>showToast("Copied"))
-  .catch(()=>showToast("Failed","error"));
-}
-
-function copyHost(){copyText(HOST_IP_TEXT);}
-function copyPowerTunnel(){copyText(PT_URL);}
-function copyHostGoURL(){copyText(HOST_GO_URL);}
-function copyIOS(){copyText(IOS_HOST);}
-
-function downloadHost(){
-  const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"});
-  const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url;a.download="angkor.host";
-  document.body.appendChild(a);a.click();
-  document.body.removeChild(a);
-  URL.revokeObjectURL(url);
-  showToast("Downloaded!");
-}
-
-/* Server Status */
-async function updateServer(){
-  const status=document.getElementById("serverStatus");
-  const online=document.getElementById("playersCount");
-  try{
-    const res=await fetch("https://angkorps.vercel.app/api/ping");
-    const data=await res.json();
-    if(data.serverStatus?.toLowerCase()==="online"){
-      status.textContent="ONLINE";
-      status.style.color="#10b981";
-      online.textContent=data.onlinePlayersCount??0;
-    }else{
-      status.textContent="OFFLINE";
-      status.style.color="red";
-      online.textContent=0;
-    }
-  }catch{
-    status.textContent="OFFLINE";
-    status.style.color="red";
-    online.textContent=0;
-  }
-}
-
-updateServer();
-setInterval(updateServer,5000);
-</script>
+<div class="footer">© 2025 AngkorPS — All Rights Reserved</div>
 
 </body>
 </html>
