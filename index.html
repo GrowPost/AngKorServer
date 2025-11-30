@@ -107,7 +107,7 @@ body {
   font-size: 1.1rem;
   font-weight: 600;
   color: #fff;
-  margin-bottom: 1rem; /* ADDED: spacing under section titles */
+  margin-bottom: 1rem;
 }
 
 .section-title i {
@@ -119,6 +119,7 @@ body {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
   gap: .8rem;
+  margin-top: 0.6rem; /* spacing between title & buttons */
 }
 
 .btn {
@@ -144,6 +145,19 @@ body {
 
 .btn-discord:hover {
   opacity: .85;
+}
+
+/* LEADERBOARD */
+.leaderboard-list {
+  list-style: none;
+  padding-left: 0;
+  margin-top: 0.5rem;
+}
+
+.leaderboard-list li {
+  padding: 6px 0;
+  border-bottom: 1px solid #1f242c;
+  font-size: 0.95rem;
 }
 
 /* FOOTER */
@@ -206,12 +220,14 @@ body {
 <!-- LEADERBOARD -->
 <section class="section">
   <div class="section-title"><i class="fas fa-trophy"></i> Leaderboard</div>
-  <ul id="leaderboardList" style="list-style:none; padding-left:0; color:#e5e5e5; font-weight:500;"></ul>
+  <ul id="leaderboardList" class="leaderboard-list">
+    <li>Loading...</li>
+  </ul>
 </section>
 
 <!-- HOST & DOWNLOAD -->
 <section class="section">
-  <div class="section-title"><i class="fas fa-server"></i> HOST & DOWNLOAD</div>
+  <div class="section-title"><i class="fas fa-server"></i> Host & Download</div>
   <div class="btn-grid">
     <button class="btn" onclick="copyHost()">Copy IP</button>
     <button class="btn" onclick="downloadHost()">Download Host</button>
@@ -223,7 +239,7 @@ body {
 
 <!-- DISCORD -->
 <section class="section">
-  <div class="section-title"><i class="fab fa-discord"></i> DISCORD</div>
+  <div class="section-title"><i class="fab fa-discord"></i> Discord</div>
   <div class="btn-grid">
     <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join</button>
   </div>
@@ -271,7 +287,7 @@ function downloadHost(){
   showToast("Downloaded!");
 }
 
-/* SERVER STATUS & LEADERBOARD */
+/* SERVER STATUS */
 async function updateServer(){
   try{
     const res = await fetch("https://angkorps.vercel.app/api/ping");
@@ -285,25 +301,24 @@ async function updateServer(){
     document.getElementById("playersCount").textContent =
       data.onlinePlayersCount ?? 0;
 
-    // Leaderboard
-    const leaderboard = document.getElementById("leaderboardList");
-    leaderboard.innerHTML = "";
-    if(data.leaderboard && data.leaderboard.length){
-      data.leaderboard.forEach((player)=>{
+    // UPDATE LEADERBOARD
+    const list = document.getElementById("leaderboardList");
+    list.innerHTML = "";
+    if(data.leaderboard && data.leaderboard.length > 0){
+      data.leaderboard.forEach(entry=>{
         const li = document.createElement("li");
-        li.textContent = player;
-        leaderboard.appendChild(li);
+        li.textContent = entry;
+        list.appendChild(li);
       });
     } else {
-      const li = document.createElement("li");
-      li.textContent = "No players found.";
-      leaderboard.appendChild(li);
+      list.innerHTML = "<li>No players found.</li>";
     }
 
   } catch {
     document.getElementById("serverStatus").textContent = "OFFLINE";
     document.getElementById("serverStatus").style.color = "red";
     document.getElementById("playersCount").textContent = 0;
+    document.getElementById("leaderboardList").innerHTML = "<li>No players found.</li>";
   }
 }
 
