@@ -150,8 +150,8 @@ body {
 /* LEADERBOARD */
 #leaderboardList div {
   padding: 6px 10px;
-  border-bottom: 1px solid #1f242c;
   font-size: .95rem;
+  color: #10b981;
 }
 
 /* FOOTER */
@@ -199,6 +199,14 @@ body {
 
 <div class="container">
 
+<!-- LEADERBOARD -->
+<section class="section">
+  <div class="section-title"><i class="fas fa-trophy"></i> Leaderboard</div>
+  <div id="leaderboardList">
+    Loading leaderboard...
+  </div>
+</section>
+
 <!-- STATUS CARDS -->
 <div class="status-grid">
   <div class="status-card">
@@ -228,14 +236,6 @@ body {
   <div class="section-title"><i class="fab fa-discord"></i> DISCORD</div>
   <div class="btn-grid">
     <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join</button>
-  </div>
-</section>
-
-<!-- LEADERBOARD -->
-<section class="section">
-  <div class="section-title"><i class="fas fa-trophy"></i> Leaderboard</div>
-  <div id="leaderboardList" style="color:#aaa; font-size:.95rem; margin-top:.5rem;">
-    Loading leaderboard...
   </div>
 </section>
 
@@ -301,7 +301,7 @@ async function updateServer(){
       leaderboardEl.innerHTML = "";
       data.leaderboard.forEach(entry => {
         const div = document.createElement("div");
-        div.textContent = entry; // already formatted: "#1. JonhAndy 537 wls"
+        div.textContent = entry; // "#1. JonhAndy 537 wls"
         leaderboardEl.appendChild(div);
       });
     } else {
