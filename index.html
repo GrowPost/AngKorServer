@@ -146,6 +146,14 @@ body {
   opacity: .85;
 }
 
+/* LEADERBOARD */
+#leaderboardList {
+  margin-top: 1rem;
+  font-size: 0.95rem;
+  color: #e5e5e5;
+  line-height: 1.5rem;
+}
+
 /* FOOTER */
 .footer {
   text-align: center;
@@ -223,20 +231,12 @@ body {
   </div>
 </section>
 
-<!-- UPDATE -->
+<!-- LEADERBOARD -->
 <section class="section">
-  <div class="section-title"><i class="fas fa-bolt"></i> UPDATE</div>
-  <p style="color:#aaa; font-size: .9rem;">- Black Crystal Ball Head (ID: 15796) (Rarity 999) Clothes
-- Blackfire Crown (ID: 15798) (Rarity 999) Clothes
-- Black Ultraviolet Wings (ID: 15800) (Rarity 999) Clothes
-- Weather Machine - Black Digital Rain (ID: 15802) (Rarity 999)
-- Black Lavish Shades (ID: 15804) (Rarity 999) Clothes
-- Black Sequin Fedora (ID: 15806) (Rarity 999) Clothes
-- Black Sequin Jacket (ID: 15808) (Rarity 999) Clothes
-- Black Swimming Cap (ID: 15810) (Rarity 999) Clothes
-- Black Ultraviolet Sword Block (ID: 15812) (Rarity 999)
-- Bleached Hair (ID: 15814) (Rarity 999) Clothes
-- Metal Band Shirt (ID: 15816) (Rarity 999) Clothes</p>
+  <div class="section-title"><i class="fas fa-bolt"></i> Leaderboard</div>
+  <div id="leaderboardList">
+    Loading leaderboard...
+  </div>
 </section>
 
 </div>
@@ -281,12 +281,13 @@ function downloadHost(){
   showToast("Downloaded!");
 }
 
-/* SERVER STATUS */
+/* SERVER STATUS + LEADERBOARD */
 async function updateServer(){
   try{
     const res = await fetch("https://angkorps.vercel.app/api/ping");
     const data = await res.json();
 
+    // Server status
     document.getElementById("serverStatus").textContent =
       data.serverStatus === "online" ? "ONLINE" : "OFFLINE";
     document.getElementById("serverStatus").style.color =
@@ -295,22 +296,30 @@ async function updateServer(){
     document.getElementById("playersCount").textContent =
       data.onlinePlayersCount ?? 0;
 
+    // Leaderboard
+    const leaderboardEl = document.getElementById("leaderboardList");
+    if (Array.isArray(data.leaderboard) && data.leaderboard.length > 0) {
+      leaderboardEl.innerHTML = "";
+      data.leaderboard.forEach((player, idx) => {
+        const div = document.createElement("div");
+        div.textContent = `#${idx+1}. ${player.name} ${player.value.toLocaleString()} World Locks`;
+        leaderboardEl.appendChild(div);
+      });
+    } else {
+      leaderboardEl.textContent = "No players found";
+    }
+
   } catch {
     document.getElementById("serverStatus").textContent = "OFFLINE";
     document.getElementById("serverStatus").style.color = "red";
     document.getElementById("playersCount").textContent = 0;
+    document.getElementById("leaderboardList").textContent = "Failed to load leaderboard";
   }
 }
 
 updateServer();
-setInterval(updateServer,5000);
+setInterval(updateServer, 5000);
 </script>
 
 </body>
 </html>
-
-
-
-
-
-
