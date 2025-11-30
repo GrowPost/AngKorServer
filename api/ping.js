@@ -1,4 +1,5 @@
 // api/ping.js
+
 let lastStatus = null; // Store the latest server status
 const OFFLINE_THRESHOLD = 12; // 12 seconds → online/offline detection
 
@@ -10,18 +11,22 @@ export default function handler(req, res) {
     try {
       const data = typeof req.body === "string" ? JSON.parse(req.body) : req.body;
 
-      if (!data.serverName) 
+      if (!data.serverName)
         return res.status(400).json({ success: false, error: "Missing serverName" });
 
       lastStatus = {
         serverName: data.serverName,
         onlinePlayersCount: data.onlinePlayersCount || 0,
         currentDate: data.currentDate || null,
-        timestamp: data.timestamp || now
+        timestamp: data.timestamp || now,
+
+        // ✅ NEW: Leaderboard support (WL Leaderboard from Lua)
+        leaderboard: Array.isArray(data.leaderboard) ? data.leaderboard : []
       };
 
       return res.status(200).json({ success: true, stored: lastStatus });
-    } catch {
+
+    } catch (err) {
       return res.status(400).json({ success: false, error: "Invalid JSON" });
     }
   }
@@ -35,7 +40,8 @@ export default function handler(req, res) {
         currentDate: null,
         timestamp: now,
         serverStatus: "offline",
-        lastUpdateSecondsAgo: null
+        lastUpdateSecondsAgo: null,
+        leaderboard: [] // **empty leaderboard before data exists**
       });
     }
 
