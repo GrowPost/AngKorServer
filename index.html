@@ -130,6 +130,7 @@ body {
   font-weight: 500;
   font-size: .9rem;
   transition: .15s ease;
+  cursor: pointer;
 }
 
 .btn:hover {
@@ -147,11 +148,10 @@ body {
 }
 
 /* LEADERBOARD */
-#leaderboardList {
-  margin-top: 1rem;
-  font-size: 0.95rem;
-  color: #e5e5e5;
-  line-height: 1.5rem;
+#leaderboardList div {
+  padding: 6px 10px;
+  border-bottom: 1px solid #1f242c;
+  font-size: .95rem;
 }
 
 /* FOOTER */
@@ -233,8 +233,8 @@ body {
 
 <!-- LEADERBOARD -->
 <section class="section">
-  <div class="section-title"><i class="fas fa-bolt"></i> Leaderboard</div>
-  <div id="leaderboardList">
+  <div class="section-title"><i class="fas fa-trophy"></i> Leaderboard</div>
+  <div id="leaderboardList" style="color:#aaa; font-size:.95rem; margin-top:.5rem;">
     Loading leaderboard...
   </div>
 </section>
@@ -288,28 +288,28 @@ async function updateServer(){
     const data = await res.json();
 
     // Server status
-    document.getElementById("serverStatus").textContent =
-      data.serverStatus === "online" ? "ONLINE" : "OFFLINE";
-    document.getElementById("serverStatus").style.color =
-      data.serverStatus === "online" ? "#10b981" : "red";
+    const isOnline = data.serverStatus === "online";
+    document.getElementById("serverStatus").textContent = isOnline ? "ONLINE" : "OFFLINE";
+    document.getElementById("serverStatus").style.color = isOnline ? "#10b981" : "red";
 
-    document.getElementById("playersCount").textContent =
-      data.onlinePlayersCount ?? 0;
+    // Players count
+    document.getElementById("playersCount").textContent = data.onlinePlayersCount ?? 0;
 
     // Leaderboard
     const leaderboardEl = document.getElementById("leaderboardList");
     if (Array.isArray(data.leaderboard) && data.leaderboard.length > 0) {
       leaderboardEl.innerHTML = "";
-      data.leaderboard.forEach((player, idx) => {
+      data.leaderboard.forEach(entry => {
         const div = document.createElement("div");
-        div.textContent = `#${idx+1}. ${player.name} ${player.value.toLocaleString()} World Locks`;
+        div.textContent = entry; // already formatted: "#1. JonhAndy 537 wls"
         leaderboardEl.appendChild(div);
       });
     } else {
       leaderboardEl.textContent = "No players found";
     }
 
-  } catch {
+  } catch (err) {
+    console.error(err);
     document.getElementById("serverStatus").textContent = "OFFLINE";
     document.getElementById("serverStatus").style.color = "red";
     document.getElementById("playersCount").textContent = 0;
@@ -317,6 +317,7 @@ async function updateServer(){
   }
 }
 
+// Initial load + refresh every 5 seconds
 updateServer();
 setInterval(updateServer, 5000);
 </script>
