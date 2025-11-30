@@ -23,68 +23,11 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 /* CONTAINER */
 .container { max-width: 900px; margin: auto; padding: 2rem 1rem; }
 
-/* HEADER PROFESSIONAL STYLE */
-.header {
-  text-align: center;
-  margin-bottom: 2.5rem;
-}
-
-.header-content {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  gap: 1rem; /* spacing between icon and text */
-  flex-wrap: wrap; /* allows wrapping on small screens */
-}
-
-.header-logo {
-  width: 50px;
-  height: 50px;
-  border-radius: 12px;
-  object-fit: cover;
-  box-shadow: 0 2px 6px rgba(0,0,0,0.3); /* subtle shadow for depth */
-}
-
-.header-text {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-}
-
-.header .title {
-  font-size: 2.5rem;
-  font-weight: 700;
-  color: #10b981;
-  line-height: 1.2;
-}
-
-.header .subtitle {
-  margin-top: 0.3rem;
-  font-size: 1rem;
-  color: #b5b5b5;
-  font-weight: 400;
-  max-width: 480px; /* keeps text from stretching too wide */
-  text-align: center;
-}
-
-/* RESPONSIVE HEADER FOR MOBILE */
-@media (max-width: 500px) {
-  .header-content {
-    flex-direction: column; /* stack icon above text */
-    gap: 0.6rem;
-  }
-  .header .title {
-    font-size: 2rem;
-  }
-  .header .subtitle {
-    font-size: 0.9rem;
-    max-width: 90%;
-  }
-  .header-logo {
-    width: 45px;
-    height: 45px;
-  }
-}
+/* HEADER */
+.header { text-align:center; margin-bottom:2rem; }
+.header .title { display:flex; align-items:center; justify-content:center; gap:.6rem; font-size:2.4rem; font-weight:700; color:#10b981; }
+.header .title img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
+.header .subtitle { margin-top:.3rem; color:#b5b5b5; font-size:.95rem; }
 
 /* CARD BASE */
 .card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
@@ -96,7 +39,7 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 
 /* LEADERBOARD */
 .leaderboard { margin-bottom:1.5rem; }
-.leaderboard h3 { font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:1.2rem; display:flex; align-items:center; gap:.5rem; }
+.leaderboard h3 { font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:.8rem; display:flex; align-items:center; gap:.5rem; }
 .leaderboard ul { list-style:none; }
 .leaderboard li { padding:.6rem 1rem; margin-bottom:.4rem; background:#161b23; border-radius:8px; display:flex; justify-content:space-between; font-weight:500; color:#e5e5e5; }
 
@@ -106,6 +49,11 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 .btn:hover { background:#10b981; color:#111; border-color:#10b981; }
 .btn-discord { background:#5865f2; border:none; color:#fff; }
 .btn-discord:hover { opacity:.85; }
+
+/* CARD HEADINGS SPACING FIX */
+.card h3 {
+  margin-bottom: 1.2rem; /* more space between heading and buttons */
+}
 
 /* FOOTER */
 .footer { text-align:center; padding:2rem 0; color:#888; font-size:0.9rem; }
@@ -118,15 +66,12 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 </head>
 <body>
 
-<!-- HEADER -->
 <header class="header">
-  <div class="header-content">
-    <img src="assets/AngkorPS.png" alt="AngkorPS Logo" class="header-logo">
-    <div class="header-text">
-      <h1 class="title">AngkorPS</h1>
-      <p class="subtitle">Growtopia Private Server — stable, fast, and enjoyable gameplay.</p>
-    </div>
-  </div>
+  <h1 class="title">
+    <img src="assets/AngkorPS.png" alt="AngkorPS Logo">
+    AngkorPS
+  </h1>
+  <p class="subtitle">Growtopia Private Server — stable, fast, and enjoyable gameplay.</p>
 </header>
 
 <div class="container">
