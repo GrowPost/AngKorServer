@@ -38,10 +38,11 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 .status-card p { font-weight:600; font-size:1.2rem; color:#10b981; }
 
 /* LEADERBOARD */
+.leaderboard { margin-bottom:1.5rem; }
 .leaderboard h3 { font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:.8rem; display:flex; align-items:center; gap:.5rem; }
 .leaderboard ul { list-style:none; }
 
-/* Leaderboard Item */
+/* NEW LEADERBOARD STYLE */
 .lb-item {
   display:flex;
   justify-content:space-between;
@@ -54,7 +55,6 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
   color:#e5e5e5;
 }
 
-/* WL Icon */
 .lb-wl {
   display:flex;
   align-items:center;
@@ -67,24 +67,6 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
   object-fit:contain;
 }
 
-/* Rank Badges */
-.rank-badge {
-  width:22px;
-  height:22px;
-  border-radius:50%;
-  font-size:.8rem;
-  font-weight:700;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  margin-right:.5rem;
-}
-
-.rank-1 { background:#f4d03f; color:#111; }
-.rank-2 { background:#c0c0c0; color:#111; }
-.rank-3 { background:#cd7f32; color:#fff; }
-.rank-other { background:#222; color:#bbb; }
-
 /* BUTTON GRID */
 .btn-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:.8rem; }
 .btn { padding:.8rem; border-radius:10px; font-weight:500; font-size:.9rem; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.2s; }
@@ -92,8 +74,10 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 .btn-discord { background:#5865f2; border:none; color:#fff; }
 .btn-discord:hover { opacity:.85; }
 
-/* HEADINGS SPACING FIX */
-.card h3 { margin-bottom:1.2rem; }
+/* CARD HEADINGS SPACING FIX */
+.card h3 {
+  margin-bottom: 1.2rem;
+}
 
 /* FOOTER */
 .footer { text-align:center; padding:2rem 0; color:#888; font-size:0.9rem; }
@@ -131,7 +115,9 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
   <!-- LEADERBOARD -->
   <div class="card leaderboard">
     <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
-    <ul id="leaderboardList"><li>Loading...</li></ul>
+    <ul id="leaderboardList">
+      <li>Loading...</li>
+    </ul>
   </div>
 
   <!-- HOST & DOWNLOAD -->
@@ -186,11 +172,10 @@ function downloadHost(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement("a");
   a.href = url; a.download="angkor.host"; a.click();
-  URL.revokeObjectURL(url);
-  showToast("Downloaded!");
+  URL.revokeObjectURL(url); showToast("Downloaded!");
 }
 
-/* SERVER STATUS + LEADERBOARD */
+/* SERVER STATUS & LEADERBOARD */
 async function updateServer(){
   try{
     const res = await fetch("https://angkorps.vercel.app/api/ping");
@@ -204,36 +189,28 @@ async function updateServer(){
     document.getElementById("playersCount").textContent =
       data.onlinePlayersCount ?? 0;
 
-    /* ⭐ LEADERBOARD UPDATE */
     const lb = document.getElementById("leaderboardList");
     lb.innerHTML = "";
 
-    if (data.leaderboard && data.leaderboard.length > 0) {
+    if(data.leaderboard && data.leaderboard.length > 0){
       data.leaderboard.forEach((entry, index) => {
         const li = document.createElement("li");
         li.className = "lb-item";
 
-        // Entry format: "Player - 12345"
+        // entry format: "Name - 537"
         const [name, amount] = entry.split(" - ");
 
-        let rankClass = "rank-other";
-        if (index === 0) rankClass = "rank-1";
-        else if (index === 1) rankClass = "rank-2";
-        else if (index === 2) rankClass = "rank-3";
-
         li.innerHTML = `
-          <span>
-            <span class="rank-badge ${rankClass}">${index + 1}</span>
-            ${name}
-          </span>
+          <span>#${index + 1}. ${name}</span>
           <span class="lb-wl">
-            <img src="assets/world_lock.png" alt="WL">
             ${amount}
+            <img src="assets/world_lock.png" alt="WL">
           </span>
         `;
 
         lb.appendChild(li);
       });
+
     } else {
       lb.innerHTML = "<li>No players found</li>";
     }
@@ -247,7 +224,7 @@ async function updateServer(){
 }
 
 updateServer();
-setInterval(updateServer, 5000);
+setInterval(updateServer,5000);
 </script>
 
 </body>
