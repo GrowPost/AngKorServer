@@ -40,9 +40,9 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 /* LEADERBOARD */
 .leaderboard { margin-bottom:1.5rem; }
 .leaderboard h3 { font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:.8rem; display:flex; align-items:center; gap:.5rem; }
-.leaderboard ul { list-style:none; }
+.leaderboard ul { list-style:none; padding:0; margin:0; }
 
-/* NEW LEADERBOARD STYLE */
+/* LEADERBOARD ITEM */
 .lb-item {
   display:flex;
   justify-content:space-between;
@@ -75,9 +75,7 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 .btn-discord:hover { opacity:.85; }
 
 /* CARD HEADINGS SPACING FIX */
-.card h3 {
-  margin-bottom: 1.2rem;
-}
+.card h3 { margin-bottom: 1.2rem; }
 
 /* FOOTER */
 .footer { text-align:center; padding:2rem 0; color:#888; font-size:0.9rem; }
@@ -193,24 +191,25 @@ async function updateServer(){
     lb.innerHTML = "";
 
     if(data.leaderboard && data.leaderboard.length > 0){
-      data.leaderboard.forEach((entry, index) => {
+      data.leaderboard.forEach((entry) => {
+        const parts = entry.split(" ");  // e.g. "#1. JonhAndy 537 wls"
+        const rank = parts[0];
+        const name = parts[1];
+        const amount = parts[2];
+        const wlText = parts[3];
+
         const li = document.createElement("li");
         li.className = "lb-item";
-
-        // entry format: "Name - 537"
-        const [name, amount] = entry.split(" - ");
-
         li.innerHTML = `
-          <span>#${index + 1}. ${name}</span>
+          <span>${rank} ${name}</span>
           <span class="lb-wl">
-            ${amount}
+            ${amount} ${wlText}
             <img src="assets/world_lock.png" alt="WL">
           </span>
         `;
 
         lb.appendChild(li);
       });
-
     } else {
       lb.innerHTML = "<li>No players found</li>";
     }
