@@ -29,6 +29,20 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 .header .title img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
 .header .subtitle { margin-top:.3rem; color:#b5b5b5; font-size:.95rem; }
 
+/* LANGUAGE SWITCH */
+.lang-switch {
+  position: fixed;
+  top: 15px;
+  right: 15px;
+  background:#161b23;
+  border:1px solid #222831;
+  color:#e5e5e5;
+  padding:.45rem .8rem;
+  border-radius:8px;
+  font-size:.9rem;
+  z-index:1000;
+}
+
 /* CARD BASE */
 .card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
 
@@ -88,6 +102,12 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 </head>
 <body>
 
+<!-- LANGUAGE SELECT -->
+<select id="langSelect" class="lang-switch" onchange="setLanguage(this.value)">
+  <option value="en">English</option>
+  <option value="kh">Khmer</option>
+</select>
+
 <header class="header">
   <h1 class="title">
     <img src="assets/AngkorPS.png" alt="AngkorPS Logo">
@@ -101,18 +121,18 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
   <!-- SERVER STATUS -->
   <div class="card">
     <div class="status-card">
-      <h4>Server Status</h4>
+      <h4 id="txt_status">Server Status</h4>
       <p id="serverStatus">Checking...</p>
     </div>
     <div class="status-card">
-      <h4>Players Online</h4>
+      <h4 id="txt_online">Players Online</h4>
       <p id="playersCount">0</p>
     </div>
   </div>
 
   <!-- LEADERBOARD -->
   <div class="card leaderboard">
-    <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
+    <h3 id="txt_leader"><i class="fas fa-trophy"></i> Leaderboard</h3>
     <ul id="leaderboardList">
       <li>Loading...</li>
     </ul>
@@ -120,31 +140,32 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 
   <!-- HOST & DOWNLOAD -->
   <div class="card">
-    <h3><i class="fas fa-server"></i> Host & Download</h3>
+    <h3 id="txt_host"><i class="fas fa-server"></i> Host & Download</h3>
     <div class="btn-grid">
-      <button class="btn" onclick="copyHost()">Copy IP</button>
-      <button class="btn" onclick="downloadHost()">Download Host</button>
-      <button class="btn" onclick="copyPowerTunnel()">PowerTunnel</button>
-      <button class="btn" onclick="copyHostGoURL()">Host GO</button>
-      <button class="btn" onclick="copyIOS()">iOS Host</button>
+      <button class="btn" id="btn_copyip" onclick="copyHost()">Copy IP</button>
+      <button class="btn" id="btn_download" onclick="downloadHost()">Download Host</button>
+      <button class="btn" id="btn_pt" onclick="copyPowerTunnel()">PowerTunnel</button>
+      <button class="btn" id="btn_go" onclick="copyHostGoURL()">Host GO</button>
+      <button class="btn" id="btn_ios" onclick="copyIOS()">iOS Host</button>
     </div>
   </div>
 
   <!-- DISCORD -->
   <div class="card">
-    <h3><i class="fab fa-discord"></i> Discord</h3>
+    <h3 id="txt_discord"><i class="fab fa-discord"></i> Discord</h3>
     <div class="btn-grid">
-      <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join Discord</button>
+      <button class="btn btn-discord" id="btn_join" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join Discord</button>
     </div>
   </div>
 
 </div>
 
-<footer class="footer">© <strong>AngkorPS</strong></footer>
+<footer class="footer" id="footerText">© AngkorPS</footer>
 
 <div id="toast" class="toast"></div>
 
 <script>
+/* TOAST */
 function showToast(msg, type="success") {
   const t = document.getElementById("toast");
   t.textContent = msg;
@@ -153,6 +174,7 @@ function showToast(msg, type="success") {
   setTimeout(() => t.classList.remove("show"), 1800);
 }
 
+/* HOST TEXT */
 const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
@@ -173,7 +195,75 @@ function downloadHost(){
   URL.revokeObjectURL(url); showToast("Downloaded!");
 }
 
-/* SERVER STATUS & LEADERBOARD */
+/* --- TRANSLATION SYSTEM --- */
+const translations = {
+  en: {
+    title: "AngkorPS",
+    subtitle: "Growtopia Private Server — stable, fast, and enjoyable gameplay.",
+    status: "Server Status",
+    online: "Players Online",
+    leaderboard: "Leaderboard",
+    host: "Host & Download",
+    copyip: "Copy IP",
+    download: "Download Host",
+    pt: "PowerTunnel",
+    go: "Host GO",
+    ios: "iOS Host",
+    discord: "Discord",
+    join: "Join Discord",
+    footer: "© AngkorPS"
+  },
+  kh: {
+    title: "AngkorPS",
+    subtitle: "ម៉ាស៊ីនមេខ្ជាប់ Growtopia — លឿន មានស្ថេរភាព និងលេងរីករាយ។",
+    status: "ស្ថានភាពម៉ាស៊ីនមេខ្ជាប់",
+    online: "អ្នកលេងកំពុងលើបណ្តាញ",
+    leaderboard: "តារាងចំណាត់ថ្នាក់",
+    host: "Host & ទាញយក",
+    copyip: "ចម្លង IP",
+    download: "ទាញយក Host",
+    pt: "PowerTunnel",
+    go: "Host GO",
+    ios: "iOS សម្រាប់ Host",
+    discord: "Discord",
+    join: "ចូលរួម Discord",
+    footer: "© AngkorPS"
+  }
+};
+
+function applyLanguage(lang){
+  const t = translations[lang];
+
+  document.querySelector(".title").childNodes[1].textContent = " " + t.title;
+  document.querySelector(".subtitle").textContent = t.subtitle;
+
+  document.getElementById("txt_status").textContent = t.status;
+  document.getElementById("txt_online").textContent = t.online;
+  document.getElementById("txt_leader").innerHTML = `<i class="fas fa-trophy"></i> ${t.leaderboard}`;
+  document.getElementById("txt_host").innerHTML = `<i class="fas fa-server"></i> ${t.host}`;
+  document.getElementById("txt_discord").innerHTML = `<i class="fab fa-discord"></i> ${t.discord}`;
+
+  document.getElementById("btn_copyip").textContent = t.copyip;
+  document.getElementById("btn_download").textContent = t.download;
+  document.getElementById("btn_pt").textContent = t.pt;
+  document.getElementById("btn_go").textContent = t.go;
+  document.getElementById("btn_ios").textContent = t.ios;
+  document.getElementById("btn_join").textContent = t.join;
+
+  document.getElementById("footerText").textContent = t.footer;
+
+  localStorage.setItem("lang", lang);
+}
+
+function setLanguage(lang){ applyLanguage(lang); }
+
+window.onload = () => {
+  const saved = localStorage.getItem("lang") || "en";
+  document.getElementById("langSelect").value = saved;
+  applyLanguage(saved);
+};
+
+/* SERVER STATUS + LB */
 async function updateServer(){
   try{
     const res = await fetch("https://angkorps.vercel.app/api/ping");
@@ -192,7 +282,7 @@ async function updateServer(){
 
     if(data.leaderboard && data.leaderboard.length > 0){
       data.leaderboard.forEach((entry) => {
-        const parts = entry.split(" ");  // e.g. "#1. JonhAndy 537 wls"
+        const parts = entry.split(" ");
         const rank = parts[0];
         const name = parts[1];
         const amount = parts[2];
@@ -213,7 +303,6 @@ async function updateServer(){
     } else {
       lb.innerHTML = "<li>No players found</li>";
     }
-
   } catch {
     document.getElementById("serverStatus").textContent="OFFLINE";
     document.getElementById("serverStatus").style.color="red";
@@ -228,4 +317,3 @@ setInterval(updateServer,5000);
 
 </body>
 </html>
-
