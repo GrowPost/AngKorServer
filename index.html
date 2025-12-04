@@ -8,17 +8,15 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 body { font-family:'Inter', sans-serif; margin:0; background:#0d1117; color:#e5e5e5; }
-.container { max-width:900px; margin:auto; padding:2rem 1rem; text-align:center; }
-.header { margin-bottom:2rem; }
-.header .title { display:flex; align-items:center; justify-content:center; gap:.6rem; font-size:2.4rem; font-weight:700; color:#10b981; }
-.header .title img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
-.header .subtitle { margin-top:.3rem; color:#b5b5b5; font-size:.95rem; }
-.icon-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(100px,1fr)); gap:1rem; margin-bottom:2rem; }
-.icon-btn { display:flex; flex-direction:column; align-items:center; justify-content:center; padding:1rem; background:#11151c; border-radius:12px; border:1px solid #1f242c; cursor:pointer; transition:.2s; }
-.icon-btn i { font-size:2rem; margin-bottom:.5rem; color:#10b981; }
-.icon-btn span { font-size:.95rem; font-weight:500; }
-.icon-btn:hover { background:#10b981; color:#111; border-color:#10b981; }
-.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; box-shadow:0 2px 8px rgba(0,0,0,0.2); margin-bottom:1.5rem; display:none; text-align:left; }
+.header { display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem; background:#11151c; border-bottom:1px solid #1f242c; }
+.header .title { display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:700; color:#10b981; }
+.header .title img { width:35px; height:35px; border-radius:8px; object-fit:cover; }
+.menu-icon { font-size:1.5rem; cursor:pointer; color:#10b981; }
+.dropdown { position:absolute; top:60px; right:20px; background:#11151c; border:1px solid #1f242c; border-radius:10px; overflow:hidden; display:none; flex-direction:column; min-width:180px; z-index:100; }
+.dropdown a { padding:.8rem 1rem; color:#e5e5e5; text-decoration:none; display:flex; align-items:center; gap:.5rem; transition:.2s; }
+.dropdown a:hover { background:#10b981; color:#111; }
+.container { max-width:900px; margin:auto; padding:2rem 1rem; }
+.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; box-shadow:0 2px 8px rgba(0,0,0,0.2); margin-bottom:1.5rem; display:none; }
 .card.active { display:block; }
 .status-card { display:flex; justify-content:space-between; align-items:center; margin-bottom:.8rem; padding:.8rem 1rem; border-radius:10px; background:#161b23; }
 .status-card h4 { font-weight:500; color:#b5b5b5; }
@@ -39,33 +37,25 @@ body { font-family:'Inter', sans-serif; margin:0; background:#0d1117; color:#e5e
 </head>
 <body>
 
-<div class="container">
-  <header class="header">
-    <h1 class="title">
-      <img src="assets/AngkorPS.png" alt="Logo">
-      AngkorPS
-    </h1>
-    <p class="subtitle">Growtopia Private Server — stable, fast, and enjoyable gameplay.</p>
-  </header>
-
-  <!-- ICON GRID MENU -->
-  <div class="icon-grid">
-    <div class="icon-btn" data-target="home"><i class="fas fa-home"></i><span>Home</span></div>
-    <div class="icon-btn" data-target="leaderboard"><i class="fas fa-trophy"></i><span>Leaderboard</span></div>
-    <div class="icon-btn" data-target="host"><i class="fas fa-server"></i><span>Host & Download</span></div>
-    <div class="icon-btn" data-target="discord"><i class="fab fa-discord"></i><span>Discord</span></div>
+<header class="header">
+  <div class="title">
+    <img src="assets/AngkorPS.png" alt="Logo"> AngkorPS
   </div>
+  <div class="menu-icon" id="menuIcon"><i class="fas fa-bars"></i></div>
+</header>
 
-  <!-- SECTIONS -->
-  <div id="home" class="card">
-    <div class="status-card">
-      <h4>Server Status</h4>
-      <p id="serverStatus">Checking...</p>
-    </div>
-    <div class="status-card">
-      <h4>Players Online</h4>
-      <p id="playersCount">0</p>
-    </div>
+<!-- DROPDOWN MENU -->
+<div class="dropdown" id="dropdownMenu">
+  <a href="#" data-target="home"><i class="fas fa-home"></i> Home</a>
+  <a href="#" data-target="leaderboard"><i class="fas fa-trophy"></i> Leaderboard</a>
+  <a href="#" data-target="host"><i class="fas fa-server"></i> Host & Download</a>
+  <a href="#" data-target="discord"><i class="fab fa-discord"></i> Discord</a>
+</div>
+
+<div class="container">
+  <div id="home" class="card active">
+    <div class="status-card"><h4>Server Status</h4><p id="serverStatus">Checking...</p></div>
+    <div class="status-card"><h4>Players Online</h4><p id="playersCount">0</p></div>
   </div>
 
   <div id="leaderboard" class="card">
@@ -88,21 +78,27 @@ body { font-family:'Inter', sans-serif; margin:0; background:#0d1117; color:#e5e
     <h3><i class="fab fa-discord"></i> Discord</h3>
     <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join Discord</button>
   </div>
-
 </div>
 
 <footer class="footer">© <strong>AngkorPS</strong></footer>
 <div id="toast" class="toast"></div>
 
 <script>
-// MENU ICON CLICK
-const icons = document.querySelectorAll('.icon-btn');
-const cards = document.querySelectorAll('.card');
+// TOGGLE DROPDOWN
+const menuIcon = document.getElementById('menuIcon');
+const dropdownMenu = document.getElementById('dropdownMenu');
+menuIcon.addEventListener('click', ()=> dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex');
+dropdownMenu.style.flexDirection = "column";
 
-icons.forEach(icon => {
-  icon.addEventListener('click', () => {
-    const target = icon.dataset.target;
-    cards.forEach(c => c.id === target ? c.classList.add('active') : c.classList.remove('active'));
+// MENU ITEM CLICK
+const menuItems = dropdownMenu.querySelectorAll('a');
+const cards = document.querySelectorAll('.card');
+menuItems.forEach(item=>{
+  item.addEventListener('click', (e)=>{
+    e.preventDefault();
+    const target = item.dataset.target;
+    cards.forEach(c=> c.id===target ? c.classList.add('active') : c.classList.remove('active'));
+    dropdownMenu.style.display='none';
   });
 });
 
@@ -110,9 +106,9 @@ icons.forEach(icon => {
 function showToast(msg, type="success") {
   const t = document.getElementById("toast");
   t.textContent = msg;
-  t.className = "toast " + (type === "error" ? "error" : "");
+  t.className = "toast " + (type==="error"?"error":"");
   t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 1800);
+  setTimeout(()=>t.classList.remove("show"),1800);
 }
 
 // HOST FUNCTIONS
@@ -120,13 +116,12 @@ const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
 5.39.13.21 www.growtopia2.com`;
-
 function copyText(text){ navigator.clipboard.writeText(text).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error")); }
 function copyHost(){ copyText(HOST_IP_TEXT); }
 function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
 function copyHostGoURL(){ copyText("https://angkorps.site/angkor.host"); }
 function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
-function downloadHost(){ const blob = new Blob([HOST_IP_TEXT], {type:"text/plain"}); const url = URL.createObjectURL(blob); const a = document.createElement("a"); a.href=url;a.download="angkor.host";a.click(); URL.revokeObjectURL(url); showToast("Downloaded!"); }
+function downloadHost(){ const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="angkor.host"; a.click(); URL.revokeObjectURL(url); showToast("Downloaded!"); }
 
 /* SERVER STATUS & LEADERBOARD */
 async function updateServer(){
@@ -137,18 +132,17 @@ async function updateServer(){
     document.getElementById("serverStatus").style.color = data.serverStatus==="online"?"#10b981":"red";
     document.getElementById("playersCount").textContent = data.onlinePlayersCount ?? 0;
 
-    const lb = document.getElementById("leaderboardList"); lb.innerHTML = "";
+    const lb = document.getElementById("leaderboardList"); lb.innerHTML="";
     if(data.leaderboard && data.leaderboard.length>0){
-      data.leaderboard.forEach((entry)=>{
-        const parts = entry.split(" ");
-        const rank = parts[0]; const name = parts[1]; const amount = parts[2]; const wlText = parts[3];
-        const li = document.createElement("li");
+      data.leaderboard.forEach(entry=>{
+        const parts = entry.split(" "); const rank=parts[0], name=parts[1], amount=parts[2], wlText=parts[3];
+        const li=document.createElement("li");
         li.className="lb-item";
-        li.innerHTML = `<span>${rank} ${name}</span><span class="lb-wl">${amount} ${wlText}<img src="assets/world_lock.png" alt="WL"></span>`;
+        li.innerHTML=`<span>${rank} ${name}</span><span class="lb-wl">${amount} ${wlText}<img src="assets/world_lock.png" alt="WL"></span>`;
         lb.appendChild(li);
       });
     } else lb.innerHTML="<li>No players found</li>";
-  } catch { 
+  } catch {
     document.getElementById("serverStatus").textContent="OFFLINE";
     document.getElementById("serverStatus").style.color="red";
     document.getElementById("playersCount").textContent=0;
