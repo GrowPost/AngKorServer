@@ -4,24 +4,19 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="AngkorPS Growtopia Private Server Dashboard">
-<title>AngkorPS</title>
+<title>AngkorPS Dashboard</title>
 
 <!-- Google Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
-
 <!-- Font Awesome -->
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
-
 <!-- Favicon -->
 <link rel="icon" href="assets/AngkorPS.png" type="image/png">
-
-<!-- Chart.js -->
-<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
 /* RESET */
 * { margin:0; padding:0; box-sizing:border-box; }
-body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; transition:.3s; }
+body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 
 /* CONTAINER */
 .container { max-width: 900px; margin: auto; padding: 2rem 1rem; }
@@ -32,8 +27,14 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; tr
 .header .title img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
 .header .subtitle { margin-top:.3rem; color:#b5b5b5; font-size:.95rem; }
 
+/* TABS */
+.tabs { display:flex; justify-content:center; gap:1rem; margin-bottom:2rem; }
+.tab-btn { padding:.6rem 1rem; border-radius:10px; background:#11151c; border:1px solid #1f242c; color:#e5e5e5; font-weight:500; cursor:pointer; transition:.2s; }
+.tab-btn.active { background:#10b981; color:#111; border-color:#10b981; }
+
 /* CARD BASE */
-.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); transition:.3s; }
+.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); display:none; }
+.card.active { display:block; }
 
 /* STATUS CARD */
 .status-card { display:flex; justify-content:space-between; align-items:center; margin-bottom:.8rem; padding:.8rem 1rem; border-radius:10px; background:#161b23; }
@@ -41,23 +42,9 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; tr
 .status-card p { font-weight:600; font-size:1.2rem; color:#10b981; }
 
 /* LEADERBOARD */
-.leaderboard { margin-bottom:1.5rem; }
 .leaderboard h3 { font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:.8rem; display:flex; align-items:center; gap:.5rem; }
-.leaderboard ul { list-style:none; padding:0; margin:0; max-height:250px; overflow-y:auto; }
-
-/* LEADERBOARD ITEM */
-.lb-item {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:.6rem 1rem;
-  margin-bottom:.4rem;
-  background:#161b23;
-  border-radius:8px;
-  font-weight:500;
-  color:#e5e5e5;
-}
-
+.leaderboard ul { list-style:none; padding:0; margin:0; }
+.lb-item { display:flex; justify-content:space-between; align-items:center; padding:.6rem 1rem; margin-bottom:.4rem; background:#161b23; border-radius:8px; font-weight:500; color:#e5e5e5; }
 .lb-wl { display:flex; align-items:center; gap:.35rem; }
 .lb-wl img { width:18px; height:18px; object-fit:contain; }
 
@@ -68,9 +55,6 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; tr
 .btn-discord { background:#5865f2; border:none; color:#fff; }
 .btn-discord:hover { opacity:.85; }
 
-/* CARD HEADINGS SPACING FIX */
-.card h3 { margin-bottom: 1.2rem; }
-
 /* FOOTER */
 .footer { text-align:center; padding:2rem 0; color:#888; font-size:0.9rem; }
 
@@ -78,11 +62,6 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; tr
 .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.8rem 1.4rem; border-radius:10px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.9rem; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
 .toast.error { background:#d9534f; }
-
-/* LIGHT MODE */
-body.light-mode { background:#f5f5f5; color:#111; }
-body.light-mode .card { background:#fff; color:#111; border-color:#ccc; }
-body.light-mode .btn:hover { color:#fff; }
 </style>
 </head>
 <body>
@@ -95,15 +74,17 @@ body.light-mode .btn:hover { color:#fff; }
   <p class="subtitle">Growtopia Private Server — stable, fast, and enjoyable gameplay.</p>
 </header>
 
+<!-- TABS -->
+<div class="tabs">
+  <button class="tab-btn active" data-target="home">Home</button>
+  <button class="tab-btn" data-target="leaderboard">Leaderboard</button>
+  <button class="tab-btn" data-target="host">Host & Download</button>
+</div>
+
 <div class="container">
 
-  <!-- DARK/LIGHT MODE -->
-  <div class="card">
-    <button class="btn" onclick="toggleTheme()">Toggle Dark/Light Mode</button>
-  </div>
-
-  <!-- SERVER STATUS -->
-  <div class="card">
+  <!-- HOME -->
+  <div id="home" class="card active">
     <div class="status-card">
       <h4>Server Status</h4>
       <p id="serverStatus">Checking...</p>
@@ -112,60 +93,18 @@ body.light-mode .btn:hover { color:#fff; }
       <h4>Players Online</h4>
       <p id="playersCount">0</p>
     </div>
-    <div class="status-card">
-      <h4>Server Uptime</h4>
-      <p id="uptime">0h 0m 0s</p>
-    </div>
-  </div>
-
-  <!-- EVENT TIMER -->
-  <div class="card">
-    <h3><i class="fas fa-clock"></i> Next Event</h3>
-    <p id="eventTimer" style="font-weight:600; font-size:1.2rem;">Loading...</p>
   </div>
 
   <!-- LEADERBOARD -->
-  <div class="card leaderboard">
+  <div id="leaderboard" class="card">
     <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
-    <input type="text" id="playerSearch" placeholder="Search player..." style="width:100%;padding:.6rem;border-radius:8px;border:1px solid #222831;margin-bottom:1rem;">
     <ul id="leaderboardList">
       <li>Loading...</li>
     </ul>
-    <ul id="searchResult"></ul>
-  </div>
-
-  <!-- PLAYER OF THE WEEK -->
-  <div class="card">
-    <h3><i class="fas fa-star"></i> Player of the Week</h3>
-    <div style="display:flex;align-items:center;gap:1rem;">
-      <img src="assets/player_avatar.png" alt="Avatar" style="width:50px;height:50px;border-radius:50%;">
-      <div>
-        <p style="margin:0;font-weight:600;">JonhAndy</p>
-        <p style="margin:0;color:#10b981;">WL: 537</p>
-      </div>
-    </div>
-  </div>
-
-  <!-- ANNOUNCEMENTS -->
-  <div class="card">
-    <h3><i class="fas fa-newspaper"></i> Announcements</h3>
-    <ul id="announcementsList"></ul>
-  </div>
-
-  <!-- PLAYERS GRAPH -->
-  <div class="card">
-    <h3><i class="fas fa-chart-line"></i> Players Graph</h3>
-    <canvas id="playersChart" style="height:150px;"></canvas>
-  </div>
-
-  <!-- TIP OF THE DAY -->
-  <div class="card">
-    <h3><i class="fas fa-lightbulb"></i> Tip of the Day</h3>
-    <p id="randomTip" style="font-weight:500;">Loading...</p>
   </div>
 
   <!-- HOST & DOWNLOAD -->
-  <div class="card">
+  <div id="host" class="card">
     <h3><i class="fas fa-server"></i> Host & Download</h3>
     <div class="btn-grid">
       <button class="btn" onclick="copyHost()">Copy IP</button>
@@ -176,14 +115,6 @@ body.light-mode .btn:hover { color:#fff; }
     </div>
   </div>
 
-  <!-- DISCORD -->
-  <div class="card">
-    <h3><i class="fab fa-discord"></i> Discord</h3>
-    <div class="btn-grid">
-      <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join Discord</button>
-    </div>
-  </div>
-
 </div>
 
 <footer class="footer">© <strong>AngkorPS</strong></footer>
@@ -191,16 +122,29 @@ body.light-mode .btn:hover { color:#fff; }
 <div id="toast" class="toast"></div>
 
 <script>
-/* TOAST */
+// TAB SWITCHING
+const tabBtns = document.querySelectorAll('.tab-btn');
+const cards = document.querySelectorAll('.card');
+
+tabBtns.forEach(btn => {
+  btn.addEventListener('click', () => {
+    tabBtns.forEach(b => b.classList.remove('active'));
+    btn.classList.add('active');
+    const target = btn.dataset.target;
+    cards.forEach(c => c.id === target ? c.classList.add('active') : c.classList.remove('active'));
+  });
+});
+
+// TOAST FUNCTION
 function showToast(msg, type="success") {
   const t = document.getElementById("toast");
   t.textContent = msg;
-  t.className = "toast " + (type==="error"?"error":"");
+  t.className = "toast " + (type === "error" ? "error" : "");
   t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1800);
+  setTimeout(() => t.classList.remove("show"), 1800);
 }
 
-/* COPY / DOWNLOAD FUNCTIONS */
+// HOST COPY FUNCTIONS
 const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
@@ -211,77 +155,44 @@ function copyHost(){ copyText(HOST_IP_TEXT); }
 function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
 function copyHostGoURL(){ copyText("https://angkorps.site/angkor.host"); }
 function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
-function downloadHost(){ 
+function downloadHost(){
   const blob = new Blob([HOST_IP_TEXT], {type:"text/plain"});
   const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href=url; a.download="angkor.host"; a.click();
+  const a = document.createElement("a"); a.href = url; a.download="angkor.host"; a.click();
   URL.revokeObjectURL(url); showToast("Downloaded!");
 }
 
-/* DARK/LIGHT MODE */
-function toggleTheme(){ document.body.classList.toggle("light-mode"); }
-
-/* ANNOUNCEMENTS */
-const announcements = [
-  "Server maintenance on Dec 8 from 2 AM - 4 AM.",
-  "New Winter Event starts Dec 10!",
-  "Bug fix: Players can now trade safely without WL loss."
-];
-const list = document.getElementById("announcementsList");
-announcements.forEach(item => { const li=document.createElement("li"); li.textContent=item; list.appendChild(li); });
-
-/* TIP OF THE DAY */
-const tips = [
-  "Tip: Trade safely using World Locks!",
-  "Tip: Join Discord to meet new friends.",
-  "Tip: Check the leaderboard every day to see top players.",
-  "Tip: Events give you the best rewards!"
-];
-function showRandomTip(){ document.getElementById("randomTip").textContent = tips[Math.floor(Math.random()*tips.length)]; }
-setInterval(showRandomTip,10000); showRandomTip();
-
-/* EVENT TIMER */
-const eventDate = new Date("2025-12-10T18:00:00");
-function updateEventTimer(){
-  const now = new Date();
-  const diff = eventDate - now;
-  if(diff<=0){ document.getElementById("eventTimer").textContent="Event is Live!"; return; }
-  const days=Math.floor(diff/(1000*60*60*24));
-  const hours=Math.floor((diff/(1000*60*60))%24);
-  const minutes=Math.floor((diff/(1000*60))%60);
-  const seconds=Math.floor((diff/1000)%60);
-  document.getElementById("eventTimer").textContent=`${days}d ${hours}h ${minutes}m ${seconds}s`;
-}
-setInterval(updateEventTimer,1000); updateEventTimer();
-
-/* SERVER STATUS, LEADERBOARD & UPTIME */
-let uptimeSeconds = 0;
+/* SERVER STATUS & LEADERBOARD */
 async function updateServer(){
   try{
     const res = await fetch("https://angkorps.site/api/ping");
     const data = await res.json();
 
     document.getElementById("serverStatus").textContent =
-      data.serverStatus==="online"?"ONLINE":"OFFLINE";
+      data.serverStatus === "online" ? "ONLINE" : "OFFLINE";
     document.getElementById("serverStatus").style.color =
-      data.serverStatus==="online"?"#10b981":"red";
+      data.serverStatus === "online" ? "#10b981" : "red";
 
-    document.getElementById("playersCount").textContent = data.onlinePlayersCount ?? 0;
-    uptimeSeconds = data.uptimeSeconds ?? uptimeSeconds;
+    document.getElementById("playersCount").textContent =
+      data.onlinePlayersCount ?? 0;
 
-    const lb = document.getElementById("leaderboardList"); lb.innerHTML="";
-    if(data.leaderboard && data.leaderboard.length>0){
-      data.leaderboard.forEach(entry=>{
-        const parts = entry.split(" ");
-        const rank = parts[0], name = parts[1], amount=parts[2], wlText=parts[3];
+    const lb = document.getElementById("leaderboardList");
+    lb.innerHTML = "";
+
+    if(data.leaderboard && data.leaderboard.length > 0){
+      data.leaderboard.forEach((entry) => {
+        const parts = entry.split(" ");  
+        const rank = parts[0];
+        const name = parts[1];
+        const amount = parts[2];
+        const wlText = parts[3];
+
         const li = document.createElement("li");
-        li.className="lb-item";
-        li.innerHTML=`<span>${rank} ${name}</span><span class="lb-wl">${amount} ${wlText} <img src="assets/world_lock.png" alt="WL"></span>`;
+        li.className = "lb-item";
+        li.innerHTML = `<span>${rank} ${name}</span><span class="lb-wl">${amount} ${wlText}<img src="assets/world_lock.png" alt="WL"></span>`;
         lb.appendChild(li);
       });
-    } else { lb.innerHTML="<li>No players found</li>"; }
-
+    } else { lb.innerHTML = "<li>No players found</li>"; }
   } catch {
     document.getElementById("serverStatus").textContent="OFFLINE";
     document.getElementById("serverStatus").style.color="red";
@@ -289,49 +200,9 @@ async function updateServer(){
     document.getElementById("leaderboardList").innerHTML="<li>No data</li>";
   }
 }
-updateServer(); setInterval(updateServer,5000);
 
-function updateUptime(){
-  uptimeSeconds++;
-  const hours=Math.floor(uptimeSeconds/3600);
-  const minutes=Math.floor((uptimeSeconds%3600)/60);
-  const seconds=uptimeSeconds%60;
-  document.getElementById("uptime").textContent=`${hours}h ${minutes}m ${seconds}s`;
-}
-setInterval(updateUptime,1000);
-
-/* PLAYER SEARCH */
-document.getElementById("playerSearch").addEventListener("input", function(){
-  const query=this.value.toLowerCase();
-  const lbItems=document.querySelectorAll(".lb-item");
-  const resultList=document.getElementById("searchResult");
-  resultList.innerHTML="";
-  lbItems.forEach(item=>{
-    const name=item.querySelector("span").textContent.toLowerCase();
-    if(name.includes(query)&&query!==""){
-      const li=document.createElement("li"); li.textContent=item.textContent;
-      resultList.appendChild(li);
-    }
-  });
-});
-
-/* PLAYERS GRAPH */
-const ctx=document.getElementById('playersChart').getContext('2d');
-const playersData={ labels:[], datasets:[{label:'Players Online', data:[], borderColor:'#10b981', backgroundColor:'rgba(16,185,129,0.2)', tension:0.3}]};
-const playersChart=new Chart(ctx,{ type:'line', data:playersData, options:{ scales:{ y:{ beginAtZero:true } } } });
-
-setInterval(async ()=>{
-  try{
-    const res=await fetch("https://angkorps.site/api/ping");
-    const data=await res.json();
-    const time=new Date().toLocaleTimeString();
-    if(playersData.labels.length>=10){ playersData.labels.shift(); playersData.datasets[0].data.shift(); }
-    playersData.labels.push(time);
-    playersData.datasets[0].data.push(data.onlinePlayersCount??0);
-    playersChart.update();
-  } catch {}
-},5000);
-
+updateServer();
+setInterval(updateServer,5000);
 </script>
 
 </body>
