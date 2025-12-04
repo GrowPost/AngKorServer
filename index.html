@@ -8,13 +8,23 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
 body { font-family:'Inter', sans-serif; margin:0; background:#0d1117; color:#e5e5e5; }
-.header { display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem; background:#11151c; border-bottom:1px solid #1f242c; }
+.header { display:flex; align-items:center; justify-content:space-between; padding:1rem 2rem; background:#11151c; border-bottom:1px solid #1f242c; position:relative; }
 .header .title { display:flex; align-items:center; gap:.6rem; font-size:1.8rem; font-weight:700; color:#10b981; }
 .header .title img { width:35px; height:35px; border-radius:8px; object-fit:cover; }
-.menu-icon { font-size:1.5rem; cursor:pointer; color:#10b981; }
-.dropdown { position:absolute; top:60px; right:20px; background:#11151c; border:1px solid #1f242c; border-radius:10px; overflow:hidden; display:none; flex-direction:column; min-width:180px; z-index:100; }
-.dropdown a { padding:.8rem 1rem; color:#e5e5e5; text-decoration:none; display:flex; align-items:center; gap:.5rem; transition:.2s; }
+.menu-icon { font-size:1.6rem; cursor:pointer; color:#10b981; transition:.3s; }
+.menu-icon:hover { color:#14d47a; }
+
+/* PROFESSIONAL DROPDOWN */
+.dropdown { 
+  position:absolute; top:65px; right:20px; background:#11151c; border-radius:12px; 
+  box-shadow:0 8px 20px rgba(0,0,0,0.4); overflow:hidden; display:none; flex-direction:column; min-width:200px; z-index:100; 
+  transform:translateY(-10px); opacity:0; transition: all .3s ease;
+}
+.dropdown.show { display:flex; transform:translateY(0); opacity:1; }
+.dropdown a { padding:1rem 1.2rem; color:#e5e5e5; text-decoration:none; display:flex; align-items:center; gap:.7rem; font-weight:500; transition:.3s; border-left:4px solid transparent; }
 .dropdown a:hover { background:#10b981; color:#111; }
+.dropdown a.active { border-left:4px solid #10b981; background:#161b23; }
+
 .container { max-width:900px; margin:auto; padding:2rem 1rem; }
 .card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; box-shadow:0 2px 8px rgba(0,0,0,0.2); margin-bottom:1.5rem; display:none; }
 .card.active { display:block; }
@@ -44,9 +54,9 @@ body { font-family:'Inter', sans-serif; margin:0; background:#0d1117; color:#e5e
   <div class="menu-icon" id="menuIcon"><i class="fas fa-bars"></i></div>
 </header>
 
-<!-- DROPDOWN MENU -->
+<!-- PROFESSIONAL DROPDOWN MENU -->
 <div class="dropdown" id="dropdownMenu">
-  <a href="#" data-target="home"><i class="fas fa-home"></i> Home</a>
+  <a href="#" data-target="home" class="active"><i class="fas fa-home"></i> Home</a>
   <a href="#" data-target="leaderboard"><i class="fas fa-trophy"></i> Leaderboard</a>
   <a href="#" data-target="host"><i class="fas fa-server"></i> Host & Download</a>
   <a href="#" data-target="discord"><i class="fab fa-discord"></i> Discord</a>
@@ -87,8 +97,7 @@ body { font-family:'Inter', sans-serif; margin:0; background:#0d1117; color:#e5e
 // TOGGLE DROPDOWN
 const menuIcon = document.getElementById('menuIcon');
 const dropdownMenu = document.getElementById('dropdownMenu');
-menuIcon.addEventListener('click', ()=> dropdownMenu.style.display = dropdownMenu.style.display === 'flex' ? 'none' : 'flex');
-dropdownMenu.style.flexDirection = "column";
+menuIcon.addEventListener('click', ()=> dropdownMenu.classList.toggle('show'));
 
 // MENU ITEM CLICK
 const menuItems = dropdownMenu.querySelectorAll('a');
@@ -98,7 +107,12 @@ menuItems.forEach(item=>{
     e.preventDefault();
     const target = item.dataset.target;
     cards.forEach(c=> c.id===target ? c.classList.add('active') : c.classList.remove('active'));
-    dropdownMenu.style.display='none';
+    
+    // Highlight active menu
+    menuItems.forEach(i=>i.classList.remove('active'));
+    item.classList.add('active');
+    
+    dropdownMenu.classList.remove('show');
   });
 });
 
