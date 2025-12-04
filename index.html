@@ -162,9 +162,9 @@ function copyText(text){
   navigator.clipboard.writeText(text).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error"));
 }
 function copyHost(){ copyText(HOST_IP_TEXT); }
-function copyPowerTunnel(){ copyText("https://angkorps.vercel.app/angkor.txt"); }
-function copyHostGoURL(){ copyText("https://angkorps.vercel.app/angkor.host"); }
-function copyIOS(){ copyText("https://angkorps.vercel.app/ios.txt"); }
+function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
+function copyHostGoURL(){ copyText("https://angkorps.site/angkor.host"); }
+function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
 function downloadHost(){
   const blob = new Blob([HOST_IP_TEXT], {type:"text/plain"});
   const url = URL.createObjectURL(blob);
@@ -176,7 +176,7 @@ function downloadHost(){
 /* SERVER STATUS & LEADERBOARD */
 async function updateServer(){
   try{
-    const res = await fetch("https://angkorps.vercel.app/api/ping");
+    const res = await fetch("https://angkorps.site/api/ping");
     const data = await res.json();
 
     document.getElementById("serverStatus").textContent =
@@ -228,5 +228,6 @@ setInterval(updateServer,5000);
 
 </body>
 </html>
+
 
 
