@@ -5,31 +5,57 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="AngkorPS Host & Download">
 <title>AngkorPS - Host & Download</title>
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <style>
-body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; margin:0; scroll-behavior:smooth; }
+/* General Body */
+body { 
+  font-family: 'Inter', sans-serif; 
+  background:#0d1117; 
+  color:#e5e5e5; 
+  margin:0; 
+  scroll-behavior:smooth; 
+  line-height:1.7; 
+  letter-spacing:0.3px;
+}
+
+/* Header */
 .header { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#11151c; border-bottom:1px solid #1f242c; position:sticky; top:0; z-index:1000; }
 .header .logo { display:flex; align-items:center; gap:.5rem; cursor:pointer; }
 .header .logo img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
-.header .logo span { font-size:1.5rem; font-weight:700; color:#10b981; }
+.header .logo span { font-family: 'Montserrat', sans-serif; font-size:1.8rem; font-weight:700; background: linear-gradient(90deg, #10b981, #3dd598); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
 .nav button { background:none; border:none; color:#e5e5e5; font-size:1rem; cursor:pointer; display:flex; align-items:center; gap:.3rem; font-weight:500; }
 .nav-menu { position:absolute; top:calc(100% + 5px); right:0; background:#161b23; border:1px solid #1f242c; border-radius:8px; flex-direction:column; min-width:180px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.3); opacity:0; transform:translateY(-20px) scaleY(0.95); pointer-events:none; transition: all 0.3s cubic-bezier(0.25,1,0.5,1); }
 .nav-menu.show { opacity:1; transform:translateY(0) scaleY(1); pointer-events:auto; }
 .nav-menu a { padding:.8rem 1rem; color:#e5e5e5; text-decoration:none; display:block; transition: all 0.2s; }
 .nav-menu a:hover { background:#10b981; color:#111; }
 
+/* Container & Cards */
 .container { max-width:900px; margin:auto; padding:2rem 1rem; }
-.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+.card { background:#11151c; padding:1.8rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.8rem; box-shadow:0 2px 10px rgba(0,0,0,0.25); transition: all 0.3s ease; }
+.card h3 { font-family: 'Montserrat', sans-serif; font-size:1.7rem; font-weight:700; background: linear-gradient(90deg,#10b981,#3dd598); -webkit-background-clip: text; -webkit-text-fill-color: transparent; margin-bottom:1rem; }
+
+/* Buttons */
 .btn-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:.8rem; }
-.btn { padding:.8rem; border-radius:10px; font-weight:500; font-size:.9rem; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.2s; text-align:center; }
+.btn { padding:.9rem; border-radius:12px; font-family: 'Montserrat', sans-serif; font-weight:600; font-size:1rem; letter-spacing:0.5px; text-transform:uppercase; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.25s; text-align:center; }
 .btn:hover { background:#10b981; color:#111; border-color:#10b981; }
-.tutorial-step { background:#161b23; border:1px solid #1f242c; border-radius:10px; padding:15px 20px; margin-top:10px; display:none; animation:fadeIn 0.3s forwards; }
+
+/* Tutorial Steps */
+.tutorial-step { background:#161b23; border:1px solid #1f242c; border-radius:12px; padding:18px 22px; margin-top:10px; display:none; animation:fadeIn 0.35s forwards; }
+.tutorial-step ol { font-size:1rem; line-height:1.8; color:#ddd; }
+.tutorial-step a { color:#10b981; text-decoration:underline; }
 @keyframes fadeIn { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
-.toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.8rem 1.4rem; border-radius:10px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.9rem; }
+
+/* Toast */
+.toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.9rem 1.6rem; border-radius:12px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.95rem; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
 .toast.error { background:#d9534f; }
-.footer { text-align:center; padding:2rem 0; color:#888; font-size:.9rem; }
+
+/* Footer */
+.footer { text-align:center; padding:2rem 0; font-family:'Inter', sans-serif; font-size:0.95rem; letter-spacing:0.5px; color:#888; }
 </style>
 </head>
 <body>
@@ -50,18 +76,19 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 </header>
 
 <div class="container">
+  <!-- Host & Download Card -->
   <div class="card">
     <h3><i class="fas fa-server"></i> Host & Download</h3>
     <div class="btn-grid">
-      <button class="btn" onclick="copyHost()">Copy IP</button>
-      <button class="btn" onclick="downloadHost()">Download Host</button>
-      <button class="btn" onclick="copyPowerTunnel()">PowerTunnel</button>
-      <button class="btn" onclick="copyHostGoURL()">Host GO</button>
-      <button class="btn" onclick="copyIOS()">iOS Host</button>
+      <button class="btn" onclick="copyHost()"><i class="fas fa-copy"></i> Copy IP</button>
+      <button class="btn" onclick="downloadHost()"><i class="fas fa-download"></i> Download Host</button>
+      <button class="btn" onclick="copyPowerTunnel()"><i class="fas fa-link"></i> PowerTunnel</button>
+      <button class="btn" onclick="copyHostGoURL()"><i class="fas fa-link"></i> Host GO</button>
+      <button class="btn" onclick="copyIOS()"><i class="fab fa-apple"></i> iOS Host</button>
     </div>
   </div>
 
-  <!-- Tutorial / How to Play Section -->
+  <!-- Tutorial / How to Play Card -->
   <div class="card">
     <h3><i class="fas fa-book-open"></i> How to Play</h3>
     <div class="btn-grid">
@@ -72,7 +99,7 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
     </div>
     <div id="android" class="tutorial-step">
       <ol>
-        <li>Download the AngkorPS APK from <a href="https://angkorps.site/android.apk" style="color:#10b981;">here</a>.</li>
+        <li>Download the AngkorPS APK from <a href="https://angkorps.site/android.apk">here</a>.</li>
         <li>Install the APK and allow unknown sources if prompted.</li>
         <li>Open the app and enter the Host IP to connect.</li>
         <li>Start playing immediately!</li>
@@ -80,23 +107,23 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
     </div>
     <div id="ios" class="tutorial-step">
       <ol>
-        <li>Download the AngkorPS iOS host file from <a href="https://angkorps.site/ios.txt" style="color:#10b981;">here</a>.</li>
-        <li>Follow instructions to configure your network settings.</li>
+        <li>Download the AngkorPS iOS host file from <a href="https://angkorps.site/ios.txt">here</a>.</li>
+        <li>Follow instructions to configure network settings.</li>
         <li>Open Growtopia and enter the Host IP.</li>
-        <li>Enjoy playing on your iOS device.</li>
+        <li>Enjoy playing on iOS.</li>
       </ol>
     </div>
     <div id="pc" class="tutorial-step">
       <ol>
-        <li>Download the Windows host file from <a href="https://angkorps.site/angkor.host" style="color:#10b981;">here</a>.</li>
-        <li>Run the host file and configure your Growtopia client.</li>
+        <li>Download the Windows host file from <a href="https://angkorps.site/angkor.host">here</a>.</li>
+        <li>Run the host file and configure Growtopia client.</li>
         <li>Enter the Host IP and connect.</li>
         <li>Start your adventure on PC.</li>
       </ol>
     </div>
     <div id="mac" class="tutorial-step">
       <ol>
-        <li>Download the Mac host file from <a href="https://angkorps.site/mac.host" style="color:#10b981;">here</a>.</li>
+        <li>Download the Mac host file from <a href="https://angkorps.site/mac.host">here</a>.</li>
         <li>Follow instructions to add the host file to your system.</li>
         <li>Open Growtopia and enter the Host IP.</li>
         <li>Play smoothly on Mac.</li>
@@ -143,11 +170,11 @@ function toggleStep(id){
   const step = document.getElementById(id);
   if(step.style.display === "block"){ step.style.display = "none"; }
   else { 
-    // Hide other steps
     document.querySelectorAll('.tutorial-step').forEach(s=>s.style.display="none");
     step.style.display = "block"; 
   }
 }
 </script>
+
 </body>
 </html>
