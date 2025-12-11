@@ -5,10 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <meta name="description" content="AngkorPS Host & Download">
 <title>AngkorPS - Host & Download</title>
+
+<!-- Google Fonts & FontAwesome -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 <style>
-/* Header, container, cards same style as index.html */
 body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; margin:0; scroll-behavior:smooth; }
 .header { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#11151c; border-bottom:1px solid #1f242c; position:sticky; top:0; z-index:1000; }
 .header .logo { display:flex; align-items:center; gap:.5rem; cursor:pointer; }
@@ -25,13 +27,33 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 .btn-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:.8rem; }
 .btn { padding:.8rem; border-radius:10px; font-weight:500; font-size:.9rem; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.2s; }
 .btn:hover { background:#10b981; color:#111; border-color:#10b981; }
+.footer { text-align:center; padding:2rem 0; color:#888; font-size:.9rem; }
 .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.8rem 1.4rem; border-radius:10px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.9rem; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
 .toast.error { background:#d9534f; }
-.footer { text-align:center; padding:2rem 0; color:#888; font-size:.9rem; }
+
+/* Loading Screen */
+#loadingScreen {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:#0d1117; display:flex; flex-direction:column; justify-content:center; align-items:center;
+  z-index:2000; transition: opacity 0.5s ease;
+}
+#loadingScreen.hidden { opacity:0; pointer-events:none; }
+#loadingScreen .spinner {
+  width:60px; height:60px; border:6px solid #161b23; border-top:6px solid #10b981; border-radius:50%;
+  animation:spin 1s linear infinite; margin-bottom:1rem;
+}
+@keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
+#loadingScreen p { color:#e5e5e5; font-size:1rem; font-weight:500; }
 </style>
 </head>
 <body>
+
+<!-- Loading Screen -->
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <p>Loading...</p>
+</div>
 
 <header class="header">
   <div class="logo" onclick="window.location.href='index.html'">
@@ -65,34 +87,28 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 <div id="toast" class="toast"></div>
 
 <script>
-// Menu
-function toggleNavMenu(){ document.getElementById("navMenu").classList.toggle("show"); }
-document.addEventListener('click', function(e){
-  const menu=document.getElementById("navMenu");
-  const btn=document.querySelector(".nav button");
-  if(!menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove("show");
-});
+// Hide loading screen
+window.addEventListener('load',()=>{document.getElementById('loadingScreen').classList.add('hidden');});
+
+// Menu toggle
+function toggleNavMenu(){document.getElementById("navMenu").classList.toggle("show");}
+document.addEventListener('click',function(e){const menu=document.getElementById("navMenu");const btn=document.querySelector(".nav button");if(!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove("show");});
 
 // Toast
-function showToast(msg,type="success"){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.className="toast "+(type==="error"?"error":"");
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1800);
-}
+function showToast(msg,type="success"){const t=document.getElementById("toast");t.textContent=msg;t.className="toast "+(type==="error"?"error":"");t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800);}
 
-// Host buttons
+// Host functions
 const HOST_IP_TEXT=`5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
 5.39.13.21 www.growtopia2.com`;
-function copyText(text){ navigator.clipboard.writeText(text).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error")); }
-function copyHost(){ copyText(HOST_IP_TEXT); }
-function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
-function copyHostGoURL(){ copyText("https://angkorps.site/angkor.host"); }
-function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
-function downloadHost(){ const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="angkor.host"; a.click(); URL.revokeObjectURL(url); showToast("Downloaded!"); }
+
+function copyText(text){navigator.clipboard.writeText(text).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error"));}
+function copyHost(){copyText(HOST_IP_TEXT);}
+function copyPowerTunnel(){copyText("https://angkorps.site/angkor.txt");}
+function copyHostGoURL(){copyText("https://angkorps.site/angkor.host");}
+function copyIOS(){copyText("https://angkorps.site/ios.txt");}
+function downloadHost(){const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"});const url=URL.createObjectURL(blob);const a=document.createElement("a");a.href=url;a.download="angkor.host";a.click();URL.revokeObjectURL(url);showToast("Downloaded!");}
 </script>
 </body>
 </html>
