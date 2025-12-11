@@ -1,113 +1,220 @@
-<!-- Add Chart.js CDN in <head> -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AngkorPS Growtopia Private Server Dashboard">
+<title>AngkorPS</title>
+
+<!-- Google Fonts -->
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+<!-- Font Awesome -->
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+<!-- Chart.js -->
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
-<!-- HEADER -->
+<!-- Favicon -->
+<link rel="icon" href="assets/AngkorPS.png" type="image/png">
+
+<style>
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
+
+/* CONTAINER */
+.container { max-width: 900px; margin: auto; padding: 2rem 1rem; }
+
+/* HEADER */
+.header { background:#11151c; padding:1.5rem 2rem; border-radius:12px; margin-bottom:2rem; }
+.header-top { display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; margin-bottom:1rem; }
+.header-logo { width:60px; height:60px; border-radius:12px; object-fit:cover; }
+.title { font-size:2.8rem; font-weight:700; color:#10b981; margin:0; }
+.subtitle { font-size:1rem; color:#b5b5b5; margin-top:.2rem; }
+.header-stats { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem; }
+.header-stats .status-card { min-width:140px; flex:1; text-align:center; padding:.8rem 1rem; border-radius:10px; background:#161b23; border:1px solid #1f242c; transition:.2s; }
+.header-stats .status-card.online { border-color:#10b981; }
+.header-stats .status-card.offline { border-color:red; }
+
+/* CARD BASE */
+.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+.card h3 { margin-bottom:1.2rem; }
+
+/* STATUS CARD */
+.status-card h4 { font-weight:500; font-size:1rem; color:#b5b5b5; margin-bottom:.3rem; }
+.status-card p { font-weight:600; font-size:1.2rem; color:#10b981; margin:0; }
+
+/* LEADERBOARD */
+.leaderboard h3 { font-size:1.2rem; font-weight:600; color:#fff; display:flex; align-items:center; gap:.5rem; }
+.leaderboard ul { list-style:none; padding:0; margin:0; }
+.lb-item { display:flex; justify-content:space-between; align-items:center; padding:.6rem 1rem; margin-bottom:.4rem; background:#161b23; border-radius:8px; font-weight:500; color:#e5e5e5; }
+.lb-wl { display:flex; align-items:center; gap:.35rem; }
+.lb-wl img { width:18px; height:18px; object-fit:contain; }
+
+/* BUTTON GRID */
+.btn-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:.8rem; }
+.btn { padding:.8rem; border-radius:10px; font-weight:500; font-size:.9rem; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.2s; }
+.btn:hover { background:#10b981; color:#111; border-color:#10b981; }
+.btn-discord { background:#5865f2; border:none; color:#fff; }
+.btn-discord:hover { opacity:.85; }
+
+/* FOOTER */
+.footer { text-align:center; padding:2rem 0; color:#888; font-size:0.9rem; }
+
+/* TOAST */
+.toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.8rem 1.4rem; border-radius:10px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.9rem; }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
+.toast.error { background:#d9534f; }
+
+/* ONLINE CHART */
+#onlineChart { width:100%; background:#161b23; border-radius:12px; padding:10px; }
+</style>
+</head>
+<body>
+
 <header class="header">
   <div class="header-top">
     <img src="assets/AngkorPS.png" alt="AngkorPS Logo" class="header-logo">
-    <h1 class="title">AngkorPS</h1>
+    <div>
+      <h1 class="title">AngkorPS</h1>
+      <p class="subtitle">Growtopia private server with exciting gameplay & stable system</p>
+    </div>
   </div>
-  <p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
+  <div class="header-stats">
+    <div class="status-card" id="serverStatusCard">
+      <h4>Server Status</h4>
+      <p id="serverStatus">Checking...</p>
+    </div>
+    <div class="status-card">
+      <h4>Players Online</h4>
+      <p id="playersCount">0</p>
+    </div>
+    <div class="status-card">
+      <h4>Peak Online</h4>
+      <p id="peakPlayers">0</p>
+    </div>
+  </div>
 </header>
 
-<!-- LIVE ONLINE PLAYERS GRAPH -->
-<div class="card">
-  <h3><i class="fas fa-chart-line"></i> Online Players Live</h3>
-  <canvas id="onlineChart" height="100"></canvas>
+<div class="container">
+  <!-- ONLINE PLAYERS GRAPH -->
+  <div class="card">
+    <h3><i class="fas fa-chart-line"></i> Online Players (Live)</h3>
+    <canvas id="onlineChart" height="120"></canvas>
+  </div>
+
+  <!-- LEADERBOARD -->
+  <div class="card leaderboard">
+    <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
+    <ul id="leaderboardList">
+      <li>Loading...</li>
+    </ul>
+  </div>
+
+  <!-- HOST & DOWNLOAD -->
+  <div class="card">
+    <h3><i class="fas fa-server"></i> Host & Download</h3>
+    <div class="btn-grid">
+      <button class="btn" onclick="copyHost()">Copy IP</button>
+      <button class="btn" onclick="downloadHost()">Download Host</button>
+      <button class="btn" onclick="copyPowerTunnel()">PowerTunnel</button>
+      <button class="btn" onclick="copyHostGoURL()">Host GO</button>
+      <button class="btn" onclick="copyIOS()">iOS Host</button>
+    </div>
+  </div>
+
+  <!-- DISCORD -->
+  <div class="card">
+    <h3><i class="fab fa-discord"></i> Discord</h3>
+    <div class="btn-grid">
+      <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join Discord</button>
+    </div>
+  </div>
 </div>
 
-<style>
-/* HEADER IMPROVEMENTS */
-.header { text-align:center; margin-bottom:2rem; padding:1rem 0; background:#11151c; border-radius:12px; border:1px solid #1f242c; }
-.header-top { display:flex; align-items:center; justify-content:center; gap:1rem; margin-bottom:.5rem; }
-.header-logo { width:50px; height:50px; border-radius:10px; object-fit:cover; }
-.header .title { font-size:2.6rem; font-weight:700; color:#10b981; }
-.header .subtitle { color:#b5b5b5; font-size:1rem; }
-
-/* CHART */
-#onlineChart { width:100%; background:#161b23; border-radius:12px; padding:10px; }
-</style>
+<footer class="footer">Â© <strong>AngkorPS</strong></footer>
+<div id="toast" class="toast"></div>
 
 <script>
-// Live online players chart
-const ctx = document.getElementById('onlineChart').getContext('2d');
-const onlineChart = new Chart(ctx, {
-    type: 'line',
-    data: {
-        labels: [], // time labels
-        datasets: [{
-            label: 'Players Online',
-            data: [],
-            borderColor: '#10b981',
-            backgroundColor: 'rgba(16,185,129,0.2)',
-            fill: true,
-            tension: 0.3,
-            pointRadius: 3,
-        }]
-    },
-    options: {
-        responsive: true,
-        plugins: { legend: { display: false } },
-        scales: {
-            x: { title: { display: true, text: 'Time' }, ticks: { color: '#e5e5e5' }, grid: { color: '#1f242c' } },
-            y: { title: { display: true, text: 'Players' }, ticks: { color: '#e5e5e5' }, grid: { color: '#1f242c' }, beginAtZero: true }
-        }
-    }
-});
-
-// Update chart every 5 seconds
-function updateChart(count) {
-    const time = new Date().toLocaleTimeString();
-    if (onlineChart.data.labels.length > 20) {
-        onlineChart.data.labels.shift();
-        onlineChart.data.datasets[0].data.shift();
-    }
-    onlineChart.data.labels.push(time);
-    onlineChart.data.datasets[0].data.push(count);
-    onlineChart.update();
+// TOAST
+function showToast(msg, type="success") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast " + (type==="error" ? "error" : "");
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"), 1800);
 }
 
-// Modify updateServer() to update chart
+// COPY / DOWNLOAD FUNCTIONS
+const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
+5.39.13.21 growtopia2.com
+5.39.13.21 www.growtopia1.com
+5.39.13.21 www.growtopia2.com`;
+
+function copyText(text){ navigator.clipboard.writeText(text).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error")); }
+function copyHost(){ copyText(HOST_IP_TEXT); }
+function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
+function copyHostGoURL(){ copyText("https://angkorps.site/angkor.host"); }
+function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
+function downloadHost(){
+  const blob = new Blob([HOST_IP_TEXT],{type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href=url; a.download="angkor.host"; a.click();
+  URL.revokeObjectURL(url);
+  showToast("Downloaded!");
+}
+
+// ONLINE PLAYERS CHART
+const ctx = document.getElementById('onlineChart').getContext('2d');
+const onlineChart = new Chart(ctx,{
+  type:'line',
+  data:{ labels:[], datasets:[{ label:'Players Online', data:[], borderColor:'#10b981', backgroundColor:'rgba(16,185,129,0.2)', fill:true, tension:0.4, pointRadius:3 }] },
+  options:{ responsive:true, plugins:{ legend:{ display:false } }, scales:{ x:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' }, title:{ display:true, text:'Time', color:'#b5b5b5' } }, y:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' }, beginAtZero:true, title:{ display:true, text:'Players', color:'#b5b5b5' } } } }
+});
+
+let peakPlayers = 0;
+function updateChart(count){
+  const time = new Date().toLocaleTimeString();
+  if(onlineChart.data.labels.length > 30){
+    onlineChart.data.labels.shift();
+    onlineChart.data.datasets[0].data.shift();
+  }
+  onlineChart.data.labels.push(time);
+  onlineChart.data.datasets[0].data.push(count);
+  onlineChart.update();
+
+  if(count > peakPlayers){ peakPlayers = count; document.getElementById('peakPlayers').textContent = peakPlayers; }
+}
+
+// UPDATE SERVER & LEADERBOARD
 async function updateServer(){
   try{
     const res = await fetch("https://angkorps.site/api/ping");
     const data = await res.json();
 
-    const statusEl = document.getElementById("serverStatus");
-    statusEl.textContent = data.serverStatus === "online" ? "ONLINE" : "OFFLINE";
-    statusEl.style.color = data.serverStatus === "online" ? "#10b981" : "red";
+    const serverStatus = document.getElementById("serverStatus");
+    const serverCard = document.getElementById("serverStatusCard");
+    serverStatus.textContent = data.serverStatus==="online" ? "ONLINE":"OFFLINE";
+    serverStatus.style.color = data.serverStatus==="online" ? "#10b981":"red";
+    serverCard.className = "status-card "+(data.serverStatus==="online"?"online":"offline");
 
-    const playersCount = data.onlinePlayersCount ?? 0;
-    document.getElementById("playersCount").textContent = playersCount;
-
-    updateChart(playersCount); // <-- update chart
+    const players = data.onlinePlayersCount ?? 0;
+    document.getElementById("playersCount").textContent = players;
+    updateChart(players);
 
     const lb = document.getElementById("leaderboardList");
     lb.innerHTML = "";
-
-    if(data.leaderboard && data.leaderboard.length > 0){
-      data.leaderboard.forEach((entry) => {
-        const parts = entry.split(" ");  
-        const rank = parts[0];
-        const name = parts[1];
-        const amount = parts[2];
-        const wlText = parts[3];
-
+    if(data.leaderboard && data.leaderboard.length>0){
+      data.leaderboard.forEach(entry=>{
+        const parts = entry.split(" ");
         const li = document.createElement("li");
-        li.className = "lb-item";
-        li.innerHTML = `
-          <span>${rank} ${name}</span>
-          <span class="lb-wl">
-            ${amount} ${wlText}
-            <img src="assets/world_lock.png" alt="WL">
-          </span>
-        `;
+        li.className="lb-item";
+        li.innerHTML=`<span>${parts[0]} ${parts[1]}</span><span class="lb-wl">${parts[2]} ${parts[3]} <img src="assets/world_lock.png" alt="WL"></span>`;
         lb.appendChild(li);
       });
-    } else {
-      lb.innerHTML = "<li>No players found</li>";
-    }
-
+    } else lb.innerHTML="<li>No players found</li>";
   } catch {
     document.getElementById("serverStatus").textContent="OFFLINE";
     document.getElementById("serverStatus").style.color="red";
@@ -120,3 +227,5 @@ async function updateServer(){
 updateServer();
 setInterval(updateServer,5000);
 </script>
+</body>
+</html>
