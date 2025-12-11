@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>AngkorPS</title>
+<title>AngkorPS Dashboard</title>
 
 <!-- Fonts -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
@@ -15,159 +15,183 @@
 <link rel="icon" href="assets/AngkorPS.png" type="image/png">
 
 <style>
+
 /* RESET */
-* { margin: 0; padding: 0; box-sizing: border-box; }
+* { margin:0; padding:0; box-sizing:border-box; }
 body {
   font-family: 'Inter', sans-serif;
-  background: #0b0f14;
-  color: #e5e5e5;
-  overflow-x: hidden;
+  background:#0d1117;
+  color:#e5e5e5;
 }
 
-/* WRAPPER */
-.container { 
-  max-width: 900px; 
-  margin: auto; 
-  padding: 2.5rem 1rem; 
+/* CENTER WRAPPER */
+.container {
+  max-width: 920px;
+  margin:auto;
+  padding: 2rem 1.2rem;
 }
 
 /* HEADER */
-.header { text-align: center; margin-bottom: 2.5rem; }
-.header .title {
-  display: flex; justify-content: center; align-items: center; gap: .8rem;
-  font-size: 2.8rem; font-weight: 700; color: #10b981;
-  text-shadow: 0 0 12px rgba(16,185,129,0.35);
+.header {
+  text-align:center;
+  margin-bottom: 2.6rem;
 }
-.header img {
-  width: 48px; height: 48px; border-radius: 10px;
+.header .title {
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  gap:.8rem;
+  font-size:2.4rem;
+  font-weight:700;
+  color:#e9ecef;
+}
+.header .title img {
+  width:48px;
+  height:48px;
+  border-radius:12px;
 }
 .header .subtitle {
-  margin-top: .5rem; font-size: 1rem; color: #9ea9b3;
+  margin-top:.4rem;
+  font-size:1rem;
+  color:#8b99a8;
 }
 
-/* CARD */
+/* CARD (clean, professional, modern) */
 .card {
-  background: rgba(17, 22, 29, 0.6);
-  border: 1px solid rgba(34, 255, 178, 0.08);
-  border-radius: 14px;
-  padding: 1.7rem;
-  margin-bottom: 1.5rem;
-  backdrop-filter: blur(12px);
-  box-shadow: 0 4px 22px rgba(0,0,0,.35);
-  transition: .25s;
-}
-.card:hover {
-  border-color: rgba(16, 185, 129, .55);
-  box-shadow: 0 6px 28px rgba(16,185,129,0.15);
+  background:#11161d;
+  border:1px solid #1c232c;
+  border-radius:14px;
+  padding:1.6rem;
+  margin-bottom:1.5rem;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.25);
 }
 
 /* CARD TITLE */
 .card h3 {
-  margin-bottom: 1.3rem;
-  font-size: 1.25rem;
-  font-weight: 600;
-  color: #fff;
-  display: flex; align-items: center; gap: .5rem;
+  font-size:1.18rem;
+  font-weight:600;
+  color:#ffffff;
+  margin-bottom:1.2rem;
+  display:flex;
+  align-items:center;
+  gap:.55rem;
 }
 
-/* STATUS BLOCK */
+/* STATUS PANEL */
 .status-card {
-  background: rgba(22,27,34,0.55);
-  padding: 1rem 1.2rem;
-  border-radius: 12px;
-  margin-bottom: .9rem;
-  display: flex; justify-content: space-between; align-items: center;
-  border: 1px solid rgba(255,255,255,0.04);
+  background:#161c24;
+  border:1px solid #1f2832;
+  border-radius:12px;
+  padding:1rem 1.2rem;
+  margin-bottom:.8rem;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
 }
-.status-card h4 { font-size: 1rem; color: #aeb8c4; }
-.status-card p { font-size: 1.25rem; font-weight: 700; color: #10b981; }
+.status-card h4 {
+  font-size:1rem;
+  color:#9aa4b1;
+}
+.status-card p {
+  font-size:1.25rem;
+  font-weight:600;
+  color:#10b981;
+}
 
 /* LEADERBOARD */
 .lb-item {
-  background: rgba(20,24,31,0.6);
-  border: 1px solid rgba(255,255,255,0.04);
-  padding: .75rem 1.1rem;
-  border-radius: 10px;
-  margin-bottom: .55rem;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  transition: .2s;
+  background:#161c24;
+  padding:.75rem 1rem;
+  border-radius:12px;
+  border:1px solid #1f2832;
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-bottom:.55rem;
 }
 .lb-item:hover {
-  background: rgba(16,185,129,0.15);
-  border-color: rgba(16,185,129,.35);
+  background:#1b222d;
 }
 .lb-wl {
-  display: flex; align-items: center; gap: .35rem;
+  display:flex;
+  align-items:center;
+  gap:.35rem;
 }
-.lb-wl img { width: 18px; }
+.lb-wl img {
+  width:18px;
+}
 
-/* BUTTON GRID */
-.btn-grid { 
-  display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(150px,1fr));
-  gap: .9rem;
+/* BUTTONS */
+.btn-grid {
+  display:grid;
+  grid-template-columns:repeat(auto-fit,minmax(150px,1fr));
+  gap:.85rem;
 }
 .btn {
-  padding: .85rem;
-  border-radius: 10px;
-  font-weight: 600;
-  font-size: .92rem;
-  background: #13181f;
-  border: 1px solid rgba(255,255,255,0.05);
-  color: #e5e5e5;
-  cursor: pointer;
-  transition: .2s;
+  background:#141a22;
+  border:1px solid #222b36;
+  color:#e5e5e5;
+  padding:.85rem;
+  border-radius:10px;
+  font-weight:500;
+  font-size:.92rem;
+  cursor:pointer;
+  transition:.18s;
 }
 .btn:hover {
-  background: #10b981;
-  color: #0b0f14;
-  border-color: #10b981;
+  background:#1d2330;
+  border-color:#2e3a47;
 }
 .btn-discord {
-  background: #5865f2; border: none;
+  background:#5865f2;
+  color:white;
+  border:none;
 }
 .btn-discord:hover {
-  filter: brightness(.85);
+  filter:brightness(.88);
 }
 
 /* FOOTER */
 .footer {
-  text-align: center;
-  padding: 2rem 0;
-  color: #7d8894;
-  font-size: .9rem;
+  text-align:center;
+  padding:2rem 0;
+  color:#7b8490;
+  font-size:.9rem;
 }
 
 /* TOAST */
 .toast {
-  position: fixed;
-  bottom: 28px; left: 50%;
-  transform: translateX(-50%) translateY(50px);
-  padding: .9rem 1.5rem;
-  border-radius: 12px;
-  font-size: .9rem;
-  opacity: 0; pointer-events: none;
-  transition: .4s ease;
-  background: #10b981;
-  color: #fff;
-  box-shadow: 0 3px 12px rgba(0,0,0,0.3);
+  position:fixed;
+  bottom:28px;
+  left:50%;
+  transform:translateX(-50%) translateY(40px);
+  background:#10b981;
+  color:#fff;
+  padding:.85rem 1.4rem;
+  border-radius:10px;
+  opacity:0;
+  transition:.35s;
+  pointer-events:none;
+  font-size:.9rem;
 }
 .toast.show {
-  opacity: 1; transform: translateX(-50%) translateY(0);
+  opacity:1;
+  transform:translateX(-50%) translateY(0);
 }
-.toast.error { background: #f44336; }
+.toast.error {
+  background:#d9534f;
+}
+
 </style>
 </head>
 <body>
 
 <header class="header">
   <h1 class="title">
-    <img src="assets/AngkorPS.png">
+    <img src="assets/AngkorPS.png" alt="Logo">
     AngkorPS
   </h1>
-  <p class="subtitle">Experience Growtopia private server with a stable and premium system.</p>
+  <p class="subtitle">A clean and stable Growtopia Private Server dashboard.</p>
 </header>
 
 <div class="container">
@@ -187,12 +211,10 @@ body {
   <!-- LEADERBOARD -->
   <div class="card">
     <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
-    <ul id="leaderboardList">
-      <li>Loading...</li>
-    </ul>
+    <ul id="leaderboardList"><li>Loading...</li></ul>
   </div>
 
-  <!-- HOST DOWNLOAD -->
+  <!-- HOST & DOWNLOAD -->
   <div class="card">
     <h3><i class="fas fa-server"></i> Host & Download</h3>
     <div class="btn-grid">
@@ -214,64 +236,62 @@ body {
 
 </div>
 
-<footer class="footer">© <b>AngkorPS</b></footer>
+<footer class="footer">© <strong>AngkorPS</strong></footer>
 
 <div id="toast" class="toast"></div>
 
-<!-- JAVASCRIPT (unchanged from your script) -->
 <script>
 function showToast(msg, type="success") {
-  const t = document.getElementById("toast");
-  t.textContent = msg;
-  t.className = "toast " + (type === "error" ? "error" : "");
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.className="toast "+(type==="error"?"error":"");
   t.classList.add("show");
-  setTimeout(() => t.classList.remove("show"), 1800);
+  setTimeout(()=>t.classList.remove("show"),1800);
 }
 
-const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
+const HOST_IP_TEXT=`5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
 5.39.13.21 www.growtopia2.com`;
 
-function copyText(t){ navigator.clipboard.writeText(t).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error")); }
-function copyHost(){ copyText(HOST_IP_TEXT); }
-function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
-function copyHostGoURL(){ copyText("https://angkorps.site/angkor.host"); }
-function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
+function copyText(t){navigator.clipboard.writeText(t).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error"));}
+function copyHost(){copyText(HOST_IP_TEXT);}
+function copyPowerTunnel(){copyText("https://angkorps.site/angkor.txt");}
+function copyHostGoURL(){copyText("https://angkorps.site/angkor.host");}
+function copyIOS(){copyText("https://angkorps.site/ios.txt");}
 
 function downloadHost(){
-  const blob = new Blob([HOST_IP_TEXT], {type:"text/plain"});
-  const url = URL.createObjectURL(blob);
-  const a = document.createElement("a");
-  a.href = url; a.download="angkor.host"; a.click();
+  const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"});
+  const url=URL.createObjectURL(blob);
+  const a=document.createElement("a");
+  a.href=url;a.download="angkor.host";a.click();
   URL.revokeObjectURL(url);
   showToast("Downloaded!");
 }
 
-/* SERVER PING */
+/* FETCH SERVER DATA */
 async function updateServer(){
   try{
-    const res = await fetch("https://angkorps.site/api/ping");
-    const data = await res.json();
+    const res=await fetch("https://angkorps.site/api/ping");
+    const d=await res.json();
 
-    const stat = document.getElementById("serverStatus");
-    stat.textContent = data.serverStatus === "online" ? "ONLINE" : "OFFLINE";
-    stat.style.color = data.serverStatus === "online" ? "#10b981" : "red";
+    const s=document.getElementById("serverStatus");
+    s.textContent=d.serverStatus==="online"?"ONLINE":"OFFLINE";
+    s.style.color=d.serverStatus==="online"?"#10b981":"red";
 
-    document.getElementById("playersCount").textContent =
-      data.onlinePlayersCount ?? 0;
+    document.getElementById("playersCount").textContent=d.onlinePlayersCount||0;
 
-    const lb = document.getElementById("leaderboardList");
-    lb.innerHTML = "";
+    const lb=document.getElementById("leaderboardList");
+    lb.innerHTML="";
 
-    if(data.leaderboard){
-      data.leaderboard.forEach(entry=>{
-        const [rank, name, amount, wl] = entry.split(" ");
-        lb.innerHTML += `
-        <li class="lb-item">
-          <span>${rank} ${name}</span>
-          <span class="lb-wl">${amount} ${wl} <img src="assets/world_lock.png"></span>
-        </li>`;
+    if(d.leaderboard){
+      d.leaderboard.forEach(entry=>{
+        const [rank,name,amount,wl]=entry.split(" ");
+        lb.innerHTML+=`
+          <li class="lb-item">
+            <span>${rank} ${name}</span>
+            <span class="lb-wl">${amount} ${wl} <img src="assets/world_lock.png"></span>
+          </li>`;
       });
     }
   }catch{
@@ -279,8 +299,9 @@ async function updateServer(){
     document.getElementById("serverStatus").style.color="red";
   }
 }
+
 updateServer();
-setInterval(updateServer, 5000);
+setInterval(updateServer,5000);
 </script>
 
 </body>
