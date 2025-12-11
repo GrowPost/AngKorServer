@@ -184,45 +184,57 @@ function downloadHost(){
 
 /* ONLINE PLAYERS CHART BY DAY */
 const ctx = document.getElementById('onlineChart').getContext('2d');
-const onlineChart = new Chart(ctx,{
+const onlineChart = new Chart(ctx, {
   type:'line',
-  data:{
-    labels:[], // days: 1,2,3...
-    datasets:[{
-      label:'Players Online',
-      data:[],
-      borderColor:'#10b981',
-      backgroundColor:'rgba(16,185,129,0.2)',
-      fill:true,
-      tension:0, // jagged
-      borderWidth:2,
-      pointRadius:3
-    }]
-  },
+  data:{ labels:[], datasets:[{
+    label:'Players Online',
+    data:[],
+    borderColor:'#10b981',
+    backgroundColor:'rgba(16,185,129,0.2)',
+    fill:true,
+    tension:0,
+    borderWidth:2,
+    pointRadius:3
+  }]},
   options:{
     responsive:true,
     plugins:{ legend:{ display:false } },
     scales:{
       x:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' } },
-      y:{ 
-        ticks:{ color:'#e5e5e5', stepSize:1, callback: v=>Math.round(v) },
-        grid:{ color:'#1f242c' },
-        beginAtZero:true
-      }
+      y:{ ticks:{ color:'#e5e5e5', stepSize:1, callback:v=>Math.round(v) },
+          grid:{ color:'#1f242c' }, beginAtZero:true }
     }
   }
 });
 
-// Update chart for daily count
-function updateChartDay(day,count){
+// Update chart with daily data
+function updateChartDaily(dateStr,count){
   if(onlineChart.data.labels.length>=30){
     onlineChart.data.labels.shift();
     onlineChart.data.datasets[0].data.shift();
   }
-  onlineChart.data.labels.push(day.toString());
+  onlineChart.data.labels.push(dateStr);
   onlineChart.data.datasets[0].data.push(Math.round(count));
   onlineChart.update();
 }
+
+// Fetch last 30 days daily data from API
+async function fetchDailyData(){
+  try {
+    const res = await fetch("https://angkorps.site/api/daily");
+    const data = await res.json(); // [{date:"2025-12-11",players:123},...]
+    onlineChart.data.labels=[];
+    onlineChart.data.datasets[0].data=[];
+    data.forEach(d=>{
+      const date = new Date(d.date);
+      const formatted = date.getDate() + " " + date.toLocaleString('en-US',{month:'short'});
+      updateChartDaily(formatted,d.players);
+    });
+  } catch(err){ console.log("Failed to fetch daily data",err); }
+}
+
+// Initial daily chart load
+fetchDailyData();
 
 /* SERVER STATUS & LEADERBOARD */
 async function updateServer(){
@@ -231,39 +243,29 @@ async function updateServer(){
     const data = await res.json();
 
     document.getElementById("serverStatus").textContent =
-      data.serverStatus === "online" ? "ONLINE" : "OFFLINE";
+      data.serverStatus==="online"?"ONLINE":"OFFLINE";
     document.getElementById("serverStatus").style.color =
-      data.serverStatus === "online" ? "#10b981" : "red";
+      data.serverStatus==="online"?"#10b981":"red";
 
-    document.getElementById("playersCount").textContent =
-      data.onlinePlayersCount ?? 0;
-
-    // Update chart (daily simulation)
-    const today = new Date();
-    const dayNum = today.getDate(); // 1-31
-    updateChartDay(dayNum, data.onlinePlayersCount ?? 0);
+    document.getElementById("playersCount").textContent = data.onlinePlayersCount ?? 0;
 
     const lb = document.getElementById("leaderboardList");
-    lb.innerHTML = "";
-
-    if(data.leaderboard && data.leaderboard.length > 0){
-      data.leaderboard.forEach((entry) => {
-        const parts = entry.split(" ");
-        const li = document.createElement("li");
-        li.className = "lb-item";
-        li.innerHTML = `<span>${parts[0]} ${parts[1]}</span><span class="lb-wl">${parts[2]} ${parts[3]} <img src="assets/world_lock.png" alt="WL"></span>`;
+    lb.innerHTML="";
+    if(data.leaderboard && data.leaderboard.length>0){
+      data.leaderboard.forEach(entry=>{
+        const parts=entry.split(" ");
+        const li=document.createElement("li");
+        li.className="lb-item";
+        li.innerHTML=`<span>${parts[0]} ${parts[1]}</span><span class="lb-wl">${parts[2]} ${parts[3]} <img src="assets/world_lock.png" alt="WL"></span>`;
         lb.appendChild(li);
       });
-    } else {
-      lb.innerHTML = "<li>No players found</li>";
-    }
+    } else lb.innerHTML="<li>No players found</li>";
 
-  } catch {
+  } catch{
     document.getElementById("serverStatus").textContent="OFFLINE";
     document.getElementById("serverStatus").style.color="red";
     document.getElementById("playersCount").textContent=0;
     document.getElementById("leaderboardList").innerHTML="<li>No data</li>";
-    updateChartDay(new Date().getDate(),0);
   }
 }
 
