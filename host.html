@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="AngkorPS Host & Download">
+<title>AngkorPS - Host & Download</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+<style>
+/* Header, container, cards same style as index.html */
+body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; margin:0; scroll-behavior:smooth; }
+.header { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#11151c; border-bottom:1px solid #1f242c; position:sticky; top:0; z-index:1000; }
+.header .logo { display:flex; align-items:center; gap:.5rem; cursor:pointer; }
+.header .logo img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
+.header .logo span { font-size:1.5rem; font-weight:700; color:#10b981; }
+.nav button { background:none; border:none; color:#e5e5e5; font-size:1rem; cursor:pointer; display:flex; align-items:center; gap:.3rem; font-weight:500; }
+.nav-menu { position:absolute; top:calc(100% + 5px); right:0; background:#161b23; border:1px solid #1f242c; border-radius:8px; flex-direction:column; min-width:180px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.3); opacity:0; transform:translateY(-20px) scaleY(0.95); pointer-events:none; transition: all 0.3s cubic-bezier(0.25,1,0.5,1); }
+.nav-menu.show { opacity:1; transform:translateY(0) scaleY(1); pointer-events:auto; }
+.nav-menu a { padding:.8rem 1rem; color:#e5e5e5; text-decoration:none; display:block; transition: all 0.2s; }
+.nav-menu a:hover { background:#10b981; color:#111; }
+
+.container { max-width:900px; margin:auto; padding:2rem 1rem; }
+.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+.btn-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:.8rem; }
+.btn { padding:.8rem; border-radius:10px; font-weight:500; font-size:.9rem; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.2s; }
+.btn:hover { background:#10b981; color:#111; border-color:#10b981; }
+.toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.8rem 1.4rem; border-radius:10px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.9rem; }
+.toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
+.toast.error { background:#d9534f; }
+.footer { text-align:center; padding:2rem 0; color:#888; font-size:.9rem; }
+</style>
+</head>
+<body>
+
+<header class="header">
+  <div class="logo" onclick="window.location.href='index.html'">
+    <img src="assets/AngkorPS.png" alt="Logo">
+    <span>AngkorPS</span>
+  </div>
+  <div class="nav">
+    <button onclick="toggleNavMenu()"><i class="fas fa-bars"></i> Menu</button>
+    <div class="nav-menu" id="navMenu">
+      <a href="index.html">Home</a>
+      <a href="host.html">Host & Download</a>
+      <a href="community.html">Discord</a>
+    </div>
+  </div>
+</header>
+
+<div class="container">
+  <div class="card">
+    <h3><i class="fas fa-server"></i> Host & Download</h3>
+    <div class="btn-grid">
+      <button class="btn" onclick="copyHost()">Copy IP</button>
+      <button class="btn" onclick="downloadHost()">Download Host</button>
+      <button class="btn" onclick="copyPowerTunnel()">PowerTunnel</button>
+      <button class="btn" onclick="copyHostGoURL()">Host GO</button>
+      <button class="btn" onclick="copyIOS()">iOS Host</button>
+    </div>
+  </div>
+</div>
+
+<footer class="footer">Â© <strong>AngkorPS</strong></footer>
+<div id="toast" class="toast"></div>
+
+<script>
+// Menu
+function toggleNavMenu(){ document.getElementById("navMenu").classList.toggle("show"); }
+document.addEventListener('click', function(e){
+  const menu=document.getElementById("navMenu");
+  const btn=document.querySelector(".nav button");
+  if(!menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove("show");
+});
+
+// Toast
+function showToast(msg,type="success"){
+  const t=document.getElementById("toast");
+  t.textContent=msg;
+  t.className="toast "+(type==="error"?"error":"");
+  t.classList.add("show");
+  setTimeout(()=>t.classList.remove("show"),1800);
+}
+
+// Host buttons
+const HOST_IP_TEXT=`5.39.13.21 growtopia1.com
+5.39.13.21 growtopia2.com
+5.39.13.21 www.growtopia1.com
+5.39.13.21 www.growtopia2.com`;
+function copyText(text){ navigator.clipboard.writeText(text).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error")); }
+function copyHost(){ copyText(HOST_IP_TEXT); }
+function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
+function copyHostGoURL(){ copyText("https://angkorps.site/angkor.host"); }
+function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
+function downloadHost(){ const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="angkor.host"; a.click(); URL.revokeObjectURL(url); showToast("Downloaded!"); }
+</script>
+</body>
+</html>
