@@ -6,7 +6,6 @@
 <meta name="description" content="AngkorPS Discord Community">
 <title>AngkorPS - Discord</title>
 
-<!-- Google Fonts & FontAwesome -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
@@ -31,9 +30,29 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.8rem 1.4rem; border-radius:10px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.9rem; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
 .toast.error { background:#d9534f; }
+
+/* Loading Screen */
+#loadingScreen {
+  position:fixed; top:0; left:0; width:100%; height:100%;
+  background:#0d1117; display:flex; flex-direction:column; justify-content:center; align-items:center;
+  z-index:2000; transition: opacity 0.5s ease;
+}
+#loadingScreen.hidden { opacity:0; pointer-events:none; }
+#loadingScreen .spinner {
+  width:60px; height:60px; border:6px solid #161b23; border-top:6px solid #10b981; border-radius:50%;
+  animation:spin 1s linear infinite; margin-bottom:1rem;
+}
+@keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
+#loadingScreen p { color:#e5e5e5; font-size:1rem; font-weight:500; }
 </style>
 </head>
 <body>
+
+<!-- Loading Screen -->
+<div id="loadingScreen">
+  <div class="spinner"></div>
+  <p>Loading AngkorPS...</p>
+</div>
 
 <header class="header">
   <div class="logo" onclick="window.location.href='index.html'">
@@ -54,9 +73,7 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
   <div class="card">
     <h3><i class="fab fa-discord"></i> Join our Discord</h3>
     <p>Click the button below to join the official AngkorPS Discord community.</p>
-    <button class="btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">
-      Join Discord
-    </button>
+    <button class="btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">Join Discord</button>
   </div>
 </div>
 
@@ -64,14 +81,9 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 <div id="toast" class="toast"></div>
 
 <script>
-// Menu toggle
-function toggleNavMenu(){ document.getElementById("navMenu").classList.toggle("show"); }
-document.addEventListener('click', function(e){
-  const menu=document.getElementById("navMenu");
-  const btn=document.querySelector(".nav button");
-  if(!menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove("show");
-});
+window.addEventListener('load',()=>{document.getElementById('loadingScreen').classList.add('hidden');});
+function toggleNavMenu(){document.getElementById("navMenu").classList.toggle("show");}
+document.addEventListener('click',function(e){const menu=document.getElementById("navMenu");const btn=document.querySelector(".nav button");if(!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove("show");});
 </script>
-
 </body>
 </html>
