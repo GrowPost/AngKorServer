@@ -19,46 +19,94 @@
 <link rel="icon" href="assets/AngkorPS.png" type="image/png">
 
 <style>
-body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; margin:0; padding:0; }
-.container { max-width:900px; margin:auto; padding:2rem 1rem; }
-.header { background:#11151c; padding:1.5rem 2rem; border-radius:12px; margin-bottom:2rem; }
-.header-top { display:flex; align-items:center; justify-content:center; gap:1rem; flex-wrap:wrap; margin-bottom:1rem; }
-.header-logo { width:60px; height:60px; border-radius:12px; object-fit:cover; }
-.title { font-size:2.8rem; font-weight:700; color:#10b981; margin:0; }
-.subtitle { font-size:1rem; color:#b5b5b5; margin-top:.2rem; }
-.header-stats { display:flex; justify-content:center; gap:1rem; flex-wrap:wrap; margin-top:1rem; }
-.header-stats .status-card { min-width:140px; flex:1; text-align:center; padding:.8rem 1rem; border-radius:10px; background:#161b23; border:1px solid #1f242c; }
-.header-stats .status-card.online { border-color:#10b981; }
-.header-stats .status-card.offline { border-color:red; }
+/* RESET */
+* { margin:0; padding:0; box-sizing:border-box; }
+body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
+
+/* CONTAINER */
+.container { max-width: 900px; margin: auto; padding: 2rem 1rem; }
+
+/* HEADER */
+.header { text-align:center; margin-bottom:2rem; }
+.header .title { display:flex; align-items:center; justify-content:center; gap:.6rem; font-size:2.4rem; font-weight:700; color:#10b981; }
+.header .title img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
+.header .subtitle { margin-top:.3rem; color:#b5b5b5; font-size:.95rem; }
+
+/* CARD BASE */
 .card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
-.card h3 { margin-bottom:1.2rem; }
-.lb-item { display:flex; justify-content:space-between; align-items:center; padding:.6rem 1rem; margin-bottom:.4rem; background:#161b23; border-radius:8px; font-weight:500; color:#e5e5e5; }
-.lb-wl { display:flex; align-items:center; gap:.35rem; }
-.lb-wl img { width:18px; height:18px; object-fit:contain; }
+
+/* STATUS CARD */
+.status-card { display:flex; justify-content:space-between; align-items:center; margin-bottom:.8rem; padding:.8rem 1rem; border-radius:10px; background:#161b23; }
+.status-card h4 { font-weight:500; font-size:1rem; color:#b5b5b5; }
+.status-card p { font-weight:600; font-size:1.2rem; color:#10b981; }
+
+/* LEADERBOARD */
+.leaderboard { margin-bottom:1.5rem; }
+.leaderboard h3 { font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:.8rem; display:flex; align-items:center; gap:.5rem; }
+.leaderboard ul { list-style:none; padding:0; margin:0; }
+
+/* LEADERBOARD ITEM */
+.lb-item {
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  padding:.6rem 1rem;
+  margin-bottom:.4rem;
+  background:#161b23;
+  border-radius:8px;
+  font-weight:500;
+  color:#e5e5e5;
+}
+
+.lb-wl {
+  display:flex;
+  align-items:center;
+  gap:.35rem;
+}
+
+.lb-wl img {
+  width:18px;
+  height:18px;
+  object-fit:contain;
+}
+
+/* BUTTON GRID */
 .btn-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:.8rem; }
 .btn { padding:.8rem; border-radius:10px; font-weight:500; font-size:.9rem; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.2s; }
 .btn:hover { background:#10b981; color:#111; border-color:#10b981; }
 .btn-discord { background:#5865f2; border:none; color:#fff; }
 .btn-discord:hover { opacity:.85; }
+
+/* CARD HEADINGS SPACING FIX */
+.card h3 { margin-bottom: 1.2rem; }
+
+/* FOOTER */
 .footer { text-align:center; padding:2rem 0; color:#888; font-size:0.9rem; }
+
+/* TOAST */
 .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.8rem 1.4rem; border-radius:10px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.9rem; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
 .toast.error { background:#d9534f; }
+
+/* ONLINE CHART */
 #onlineChart { width:100%; background:#161b23; border-radius:12px; padding:10px; }
 </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="header-top">
-    <img src="assets/AngkorPS.png" alt="AngkorPS Logo" class="header-logo">
-    <div>
-      <h1 class="title">AngkorPS</h1>
-      <p class="subtitle">Growtopia private server with exciting gameplay & stable system</p>
-    </div>
-  </div>
-  <div class="header-stats">
-    <div class="status-card" id="serverStatusCard">
+  <h1 class="title">
+    <img src="assets/AngkorPS.png" alt="AngkorPS Logo">
+    AngkorPS
+  </h1>
+  <p class="subtitle">Experience playing on Growtopia private server with exciting gameplay and stable system.</p>
+</header>
+
+<div class="container">
+
+  <!-- SERVER STATUS -->
+  <div class="card">
+    <div class="status-card">
       <h4>Server Status</h4>
       <p id="serverStatus">Checking...</p>
     </div>
@@ -67,19 +115,19 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; ma
       <p id="playersCount">0</p>
     </div>
   </div>
-</header>
 
-<div class="container">
-  <!-- ONLINE PLAYERS BY DAY GRAPH -->
+  <!-- ONLINE PLAYERS GRAPH -->
   <div class="card">
     <h3><i class="fas fa-chart-line"></i> Online Players (Daily)</h3>
     <canvas id="onlineChart" height="120"></canvas>
   </div>
 
   <!-- LEADERBOARD -->
-  <div class="card">
+  <div class="card leaderboard">
     <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
-    <ul id="leaderboardList"><li>Loading...</li></ul>
+    <ul id="leaderboardList">
+      <li>Loading...</li>
+    </ul>
   </div>
 
   <!-- HOST & DOWNLOAD -->
@@ -101,23 +149,22 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; ma
       <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join Discord</button>
     </div>
   </div>
+
 </div>
 
 <footer class="footer">Â© <strong>AngkorPS</strong></footer>
 <div id="toast" class="toast"></div>
 
 <script>
-// TOAST
-function showToast(msg,type="success"){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.className="toast "+(type==="error"?"error":"");
+function showToast(msg, type="success") {
+  const t = document.getElementById("toast");
+  t.textContent = msg;
+  t.className = "toast " + (type==="error"?"error":"");
   t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1800);
+  setTimeout(() => t.classList.remove("show"), 1800);
 }
 
-// COPY / DOWNLOAD
-const HOST_IP_TEXT=`5.39.13.21 growtopia1.com
+const HOST_IP_TEXT = `5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
 5.39.13.21 www.growtopia2.com`;
@@ -127,69 +174,102 @@ function copyHost(){ copyText(HOST_IP_TEXT); }
 function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
 function copyHostGoURL(){ copyText("https://angkorps.site/angkor.host"); }
 function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
-function downloadHost(){ const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"}); const a=document.createElement("a"); a.href=URL.createObjectURL(blob); a.download="angkor.host"; a.click(); showToast("Downloaded!"); }
+function downloadHost(){
+  const blob = new Blob([HOST_IP_TEXT], {type:"text/plain"});
+  const url = URL.createObjectURL(blob);
+  const a = document.createElement("a");
+  a.href = url; a.download="angkor.host"; a.click();
+  URL.revokeObjectURL(url); showToast("Downloaded!");
+}
 
-// DAILY ONLINE PLAYERS GRAPH
-const ctx=document.getElementById('onlineChart').getContext('2d');
-const onlineChart=new Chart(ctx,{
+/* ONLINE PLAYERS CHART BY DAY */
+const ctx = document.getElementById('onlineChart').getContext('2d');
+const onlineChart = new Chart(ctx,{
   type:'line',
-  data:{ labels:[], datasets:[{ label:'Players Online', data:[], borderColor:'#10b981', backgroundColor:'rgba(16,185,129,0.2)', fill:true, tension:0, borderWidth:2, pointRadius:3 }] },
-  options:{ responsive:true, plugins:{ legend:{ display:false } }, scales:{ x:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' } }, y:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' }, beginAtZero:true } } }
+  data:{
+    labels:[], // days: 1,2,3...
+    datasets:[{
+      label:'Players Online',
+      data:[],
+      borderColor:'#10b981',
+      backgroundColor:'rgba(16,185,129,0.2)',
+      fill:true,
+      tension:0, // jagged
+      borderWidth:2,
+      pointRadius:3
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{ legend:{ display:false } },
+    scales:{
+      x:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' } },
+      y:{ 
+        ticks:{ color:'#e5e5e5', stepSize:1, callback: v=>Math.round(v) },
+        grid:{ color:'#1f242c' },
+        beginAtZero:true
+      }
+    }
+  }
 });
 
-// Update chart with daily data
-function updateChartDaily(date,count){
-  if(onlineChart.data.labels.length>=30){ onlineChart.data.labels.shift(); onlineChart.data.datasets[0].data.shift(); }
-  onlineChart.data.labels.push(date);
-  onlineChart.data.datasets[0].data.push(count);
+// Update chart for daily count
+function updateChartDay(day,count){
+  if(onlineChart.data.labels.length>=30){
+    onlineChart.data.labels.shift();
+    onlineChart.data.datasets[0].data.shift();
+  }
+  onlineChart.data.labels.push(day.toString());
+  onlineChart.data.datasets[0].data.push(Math.round(count));
   onlineChart.update();
 }
 
-// Fetch daily data from API (assumes API provides last 30 days)
-async function fetchDailyData(){
-  try{
-    const res=await fetch("https://angkorps.site/api/daily");
-    const data=await res.json(); // [{date:"2025-12-01",players:123},...]
-    onlineChart.data.labels=[];
-    onlineChart.data.datasets[0].data=[];
-    data.forEach(d=>updateChartDaily(d.date,d.players));
-  }catch{ console.log("Failed to fetch daily data"); }
-}
-
-// Fetch server status & leaderboard
+/* SERVER STATUS & LEADERBOARD */
 async function updateServer(){
   try{
-    const res=await fetch("https://angkorps.site/api/ping");
-    const data=await res.json();
-    const serverStatus=document.getElementById("serverStatus");
-    const serverCard=document.getElementById("serverStatusCard");
-    serverStatus.textContent=data.serverStatus==="online"?"ONLINE":"OFFLINE";
-    serverStatus.style.color=data.serverStatus==="online"?"#10b981":"red";
-    serverCard.className="status-card "+(data.serverStatus==="online"?"online":"offline");
-    document.getElementById("playersCount").textContent=data.onlinePlayersCount??0;
+    const res = await fetch("https://angkorps.site/api/ping");
+    const data = await res.json();
 
-    const lb=document.getElementById("leaderboardList");
-    lb.innerHTML="";
-    if(data.leaderboard && data.leaderboard.length>0){
-      data.leaderboard.forEach(entry=>{
-        const parts=entry.split(" ");
-        const li=document.createElement("li");
-        li.className="lb-item";
-        li.innerHTML=`<span>${parts[0]} ${parts[1]}</span><span class="lb-wl">${parts[2]} ${parts[3]} <img src="assets/world_lock.png" alt="WL"></span>`;
+    document.getElementById("serverStatus").textContent =
+      data.serverStatus === "online" ? "ONLINE" : "OFFLINE";
+    document.getElementById("serverStatus").style.color =
+      data.serverStatus === "online" ? "#10b981" : "red";
+
+    document.getElementById("playersCount").textContent =
+      data.onlinePlayersCount ?? 0;
+
+    // Update chart (daily simulation)
+    const today = new Date();
+    const dayNum = today.getDate(); // 1-31
+    updateChartDay(dayNum, data.onlinePlayersCount ?? 0);
+
+    const lb = document.getElementById("leaderboardList");
+    lb.innerHTML = "";
+
+    if(data.leaderboard && data.leaderboard.length > 0){
+      data.leaderboard.forEach((entry) => {
+        const parts = entry.split(" ");
+        const li = document.createElement("li");
+        li.className = "lb-item";
+        li.innerHTML = `<span>${parts[0]} ${parts[1]}</span><span class="lb-wl">${parts[2]} ${parts[3]} <img src="assets/world_lock.png" alt="WL"></span>`;
         lb.appendChild(li);
       });
-    }else lb.innerHTML="<li>No players found</li>";
-  }catch{
+    } else {
+      lb.innerHTML = "<li>No players found</li>";
+    }
+
+  } catch {
     document.getElementById("serverStatus").textContent="OFFLINE";
     document.getElementById("serverStatus").style.color="red";
     document.getElementById("playersCount").textContent=0;
     document.getElementById("leaderboardList").innerHTML="<li>No data</li>";
+    updateChartDay(new Date().getDate(),0);
   }
 }
 
-fetchDailyData();
 updateServer();
 setInterval(updateServer,5000);
 </script>
+
 </body>
 </html>
