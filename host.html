@@ -8,7 +8,6 @@
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <style>
-/* Header, container, cards same style as index.html */
 body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; margin:0; scroll-behavior:smooth; }
 .header { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#11151c; border-bottom:1px solid #1f242c; position:sticky; top:0; z-index:1000; }
 .header .logo { display:flex; align-items:center; gap:.5rem; cursor:pointer; }
@@ -23,8 +22,10 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 .container { max-width:900px; margin:auto; padding:2rem 1rem; }
 .card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; }
 .btn-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:.8rem; }
-.btn { padding:.8rem; border-radius:10px; font-weight:500; font-size:.9rem; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.2s; }
+.btn { padding:.8rem; border-radius:10px; font-weight:500; font-size:.9rem; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.2s; text-align:center; }
 .btn:hover { background:#10b981; color:#111; border-color:#10b981; }
+.tutorial-step { background:#161b23; border:1px solid #1f242c; border-radius:10px; padding:15px 20px; margin-top:10px; display:none; animation:fadeIn 0.3s forwards; }
+@keyframes fadeIn { from {opacity:0; transform:translateY(-10px);} to {opacity:1; transform:translateY(0);} }
 .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.8rem 1.4rem; border-radius:10px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.9rem; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
 .toast.error { background:#d9534f; }
@@ -57,6 +58,49 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
       <button class="btn" onclick="copyPowerTunnel()">PowerTunnel</button>
       <button class="btn" onclick="copyHostGoURL()">Host GO</button>
       <button class="btn" onclick="copyIOS()">iOS Host</button>
+    </div>
+  </div>
+
+  <!-- Tutorial / How to Play Section -->
+  <div class="card">
+    <h3><i class="fas fa-book-open"></i> How to Play</h3>
+    <div class="btn-grid">
+      <div class="btn" onclick="toggleStep('android')"><i class="fab fa-android"></i> Android</div>
+      <div class="btn" onclick="toggleStep('ios')"><i class="fab fa-apple"></i> iOS</div>
+      <div class="btn" onclick="toggleStep('pc')"><i class="fas fa-desktop"></i> PC</div>
+      <div class="btn" onclick="toggleStep('mac')"><i class="fas fa-laptop"></i> Mac</div>
+    </div>
+    <div id="android" class="tutorial-step">
+      <ol>
+        <li>Download the AngkorPS APK from <a href="https://angkorps.site/android.apk" style="color:#10b981;">here</a>.</li>
+        <li>Install the APK and allow unknown sources if prompted.</li>
+        <li>Open the app and enter the Host IP to connect.</li>
+        <li>Start playing immediately!</li>
+      </ol>
+    </div>
+    <div id="ios" class="tutorial-step">
+      <ol>
+        <li>Download the AngkorPS iOS host file from <a href="https://angkorps.site/ios.txt" style="color:#10b981;">here</a>.</li>
+        <li>Follow instructions to configure your network settings.</li>
+        <li>Open Growtopia and enter the Host IP.</li>
+        <li>Enjoy playing on your iOS device.</li>
+      </ol>
+    </div>
+    <div id="pc" class="tutorial-step">
+      <ol>
+        <li>Download the Windows host file from <a href="https://angkorps.site/angkor.host" style="color:#10b981;">here</a>.</li>
+        <li>Run the host file and configure your Growtopia client.</li>
+        <li>Enter the Host IP and connect.</li>
+        <li>Start your adventure on PC.</li>
+      </ol>
+    </div>
+    <div id="mac" class="tutorial-step">
+      <ol>
+        <li>Download the Mac host file from <a href="https://angkorps.site/mac.host" style="color:#10b981;">here</a>.</li>
+        <li>Follow instructions to add the host file to your system.</li>
+        <li>Open Growtopia and enter the Host IP.</li>
+        <li>Play smoothly on Mac.</li>
+      </ol>
     </div>
   </div>
 </div>
@@ -93,6 +137,17 @@ function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
 function copyHostGoURL(){ copyText("https://angkorps.site/angkor.host"); }
 function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
 function downloadHost(){ const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"}); const url=URL.createObjectURL(blob); const a=document.createElement("a"); a.href=url; a.download="angkor.host"; a.click(); URL.revokeObjectURL(url); showToast("Downloaded!"); }
+
+// Tutorial toggle
+function toggleStep(id){
+  const step = document.getElementById(id);
+  if(step.style.display === "block"){ step.style.display = "none"; }
+  else { 
+    // Hide other steps
+    document.querySelectorAll('.tutorial-step').forEach(s=>s.style.display="none");
+    step.style.display = "block"; 
+  }
+}
 </script>
 </body>
 </html>
