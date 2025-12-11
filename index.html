@@ -90,10 +90,6 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
       <h4>Players Online</h4>
       <p id="playersCount">0</p>
     </div>
-    <div class="status-card">
-      <h4>Peak Online</h4>
-      <p id="peakPlayers">0</p>
-    </div>
   </div>
 </header>
 
@@ -141,9 +137,9 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 function showToast(msg, type="success") {
   const t = document.getElementById("toast");
   t.textContent = msg;
-  t.className = "toast " + (type==="error" ? "error" : "");
+  t.className = "toast " + (type==="error"?"error":"");
   t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"), 1800);
+  setTimeout(()=>t.classList.remove("show"),1800);
 }
 
 // COPY / DOWNLOAD FUNCTIONS
@@ -166,15 +162,34 @@ function downloadHost(){
   showToast("Downloaded!");
 }
 
-// ONLINE PLAYERS CHART
+// ONLINE PLAYERS CHART (JAGGED LINE)
 const ctx = document.getElementById('onlineChart').getContext('2d');
 const onlineChart = new Chart(ctx,{
   type:'line',
-  data:{ labels:[], datasets:[{ label:'Players Online', data:[], borderColor:'#10b981', backgroundColor:'rgba(16,185,129,0.2)', fill:true, tension:0.4, pointRadius:3 }] },
-  options:{ responsive:true, plugins:{ legend:{ display:false } }, scales:{ x:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' }, title:{ display:true, text:'Time', color:'#b5b5b5' } }, y:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' }, beginAtZero:true, title:{ display:true, text:'Players', color:'#b5b5b5' } } } }
+  data:{
+    labels:[],
+    datasets:[{
+      label:'Players Online',
+      data:[],
+      borderColor:'#10b981',
+      backgroundColor:'rgba(16,185,129,0.2)',
+      fill:true,
+      tension:0, // jagged, no smoothing
+      borderWidth:2,
+      pointRadius:3
+    }]
+  },
+  options:{
+    responsive:true,
+    plugins:{ legend:{ display:false } },
+    scales:{
+      x:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' } },
+      y:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' }, beginAtZero:true }
+    }
+  }
 });
 
-let peakPlayers = 0;
+// UPDATE CHART
 function updateChart(count){
   const time = new Date().toLocaleTimeString();
   if(onlineChart.data.labels.length > 30){
@@ -184,8 +199,6 @@ function updateChart(count){
   onlineChart.data.labels.push(time);
   onlineChart.data.datasets[0].data.push(count);
   onlineChart.update();
-
-  if(count > peakPlayers){ peakPlayers = count; document.getElementById('peakPlayers').textContent = peakPlayers; }
 }
 
 // UPDATE SERVER & LEADERBOARD
@@ -196,8 +209,8 @@ async function updateServer(){
 
     const serverStatus = document.getElementById("serverStatus");
     const serverCard = document.getElementById("serverStatusCard");
-    serverStatus.textContent = data.serverStatus==="online" ? "ONLINE":"OFFLINE";
-    serverStatus.style.color = data.serverStatus==="online" ? "#10b981":"red";
+    serverStatus.textContent = data.serverStatus==="online"?"ONLINE":"OFFLINE";
+    serverStatus.style.color = data.serverStatus==="online"?"#10b981":"red";
     serverCard.className = "status-card "+(data.serverStatus==="online"?"online":"offline");
 
     const players = data.onlinePlayersCount ?? 0;
@@ -215,6 +228,7 @@ async function updateServer(){
         lb.appendChild(li);
       });
     } else lb.innerHTML="<li>No players found</li>";
+
   } catch {
     document.getElementById("serverStatus").textContent="OFFLINE";
     document.getElementById("serverStatus").style.color="red";
