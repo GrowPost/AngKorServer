@@ -6,39 +6,36 @@
 <meta name="description" content="AngkorPS Growtopia Private Server Dashboard">
 <title>AngkorPS - Home</title>
 
-<!-- Google Fonts & FontAwesome & Chart.js -->
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 
 <style>
-/* --- RESET --- */
-body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; margin:0; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; margin:0; background:#0d1117; color:#e5e5e5; scroll-behavior:smooth; }
 .header { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#11151c; border-bottom:1px solid #1f242c; position:sticky; top:0; z-index:1000; }
 .header .logo { display:flex; align-items:center; gap:.5rem; cursor:pointer; }
 .header .logo img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
 .header .logo span { font-size:1.5rem; font-weight:700; color:#10b981; }
 .nav button { background:none; border:none; color:#e5e5e5; font-size:1rem; cursor:pointer; display:flex; align-items:center; gap:.3rem; font-weight:500; }
-.nav-menu { position:absolute; top:calc(100% + 5px); right:0; background:#161b23; border:1px solid #1f242c; border-radius:8px; flex-direction:column; min-width:180px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.3); opacity:0; transform:translateY(-20px) scaleY(0.95); pointer-events:none; transition: all 0.3s cubic-bezier(0.25,1,0.5,1); }
-.nav-menu.show { opacity:1; transform:translateY(0) scaleY(1); pointer-events:auto; }
-.nav-menu a { padding:.8rem 1rem; color:#e5e5e5; text-decoration:none; display:block; transition: all 0.2s; }
+.nav-menu { position:fixed; top:0; right:-250px; width:250px; height:100%; background:#161b23; border-left:1px solid #1f242c; border-radius:0 0 0 8px; flex-direction:column; padding-top:4rem; overflow:hidden; display:flex; gap:.3rem; box-shadow:-4px 0 12px rgba(0,0,0,0.3); transition:right 0.4s cubic-bezier(0.25,1,0.5,1); z-index:1500; }
+.nav-menu.show { right:0; }
+.nav-menu a { padding:.8rem 1.2rem; color:#e5e5e5; text-decoration:none; display:block; transition:all 0.2s; font-weight:500; }
 .nav-menu a:hover { background:#10b981; color:#111; }
 
 .container { max-width:900px; margin:auto; padding:2rem 1rem; }
-.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; }
+.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+
 .status-card { display:flex; justify-content:space-between; align-items:center; margin-bottom:.8rem; padding:.8rem 1rem; border-radius:10px; background:#161b23; }
 .status-card h4 { font-weight:500; font-size:1rem; color:#b5b5b5; }
 .status-card p { font-weight:600; font-size:1.2rem; color:#10b981; }
 
-.leaderboard h3, .card h3 { margin-bottom:1.2rem; display:flex; align-items:center; gap:.5rem; color:#fff; }
+.leaderboard h3 { font-size:1.1rem; font-weight:600; color:#fff; margin-bottom:.8rem; display:flex; align-items:center; gap:.5rem; }
 .leaderboard ul { list-style:none; padding:0; margin:0; }
 .lb-item { display:flex; justify-content:space-between; align-items:center; padding:.6rem 1rem; margin-bottom:.4rem; background:#161b23; border-radius:8px; font-weight:500; color:#e5e5e5; }
 .lb-wl { display:flex; align-items:center; gap:.35rem; }
 .lb-wl img { width:18px; height:18px; object-fit:contain; }
 
-#onlineChart { width:100%; background:#161b23; border-radius:12px; padding:10px; }
-
-.btn-grid { display:grid; grid-template-columns:repeat(auto-fit, minmax(150px, 1fr)); gap:.8rem; }
+.btn-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(150px,1fr)); gap:.8rem; }
 .btn { padding:.8rem; border-radius:10px; font-weight:500; font-size:.9rem; border:1px solid #222831; background:#1a1f26; color:#e5e5e5; cursor:pointer; transition:.2s; }
 .btn:hover { background:#10b981; color:#111; border-color:#10b981; }
 .btn-discord { background:#5865f2; border:none; color:#fff; }
@@ -49,27 +46,20 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
 .toast.error { background:#d9534f; }
 
-/* Loading Screen */
-#loadingScreen {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:#0d1117; display:flex; flex-direction:column; justify-content:center; align-items:center;
-  z-index:2000; transition: opacity 0.5s ease;
-}
+#loadingScreen { position:fixed; top:0; left:0; width:100%; height:100%; background:#0d1117; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:2000; transition:opacity 0.5s ease; }
 #loadingScreen.hidden { opacity:0; pointer-events:none; }
-#loadingScreen .spinner {
-  width:60px; height:60px; border:6px solid #161b23; border-top:6px solid #10b981; border-radius:50%;
-  animation:spin 1s linear infinite; margin-bottom:1rem;
-}
+#loadingScreen .spinner { width:60px; height:60px; border:6px solid #161b23; border-top:6px solid #10b981; border-radius:50%; animation:spin 1s linear infinite; margin-bottom:1rem; }
 @keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
 #loadingScreen p { color:#e5e5e5; font-size:1rem; font-weight:500; }
+
+canvas { background:#161b23; border-radius:12px; padding:10px; }
 </style>
 </head>
 <body>
 
-<!-- Loading Screen -->
 <div id="loadingScreen">
   <div class="spinner"></div>
-  <p>Loading...</p>
+  <p>Loading AngkorPS...</p>
 </div>
 
 <header class="header">
@@ -88,7 +78,7 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 </header>
 
 <div class="container">
-  <!-- SERVER STATUS -->
+
   <div class="card">
     <div class="status-card">
       <h4>Server Status</h4>
@@ -100,92 +90,69 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
     </div>
   </div>
 
-  <!-- ONLINE PLAYERS GRAPH -->
   <div class="card">
-    <h3><i class="fas fa-chart-line"></i> Online Players (Live)</h3>
-    <canvas id="onlineChart" height="120"></canvas>
+    <h3><i class="fas fa-chart-line"></i> Online Graph</h3>
+    <canvas id="onlineChart" height="200"></canvas>
   </div>
 
-  <!-- LEADERBOARD -->
   <div class="card leaderboard">
     <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
     <ul id="leaderboardList">
       <li>Loading...</li>
     </ul>
   </div>
+
 </div>
 
 <footer class="footer">Â© <strong>AngkorPS</strong></footer>
 <div id="toast" class="toast"></div>
 
 <script>
-// Hide loading screen when page fully loaded
-window.addEventListener('load', () => {
-  document.getElementById('loadingScreen').classList.add('hidden');
-});
+setTimeout(()=>{document.getElementById('loadingScreen').classList.add('hidden');},2000);
 
-// Menu toggle
-function toggleNavMenu(){ document.getElementById("navMenu").classList.toggle("show"); }
-document.addEventListener('click', function(e){
-  const menu=document.getElementById("navMenu");
-  const btn=document.querySelector(".nav button");
-  if(!menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove("show");
-});
+// Menu
+function toggleNavMenu(){document.getElementById("navMenu").classList.toggle("show");}
+document.addEventListener('click',function(e){const menu=document.getElementById("navMenu");const btn=document.querySelector(".nav button");if(!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove("show");});
 
 // Toast
-function showToast(msg,type="success"){
-  const t=document.getElementById("toast");
-  t.textContent=msg;
-  t.className="toast "+(type==="error"?"error":"");
-  t.classList.add("show");
-  setTimeout(()=>t.classList.remove("show"),1800);
-}
+function showToast(msg,type="success"){const t=document.getElementById("toast");t.textContent=msg;t.className="toast "+(type==="error"?"error":"");t.classList.add("show");setTimeout(()=>t.classList.remove("show"),1800);}
 
-// Live online chart
-const ctx=document.getElementById('onlineChart').getContext('2d');
-const onlineChart=new Chart(ctx,{
-  type:'line',
-  data:{ labels:[], datasets:[{ label:'Players Online', data:[], borderColor:'#10b981', backgroundColor:'rgba(16,185,129,0.2)', fill:true, tension:0, borderWidth:2, pointRadius:3 }]},
-  options:{ responsive:true, plugins:{ legend:{ display:false } }, scales:{ x:{ display:false }, y:{ ticks:{ color:'#e5e5e5', stepSize:1, callback:v=>Math.round(v) }, grid:{ color:'#1f242c' }, beginAtZero:true } } }
-});
-function addOnlineData(count){
-  if(onlineChart.data.labels.length>=30){ onlineChart.data.labels.shift(); onlineChart.data.datasets[0].data.shift(); }
-  onlineChart.data.labels.push("");
-  onlineChart.data.datasets[0].data.push(Math.round(count));
-  onlineChart.update();
-}
+// Chart.js
+const ctx = document.getElementById('onlineChart').getContext('2d');
+const onlineData = { labels: [], datasets:[{ label:'Players Online', data:[], borderColor:'#10b981', backgroundColor:'rgba(16,185,129,0.2)', tension:0.4 }]};
+const onlineChart = new Chart(ctx,{type:'line', data:onlineData, options:{responsive:true, plugins:{legend:{display:false}}, scales:{y:{beginAtZero:true, stepSize:1}, x:{display:false}}}});
 
-// Server & leaderboard
 async function updateServer(){
   try{
     const res=await fetch("https://angkorps.site/api/ping");
     const data=await res.json();
-    document.getElementById("serverStatus").textContent=data.serverStatus==="online"?"ONLINE":"OFFLINE";
-    document.getElementById("serverStatus").style.color=data.serverStatus==="online"?"#10b981":"red";
-    document.getElementById("playersCount").textContent=data.onlinePlayersCount??0;
-    addOnlineData(data.onlinePlayersCount??0);
+    const onlineCount = data.onlinePlayersCount ?? 0;
+    document.getElementById("serverStatus").textContent = data.serverStatus==="online"?"ONLINE":"OFFLINE";
+    document.getElementById("serverStatus").style.color = data.serverStatus==="online"?"#10b981":"red";
+    document.getElementById("playersCount").textContent = onlineCount;
 
-    const lb=document.getElementById("leaderboardList");
-    lb.innerHTML="";
+    if(onlineData.labels.length>20){onlineData.labels.shift(); onlineData.datasets[0].data.shift();}
+    onlineData.labels.push('');
+    onlineData.datasets[0].data.push(onlineCount);
+    onlineChart.update();
+
+    const lb=document.getElementById("leaderboardList"); lb.innerHTML="";
     if(data.leaderboard && data.leaderboard.length>0){
       data.leaderboard.forEach(entry=>{
-        const parts=entry.split(" ");
+        const parts=entry.split(" "); const rank=parts[0]; const name=parts[1]; const amount=parts[2]; const wlText=parts[3];
         const li=document.createElement("li"); li.className="lb-item";
-        li.innerHTML=`<span>${parts[0]} ${parts[1]}</span><span class="lb-wl">${parts[2]} ${parts[3]} <img src="assets/world_lock.png" alt="WL"></span>`;
+        li.innerHTML=`<span>${rank} ${name}</span><span class="lb-wl">${amount} ${wlText}<img src="assets/world_lock.png" alt="WL"></span>`;
         lb.appendChild(li);
       });
-    } else lb.innerHTML="<li>No players found</li>";
-  } catch{
-    document.getElementById("serverStatus").textContent="OFFLINE";
-    document.getElementById("serverStatus").style.color="red";
-    document.getElementById("playersCount").textContent=0;
-    addOnlineData(0);
-    document.getElementById("leaderboardList").innerHTML="<li>No data</li>";
+    } else { lb.innerHTML="<li>No players found</li>"; }
+  } catch {
+    document.getElementById("serverStatus").textContent="OFFLINE"; document.getElementById("serverStatus").style.color="red";
+    document.getElementById("playersCount").textContent=0; document.getElementById("leaderboardList").innerHTML="<li>No data</li>";
   }
 }
-updateServer();
-setInterval(updateServer,5000);
+
+updateServer(); setInterval(updateServer,5000);
 </script>
+
 </body>
 </html>
-
