@@ -30,8 +30,13 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; sc
 .header .logo span { font-size:1.5rem; font-weight:700; color:#10b981; }
 .nav { position:relative; }
 .nav button { background:none; border:none; color:#e5e5e5; font-size:1rem; cursor:pointer; display:flex; align-items:center; gap:.3rem; font-weight:500; }
-.nav-menu { position:absolute; top:120%; right:0; background:#161b23; border:1px solid #1f242c; border-radius:8px; display:none; flex-direction:column; min-width:180px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.3); }
-.nav-menu a { padding:.8rem 1rem; color:#e5e5e5; text-decoration:none; transition:.2s; }
+.nav-menu { position:absolute; top:120%; right:0; background:#161b23; border:1px solid #1f242c; border-radius:8px; flex-direction:column; min-width:180px;
+  overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.3);
+  opacity:0; transform:translateY(-10px); pointer-events:none;
+  transition: all 0.25s ease-in-out;
+}
+.nav-menu.show { opacity:1; transform:translateY(0); pointer-events:auto; }
+.nav-menu a { padding:.8rem 1rem; color:#e5e5e5; text-decoration:none; display:block; transition:.2s; }
 .nav-menu a:hover { background:#10b981; color:#111; }
 
 /* CONTAINER */
@@ -52,15 +57,8 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; sc
 
 /* LEADERBOARD ITEM */
 .lb-item {
-  display:flex;
-  justify-content:space-between;
-  align-items:center;
-  padding:.6rem 1rem;
-  margin-bottom:.4rem;
-  background:#161b23;
-  border-radius:8px;
-  font-weight:500;
-  color:#e5e5e5;
+  display:flex; justify-content:space-between; align-items:center; padding:.6rem 1rem; margin-bottom:.4rem;
+  background:#161b23; border-radius:8px; font-weight:500; color:#e5e5e5;
 }
 .lb-wl { display:flex; align-items:center; gap:.35rem; }
 .lb-wl img { width:18px; height:18px; object-fit:contain; }
@@ -97,9 +95,9 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; sc
   <div class="nav">
     <button onclick="toggleNavMenu()"><i class="fas fa-bars"></i> Menu</button>
     <div class="nav-menu" id="navMenu">
-      <a href="#homeSection">Home</a>
-      <a href="#hostSection">Host & Download</a>
-      <a href="#discordSection">Discord</a>
+      <a href="#homeSection" onclick="closeNavMenu()">Home</a>
+      <a href="#hostSection" onclick="closeNavMenu()">Host & Download</a>
+      <a href="#discordSection" onclick="closeNavMenu()">Discord</a>
     </div>
   </div>
 </header>
@@ -158,15 +156,18 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; sc
 <div id="toast" class="toast"></div>
 
 <script>
+// HEADER MENU
 function scrollToTop(){ window.scrollTo({top:0, behavior:"smooth"}); }
-
-function toggleNavMenu(){
+function toggleNavMenu(){ document.getElementById("navMenu").classList.toggle("show"); }
+function closeNavMenu(){ document.getElementById("navMenu").classList.remove("show"); }
+document.addEventListener('click', function(e){
   const menu=document.getElementById("navMenu");
-  menu.style.display = menu.style.display==="flex"?"none":"flex";
-}
+  const btn=document.querySelector(".nav button");
+  if(!menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove("show");
+});
 
 // Toast helper
-function showToast(msg, type="success") {
+function showToast(msg,type="success"){
   const t=document.getElementById("toast");
   t.textContent=msg;
   t.className="toast "+(type==="error"?"error":"");
@@ -174,12 +175,11 @@ function showToast(msg, type="success") {
   setTimeout(()=>t.classList.remove("show"),1800);
 }
 
-// Host & Download helpers
+// Host & Download
 const HOST_IP_TEXT=`5.39.13.21 growtopia1.com
 5.39.13.21 growtopia2.com
 5.39.13.21 www.growtopia1.com
 5.39.13.21 www.growtopia2.com`;
-
 function copyText(text){ navigator.clipboard.writeText(text).then(()=>showToast("Copied")).catch(()=>showToast("Failed","error")); }
 function copyHost(){ copyText(HOST_IP_TEXT); }
 function copyPowerTunnel(){ copyText("https://angkorps.site/angkor.txt"); }
@@ -188,8 +188,7 @@ function copyIOS(){ copyText("https://angkorps.site/ios.txt"); }
 function downloadHost(){
   const blob=new Blob([HOST_IP_TEXT],{type:"text/plain"});
   const url=URL.createObjectURL(blob);
-  const a=document.createElement("a");
-  a.href=url; a.download="angkor.host"; a.click();
+  const a=document.createElement("a"); a.href=url; a.download="angkor.host"; a.click();
   URL.revokeObjectURL(url); showToast("Downloaded!");
 }
 
@@ -197,31 +196,15 @@ function downloadHost(){
 const ctx=document.getElementById('onlineChart').getContext('2d');
 const onlineChart=new Chart(ctx,{
   type:'line',
-  data:{ labels:[], datasets:[{
-    label:'Players Online',
-    data:[],
-    borderColor:'#10b981',
-    backgroundColor:'rgba(16,185,129,0.2)',
-    fill:true,
-    tension:0,
-    borderWidth:2,
-    pointRadius:3
-  }]},
+  data:{ labels:[], datasets:[{ label:'Players Online', data:[], borderColor:'#10b981', backgroundColor:'rgba(16,185,129,0.2)', fill:true, tension:0, borderWidth:2, pointRadius:3 }]},
   options:{
     responsive:true,
     plugins:{ legend:{ display:false } },
-    scales:{
-      x:{ display:false },
-      y:{ ticks:{ color:'#e5e5e5', stepSize:1, callback:v=>Math.round(v) }, grid:{ color:'#1f242c' }, beginAtZero:true }
-    }
+    scales:{ x:{ display:false }, y:{ ticks:{ color:'#e5e5e5', stepSize:1, callback:v=>Math.round(v) }, grid:{ color:'#1f242c' }, beginAtZero:true } }
   }
 });
-
 function addOnlineData(count){
-  if(onlineChart.data.labels.length>=30){
-    onlineChart.data.labels.shift();
-    onlineChart.data.datasets[0].data.shift();
-  }
+  if(onlineChart.data.labels.length>=30){ onlineChart.data.labels.shift(); onlineChart.data.datasets[0].data.shift(); }
   onlineChart.data.labels.push("");
   onlineChart.data.datasets[0].data.push(Math.round(count));
   onlineChart.update();
@@ -232,11 +215,9 @@ async function updateServer(){
   try{
     const res=await fetch("https://angkorps.site/api/ping");
     const data=await res.json();
-
     document.getElementById("serverStatus").textContent=data.serverStatus==="online"?"ONLINE":"OFFLINE";
     document.getElementById("serverStatus").style.color=data.serverStatus==="online"?"#10b981":"red";
     document.getElementById("playersCount").textContent=data.onlinePlayersCount??0;
-
     addOnlineData(data.onlinePlayersCount??0);
 
     const lb=document.getElementById("leaderboardList");
@@ -244,8 +225,7 @@ async function updateServer(){
     if(data.leaderboard && data.leaderboard.length>0){
       data.leaderboard.forEach(entry=>{
         const parts=entry.split(" ");
-        const li=document.createElement("li");
-        li.className="lb-item";
+        const li=document.createElement("li"); li.className="lb-item";
         li.innerHTML=`<span>${parts[0]} ${parts[1]}</span><span class="lb-wl">${parts[2]} ${parts[3]} <img src="assets/world_lock.png" alt="WL"></span>`;
         lb.appendChild(li);
       });
