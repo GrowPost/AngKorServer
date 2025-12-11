@@ -118,7 +118,7 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; }
 
   <!-- ONLINE PLAYERS GRAPH -->
   <div class="card">
-    <h3><i class="fas fa-chart-line"></i> Online Players (Daily)</h3>
+    <h3><i class="fas fa-chart-line"></i> Online Players (Live)</h3>
     <canvas id="onlineChart" height="120"></canvas>
   </div>
 
@@ -182,9 +182,9 @@ function downloadHost(){
   URL.revokeObjectURL(url); showToast("Downloaded!");
 }
 
-/* ONLINE PLAYERS CHART BY DAY */
+/* LIVE ONLINE PLAYERS GRAPH */
 const ctx = document.getElementById('onlineChart').getContext('2d');
-const onlineChart = new Chart(ctx, {
+const onlineChart = new Chart(ctx,{
   type:'line',
   data:{ labels:[], datasets:[{
     label:'Players Online',
@@ -200,41 +200,22 @@ const onlineChart = new Chart(ctx, {
     responsive:true,
     plugins:{ legend:{ display:false } },
     scales:{
-      x:{ ticks:{ color:'#e5e5e5' }, grid:{ color:'#1f242c' } },
-      y:{ ticks:{ color:'#e5e5e5', stepSize:1, callback:v=>Math.round(v) },
-          grid:{ color:'#1f242c' }, beginAtZero:true }
+      x:{ display:false }, // hide X-axis labels
+      y:{ ticks:{ color:'#e5e5e5', stepSize:1, callback:v=>Math.round(v) }, grid:{ color:'#1f242c' }, beginAtZero:true }
     }
   }
 });
 
-// Update chart with daily data
-function updateChartDaily(dateStr,count){
+// Add new online player count every 5 sec
+function addOnlineData(count){
   if(onlineChart.data.labels.length>=30){
     onlineChart.data.labels.shift();
     onlineChart.data.datasets[0].data.shift();
   }
-  onlineChart.data.labels.push(dateStr);
+  onlineChart.data.labels.push(""); // empty label for live graph
   onlineChart.data.datasets[0].data.push(Math.round(count));
   onlineChart.update();
 }
-
-// Fetch last 30 days daily data from API
-async function fetchDailyData(){
-  try {
-    const res = await fetch("https://angkorps.site/api/daily");
-    const data = await res.json(); // [{date:"2025-12-11",players:123},...]
-    onlineChart.data.labels=[];
-    onlineChart.data.datasets[0].data=[];
-    data.forEach(d=>{
-      const date = new Date(d.date);
-      const formatted = date.getDate() + " " + date.toLocaleString('en-US',{month:'short'});
-      updateChartDaily(formatted,d.players);
-    });
-  } catch(err){ console.log("Failed to fetch daily data",err); }
-}
-
-// Initial daily chart load
-fetchDailyData();
 
 /* SERVER STATUS & LEADERBOARD */
 async function updateServer(){
@@ -248,6 +229,9 @@ async function updateServer(){
       data.serverStatus==="online"?"#10b981":"red";
 
     document.getElementById("playersCount").textContent = data.onlinePlayersCount ?? 0;
+
+    // Update live graph
+    addOnlineData(data.onlinePlayersCount ?? 0);
 
     const lb = document.getElementById("leaderboardList");
     lb.innerHTML="";
@@ -265,10 +249,12 @@ async function updateServer(){
     document.getElementById("serverStatus").textContent="OFFLINE";
     document.getElementById("serverStatus").style.color="red";
     document.getElementById("playersCount").textContent=0;
+    addOnlineData(0);
     document.getElementById("leaderboardList").innerHTML="<li>No data</li>";
   }
 }
 
+// Initial load
 updateServer();
 setInterval(updateServer,5000);
 </script>
