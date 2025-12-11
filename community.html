@@ -3,52 +3,43 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="AngkorPS Discord Community">
+<meta name="description" content="AngkorPS Growtopia Community Discord">
 <title>AngkorPS - Discord</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
 <style>
-body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; margin:0; scroll-behavior:smooth; }
+body { font-family:'Inter',sans-serif; margin:0; background:#0d1117; color:#e5e5e5; scroll-behavior:smooth; }
 .header { display:flex; justify-content:space-between; align-items:center; padding:1rem 2rem; background:#11151c; border-bottom:1px solid #1f242c; position:sticky; top:0; z-index:1000; }
 .header .logo { display:flex; align-items:center; gap:.5rem; cursor:pointer; }
 .header .logo img { width:40px; height:40px; border-radius:8px; object-fit:cover; }
 .header .logo span { font-size:1.5rem; font-weight:700; color:#10b981; }
 .nav button { background:none; border:none; color:#e5e5e5; font-size:1rem; cursor:pointer; display:flex; align-items:center; gap:.3rem; font-weight:500; }
-.nav-menu { position:absolute; top:calc(100% + 5px); right:0; background:#161b23; border:1px solid #1f242c; border-radius:8px; flex-direction:column; min-width:180px; overflow:hidden; box-shadow:0 4px 12px rgba(0,0,0,0.3); opacity:0; transform:translateY(-20px) scaleY(0.95); pointer-events:none; transition: all 0.3s cubic-bezier(0.25,1,0.5,1); }
-.nav-menu.show { opacity:1; transform:translateY(0) scaleY(1); pointer-events:auto; }
-.nav-menu a { padding:.8rem 1rem; color:#e5e5e5; text-decoration:none; display:block; transition: all 0.2s; }
+.nav-menu { position:fixed; top:0; right:-250px; width:250px; height:100%; background:#161b23; border-left:1px solid #1f242c; border-radius:0 0 0 8px; flex-direction:column; padding-top:4rem; overflow:hidden; display:flex; gap:.3rem; box-shadow:-4px 0 12px rgba(0,0,0,0.3); transition:right 0.4s cubic-bezier(0.25,1,0.5,1); z-index:1500; }
+.nav-menu.show { right:0; }
+.nav-menu a { padding:.8rem 1.2rem; color:#e5e5e5; text-decoration:none; display:block; transition:all 0.2s; font-weight:500; }
 .nav-menu a:hover { background:#10b981; color:#111; }
 
 .container { max-width:900px; margin:auto; padding:2rem 1rem; }
-.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; text-align:center; }
-.btn-discord { background:#5865f2; border:none; color:#fff; padding:.8rem 1.2rem; font-weight:500; border-radius:10px; cursor:pointer; font-size:1rem; transition:.2s; }
-.btn-discord:hover { opacity:.85; }
+.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+.btn { padding:.8rem 1.2rem; border-radius:10px; font-weight:500; font-size:.9rem; border:none; background:#5865f2; color:#fff; cursor:pointer; transition:.2s; }
+.btn:hover { opacity:.85; }
 
 .footer { text-align:center; padding:2rem 0; color:#888; font-size:.9rem; }
 .toast { position:fixed; bottom:30px; left:50%; transform:translateX(-50%) translateY(40px); background:#10b981; color:#fff; padding:.8rem 1.4rem; border-radius:10px; opacity:0; transition:.4s ease; pointer-events:none; font-size:.9rem; }
 .toast.show { opacity:1; transform:translateX(-50%) translateY(0px); }
 .toast.error { background:#d9534f; }
 
-/* Loading Screen */
-#loadingScreen {
-  position:fixed; top:0; left:0; width:100%; height:100%;
-  background:#0d1117; display:flex; flex-direction:column; justify-content:center; align-items:center;
-  z-index:2000; transition: opacity 0.5s ease;
-}
+#loadingScreen { position:fixed; top:0; left:0; width:100%; height:100%; background:#0d1117; display:flex; flex-direction:column; justify-content:center; align-items:center; z-index:2000; transition:opacity 0.5s ease; }
 #loadingScreen.hidden { opacity:0; pointer-events:none; }
-#loadingScreen .spinner {
-  width:60px; height:60px; border:6px solid #161b23; border-top:6px solid #10b981; border-radius:50%;
-  animation:spin 1s linear infinite; margin-bottom:1rem;
-}
+#loadingScreen .spinner { width:60px; height:60px; border:6px solid #161b23; border-top:6px solid #10b981; border-radius:50%; animation:spin 1s linear infinite; margin-bottom:1rem; }
 @keyframes spin { 0%{transform:rotate(0deg);}100%{transform:rotate(360deg);} }
 #loadingScreen p { color:#e5e5e5; font-size:1rem; font-weight:500; }
 </style>
 </head>
 <body>
 
-<!-- Loading Screen -->
 <div id="loadingScreen">
   <div class="spinner"></div>
   <p>Loading AngkorPS...</p>
@@ -71,9 +62,8 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 
 <div class="container">
   <div class="card">
-    <h3><i class="fab fa-discord"></i> Join our Discord</h3>
-    <p>Click the button below to join the official AngkorPS Discord community.</p>
-    <button class="btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx','_blank')">Join Discord</button>
+    <h3><i class="fab fa-discord"></i> Join Our Discord</h3>
+    <button class="btn" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join Discord</button>
   </div>
 </div>
 
@@ -81,7 +71,7 @@ body { font-family: 'Inter', sans-serif; background:#0d1117; color:#e5e5e5; marg
 <div id="toast" class="toast"></div>
 
 <script>
-window.addEventListener('load',()=>{document.getElementById('loadingScreen').classList.add('hidden');});
+setTimeout(()=>{document.getElementById('loadingScreen').classList.add('hidden');},2000);
 function toggleNavMenu(){document.getElementById("navMenu").classList.toggle("show");}
 document.addEventListener('click',function(e){const menu=document.getElementById("navMenu");const btn=document.querySelector(".nav button");if(!menu.contains(e.target)&&!btn.contains(e.target))menu.classList.remove("show");});
 </script>
