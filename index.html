@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
 <html lang="en">
 <head>
 <meta charset="UTF-8">
@@ -40,10 +40,10 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; sc
 .nav-menu a:hover { background:#10b981; color:#111; }
 
 /* CONTAINER */
-.container { max-width: 900px; margin: auto; padding: 2rem 1rem; scroll-margin-top:70px; }
+.container { max-width: 900px; margin: auto; padding: 2rem 1rem; }
 
 /* CARD BASE */
-.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); }
+.card { background:#11151c; padding:1.5rem; border-radius:12px; border:1px solid #1f242c; margin-bottom:1.4rem; box-shadow:0 2px 8px rgba(0,0,0,0.2); transition: all 0.3s ease; }
 
 /* STATUS CARD */
 .status-card { display:flex; justify-content:space-between; align-items:center; margin-bottom:.8rem; padding:.8rem 1rem; border-radius:10px; background:#161b23; }
@@ -83,70 +83,79 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; sc
 
 /* ONLINE CHART */
 #onlineChart { width:100%; background:#161b23; border-radius:12px; padding:10px; }
+
+/* HIDDEN SECTION */
+.hidden { display:none !important; }
 </style>
 </head>
 <body>
 
 <header class="header">
-  <div class="logo" onclick="scrollToTop()">
+  <div class="logo" onclick="showSection('home')">
     <img src="assets/AngkorPS.png" alt="Logo">
     <span>AngkorPS</span>
   </div>
   <div class="nav">
     <button onclick="toggleNavMenu()"><i class="fas fa-bars"></i> Menu</button>
     <div class="nav-menu" id="navMenu">
-      <a href="#homeSection" onclick="closeNavMenu()">Home</a>
-      <a href="#hostSection" onclick="closeNavMenu()">Host & Download</a>
-      <a href="#discordSection" onclick="closeNavMenu()">Discord</a>
+      <a href="#" onclick="showSection('home')">Home</a>
+      <a href="#" onclick="showSection('host')">Host & Download</a>
+      <a href="#" onclick="showSection('discord')">Discord</a>
     </div>
   </div>
 </header>
 
-<div class="container" id="homeSection">
+<div class="container">
 
-  <!-- SERVER STATUS -->
-  <div class="card">
-    <div class="status-card">
-      <h4>Server Status</h4>
-      <p id="serverStatus">Checking...</p>
+  <!-- SERVER STATUS & LEADERBOARD (Home) -->
+  <div id="homeSection" class="section">
+    <div class="card">
+      <div class="status-card">
+        <h4>Server Status</h4>
+        <p id="serverStatus">Checking...</p>
+      </div>
+      <div class="status-card">
+        <h4>Players Online</h4>
+        <p id="playersCount">0</p>
+      </div>
     </div>
-    <div class="status-card">
-      <h4>Players Online</h4>
-      <p id="playersCount">0</p>
+
+    <!-- ONLINE PLAYERS GRAPH -->
+    <div class="card">
+      <h3><i class="fas fa-chart-line"></i> Online Players (Live)</h3>
+      <canvas id="onlineChart" height="120"></canvas>
     </div>
-  </div>
 
-  <!-- ONLINE PLAYERS GRAPH -->
-  <div class="card">
-    <h3><i class="fas fa-chart-line"></i> Online Players (Live)</h3>
-    <canvas id="onlineChart" height="120"></canvas>
-  </div>
-
-  <!-- LEADERBOARD -->
-  <div class="card leaderboard">
-    <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
-    <ul id="leaderboardList">
-      <li>Loading...</li>
-    </ul>
+    <!-- LEADERBOARD -->
+    <div class="card leaderboard">
+      <h3><i class="fas fa-trophy"></i> Leaderboard</h3>
+      <ul id="leaderboardList">
+        <li>Loading...</li>
+      </ul>
+    </div>
   </div>
 
   <!-- HOST & DOWNLOAD -->
-  <div class="card" id="hostSection">
-    <h3><i class="fas fa-server"></i> Host & Download</h3>
-    <div class="btn-grid">
-      <button class="btn" onclick="copyHost()">Copy IP</button>
-      <button class="btn" onclick="downloadHost()">Download Host</button>
-      <button class="btn" onclick="copyPowerTunnel()">PowerTunnel</button>
-      <button class="btn" onclick="copyHostGoURL()">Host GO</button>
-      <button class="btn" onclick="copyIOS()">iOS Host</button>
+  <div id="hostSection" class="section hidden">
+    <div class="card">
+      <h3><i class="fas fa-server"></i> Host & Download</h3>
+      <div class="btn-grid">
+        <button class="btn" onclick="copyHost()">Copy IP</button>
+        <button class="btn" onclick="downloadHost()">Download Host</button>
+        <button class="btn" onclick="copyPowerTunnel()">PowerTunnel</button>
+        <button class="btn" onclick="copyHostGoURL()">Host GO</button>
+        <button class="btn" onclick="copyIOS()">iOS Host</button>
+      </div>
     </div>
   </div>
 
   <!-- DISCORD -->
-  <div class="card" id="discordSection">
-    <h3><i class="fab fa-discord"></i> Discord</h3>
-    <div class="btn-grid">
-      <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join Discord</button>
+  <div id="discordSection" class="section hidden">
+    <div class="card">
+      <h3><i class="fab fa-discord"></i> Discord</h3>
+      <div class="btn-grid">
+        <button class="btn btn-discord" onclick="window.open('https://discord.gg/JrVquN9sgx')">Join Discord</button>
+      </div>
     </div>
   </div>
 
@@ -157,14 +166,23 @@ body { font-family: 'Inter', sans-serif; background: #0d1117; color: #e5e5e5; sc
 
 <script>
 // HEADER MENU
-function scrollToTop(){ window.scrollTo({top:0, behavior:"smooth"}); }
 function toggleNavMenu(){ document.getElementById("navMenu").classList.toggle("show"); }
-function closeNavMenu(){ document.getElementById("navMenu").classList.remove("show"); }
 document.addEventListener('click', function(e){
   const menu=document.getElementById("navMenu");
   const btn=document.querySelector(".nav button");
   if(!menu.contains(e.target) && !btn.contains(e.target)) menu.classList.remove("show");
 });
+
+// SHOW/HIDE SECTIONS
+function showSection(section){
+  const sections=['home','host','discord'];
+  sections.forEach(s=>{
+    const el=document.getElementById(s+'Section');
+    if(s===section) el.classList.remove('hidden'); else el.classList.add('hidden');
+  });
+  closeNavMenu();
+}
+function closeNavMenu(){ document.getElementById("navMenu").classList.remove("show"); }
 
 // Toast helper
 function showToast(msg,type="success"){
